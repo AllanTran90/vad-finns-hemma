@@ -11,12 +11,19 @@ async function signUp() {
   });
   console.log("error:", error);
 }
+async function signIn() {
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
+  console.log("error:", error);
+}
 </script>
 
 <template>
   <main>
     <h1>Log in</h1>
-    <form>
+    <form @submit.prevent="signIn">
       <input v-model="email" type="email" placeholder="Email" autocomplete="email" />
       <input v-model="password" type="password" placeholder="Password" autocomplete="current-password" />
       <button type="submit">Log in</button>
