@@ -4,19 +4,18 @@ const supabase = useSupabaseClient();
 const email = ref("");
 const password = ref("");
 
-async function signUp() {
-  const { error } = await supabase.auth.signUp({
-    email: email.value,
-    password: password.value,
-  });
-  console.log("error:", error);
-}
 async function signIn() {
   const { error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
-  console.log("error:", error);
+
+  if (error) {
+    console.log("error:", error);
+    return;
+  }
+
+  await navigateTo("/");
 }
 </script>
 
@@ -24,10 +23,20 @@ async function signIn() {
   <main>
     <h1>Log in</h1>
     <form @submit.prevent="signIn">
-      <input v-model="email" type="email" placeholder="Email" autocomplete="email" />
-      <input v-model="password" type="password" placeholder="Password" autocomplete="current-password" />
+      <input
+        v-model="email"
+        type="email"
+        placeholder="Email"
+        autocomplete="email"
+      />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      />
       <button type="submit">Log in</button>
-      <button type="button" @click="signUp">Create account</button>
     </form>
+    <p>No account yet? <NuxtLink to="/signup">Create account</NuxtLink></p>
   </main>
 </template>
