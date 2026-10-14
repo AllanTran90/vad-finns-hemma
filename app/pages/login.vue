@@ -3,15 +3,19 @@ const supabase = useSupabaseClient();
 
 const email = ref("");
 const password = ref("");
+const errorMessage = ref("");
 
 async function signIn() {
+  errorMessage.value = "";
+
   const { error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
 
   if (error) {
-    console.log("error:", error);
+    console.log("Login error:", error);
+    errorMessage.value = "Wrong email or password. Please try again.";
     return;
   }
 
@@ -37,6 +41,7 @@ async function signIn() {
       />
       <button type="submit">Log in</button>
     </form>
+    <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
     <p>No account yet? <NuxtLink to="/signup">Create account</NuxtLink></p>
   </main>
 </template>
