@@ -2,8 +2,7 @@
 
 ## Om mig
 Jag heter Allan och studerar webbutveckling på Yrgo. Det här är mitt
-examensarbete. Jag är relativt ny på programmering och nybörjare på Vue/Nuxt
-(jag kommer från React).
+examensarbete. Jag är relativt ny på programmering och nybörjare på Vue/Nuxt.
 
 ## Hur jag vill jobba (viktigt!)
 - Ta EN fil eller ETT koncept i taget. Vänta på mig innan nästa steg.
