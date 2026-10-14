@@ -47,6 +47,10 @@ Klart:
 - app/middleware/auth.ts (namngiven, inte global) skyddar app/pages/index.vue
 - Deploy på Vercel fungerar
 - AI-USE.md med logg per dag
+- Auth(login and user) in Supabase
+- Pantry & Favorites and policies in database
+- logga ut-knappen i app/pages/index.vue
+- supabase/schema.sql (så att framtida sessioner vet var schemat ligger)
 
 Planerad mappstruktur som inte är skapad än:
 app/components/ (pantry/, dish/, ui/), app/composables/, server/api/,
@@ -55,8 +59,7 @@ shared/schemas/
 Inte bestämt: ska startsidan vara öppen eller kräva inloggning?
 
 ## Sprintplan (inlämning 16 nov, handledning 21 okt och 4 nov)
-- Sprint 1, v.42: grund, Supabase, login, deploy ← nästan klar
-  Kvar: logga ut-knapp, databasschema (pantry, favorites)
+- Sprint 1, v.42: grund, Supabase, login, deploy ← klar
 - Sprint 2, v.43: ingrediensinmatning, val av kök, server route mot
   Claude API, Zod-validering, enkel resultatvy
 - Sprint 3, v.44: bildigenkänning med rättning, sparat skafferi,
@@ -70,4 +73,4 @@ Inte bestämt: ska startsidan vara öppen eller kräva inloggning?
 - Använd aldrig Supabase service_role/secret-nyckeln i frontend.
 
 ## Nästa steg
-Logga ut-knapp.
+Enkel ingrediensinmatning som sparas i pantry (testa att RLS funkar).
