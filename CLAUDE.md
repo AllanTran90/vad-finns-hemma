@@ -59,13 +59,13 @@ shared/schemas/
 Inte bestämt: ska startsidan vara öppen eller kräva inloggning?
 
 ## Sprintplan (inlämning 16 nov, handledning 21 okt och 4 nov)
-- Sprint 1, v.42: grund, Supabase, login, deploy ← klar
-- Sprint 2, v.43: ingrediensinmatning, val av kök, server route mot
+- Sprint 1, v.42: grund, Supabase, login, deploy ← [x]klar
+- Sprint 2, v.43: ingrediensinmatning, val av kök, server route mot[]
   Claude API, Zod-validering, enkel resultatvy
 - Sprint 3, v.44: bildigenkänning med rättning, sparat skafferi,
-  instruktioner för hur man fotar
-- Sprint 4, v.45: favoriter, allergier/kostpreferenser, felhantering
-- Sprint 5, v.46: tester, mobilputs, dokumentation, README
+  instruktioner för hur man fotar[]
+- Sprint 4, v.45: favoriter, allergier/kostpreferenser, felhantering[]
+- Sprint 5, v.46: tester, mobilputs, dokumentation, README, licens[]
 
 ## Kom ihåg
 - Nya hemliga nycklar (t.ex. Claude API-nyckeln) ska in i både .env OCH
