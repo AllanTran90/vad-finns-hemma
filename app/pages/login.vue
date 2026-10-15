@@ -1,9 +1,6 @@
 <script setup lang="ts">
 
 const supabase = useSupabaseClient();
-
-const email = ref("");
-const password = ref("");
 const errorMessage = ref("");
 
 async function signIn(email: string, password: string) {
