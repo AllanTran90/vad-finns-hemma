@@ -49,14 +49,14 @@ async function addIngredient() {
   await loadIngredients();
 }
 
-async function removeIngredient(id: string) {
+async function deleteIngredient(id: string) {
   errorMessage.value = "";
 
   const { error } = await supabase.from("pantry").delete().eq("id", id);
 
   if (error) {
-    console.log("Remove ingredient error:", error);
-    errorMessage.value = "Could not remove ingredient. Please try again.";
+    console.log("Delete ingredient error:", error);
+    errorMessage.value = "Could not delete ingredient. Please try again.";
     return;
   }
   await loadIngredients();
@@ -85,8 +85,8 @@ definePageMeta({
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.id">
         {{ ingredient.name }}
-        <button type="button" @click="removeIngredient(ingredient.id)">
-          Remove
+        <button type="button" @click="deleteIngredient(ingredient.id)">
+          Delete
         </button>
       </li>
     </ul>
