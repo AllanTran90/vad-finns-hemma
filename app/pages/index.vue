@@ -1,9 +1,7 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient();
-const user = useSupabaseUser();
 const ingredientName = ref("");
-const { ingredients, errorMessage, loadIngredients, deleteIngredient } = usePantry();
-
+const { ingredients, errorMessage,loadIngredients, deleteIngredient, addIngredient } = usePantry();
 
 async function signOut() {
   errorMessage.value = "";
@@ -18,24 +16,12 @@ async function signOut() {
   await navigateTo("/login");
 }
 
+async function handleAdd() {
+  await addIngredient(ingredientName.value);
 
-
-async function addIngredient() {
-  errorMessage.value = "";
-
-  const { error } = await supabase.from("pantry").insert({
-    name: ingredientName.value,
-    user_id: user.value?.sub,
-  });
-
-  if (error) {
-    console.log("Add ingredient error:", error);
-    errorMessage.value = "Could not add ingredient. Please try again.";
-    return;
+  if (!errorMessage.value) {
+    ingredientName.value = "";
   }
-
-  ingredientName.value = "";
-  await loadIngredients();
 }
 
 
@@ -49,7 +35,7 @@ definePageMeta({
 <template>
   <main>
     <h1>Vad finns hemma?</h1>
-    <form @submit.prevent="addIngredient">
+    <form @submit.prevent="handleAdd">
       <input
         v-model="ingredientName"
         type="text"

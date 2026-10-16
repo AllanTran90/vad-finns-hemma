@@ -1,6 +1,7 @@
 export function usePantry() {
   const supabase = useSupabaseClient();
   const errorMessage = ref("");
+  const user = useSupabaseUser();
   const ingredients = ref<{ id: string; name: string }[]>([]);
 
   async function loadIngredients() {
@@ -17,6 +18,23 @@ export function usePantry() {
     ingredients.value = data;
   }
 
+  async function addIngredient(name: string) {
+  errorMessage.value = "";
+
+  const { error } = await supabase.from("pantry").insert({
+    name,
+    user_id: user.value?.sub,
+  });
+
+  if (error) {
+    console.log("Add ingredient error:", error);
+    errorMessage.value = "Could not add ingredient. Please try again.";
+    return;
+  }
+
+  await loadIngredients();
+}
+
   async function deleteIngredient(id: string) {
     errorMessage.value = "";
 
@@ -30,5 +48,5 @@ export function usePantry() {
     await loadIngredients();
   }
 
-  return { ingredients, errorMessage, loadIngredients, deleteIngredient };
+  return { ingredients, errorMessage, loadIngredients, addIngredient, deleteIngredient };
 }
