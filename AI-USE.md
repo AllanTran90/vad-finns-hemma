@@ -14,3 +14,8 @@
 - What: The login and signup forms started to look the same. I wanted to keep the code DRY.
 - How: Claude explained props and emit in Vue and reviewed my files. It pointed out mistakes, but I wrote the code.
 - What I did: Created a new file called AuthForm for login form.
+## 2026-10-16
+- Tool: Claude code
+- What I did: Wrote the delete function and button myself. Wrote the first version of usePantry. Tested add, list and delete on localhost.
+- How: Claude explained what a composable is and pointed out what was missing in my code. Claude also found that the insert failed because useSupabaseUser() returns `sub`, not `id`. When I got stuck on the composable I asked Claude to edit the files, and it changed usePantry.ts and the top of index.vue.
+- What I did: Tested add, list and delete on localhost. Asked claude(I call it Clu) if he coulde help me with the editing and solve the problem. 
