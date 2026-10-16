@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient();
-const errorMessage = ref("");
 const user = useSupabaseUser();
 const ingredientName = ref("");
-const ingredients = ref<{ id: string; name: string }[]>([]);
+const { ingredients, errorMessage, loadIngredients, deleteIngredient } = usePantry();
+
+
 async function signOut() {
   errorMessage.value = "";
   const { error } = await supabase.auth.signOut();
@@ -17,19 +18,7 @@ async function signOut() {
   await navigateTo("/login");
 }
 
-async function loadIngredients() {
-  const { data, error } = await supabase
-    .from("pantry")
-    .select("id, name")
-    .order("created_at");
 
-  if (error) {
-    console.log("Load ingredients error:", error);
-    errorMessage.value = "Could not load ingredients. Please try again.";
-    return;
-  }
-  ingredients.value = data;
-}
 
 async function addIngredient() {
   errorMessage.value = "";
@@ -49,18 +38,6 @@ async function addIngredient() {
   await loadIngredients();
 }
 
-async function deleteIngredient(id: string) {
-  errorMessage.value = "";
-
-  const { error } = await supabase.from("pantry").delete().eq("id", id);
-
-  if (error) {
-    console.log("Delete ingredient error:", error);
-    errorMessage.value = "Could not delete ingredient. Please try again.";
-    return;
-  }
-  await loadIngredients();
-}
 
 onMounted(loadIngredients);
 
@@ -81,7 +58,7 @@ definePageMeta({
       />
       <button type="submit">Add</button>
     </form>
-  
+
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.id">
         {{ ingredient.name }}
