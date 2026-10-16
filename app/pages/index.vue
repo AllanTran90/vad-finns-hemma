@@ -1,7 +1,13 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient();
 const ingredientName = ref("");
-const { ingredients, errorMessage,loadIngredients, deleteIngredient, addIngredient } = usePantry();
+const {
+  ingredients,
+  errorMessage,
+  loadIngredients,
+  deleteIngredient,
+  addIngredient,
+} = usePantry();
 
 async function signOut() {
   errorMessage.value = "";
@@ -24,7 +30,6 @@ async function handleAdd() {
   }
 }
 
-
 onMounted(loadIngredients);
 
 definePageMeta({
@@ -45,14 +50,7 @@ definePageMeta({
       <button type="submit">Add</button>
     </form>
 
-    <ul>
-      <li v-for="ingredient in ingredients" :key="ingredient.id">
-        {{ ingredient.name }}
-        <button type="button" @click="deleteIngredient(ingredient.id)">
-          Delete
-        </button>
-      </li>
-    </ul>
+    <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
 
     <button type="button" @click="signOut">Log out</button>
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
