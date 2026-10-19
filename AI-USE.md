@@ -19,3 +19,8 @@
 - What: Wrote the delete function and button myself. Wrote the first version of usePantry. Tested add, list and delete on localhost.
 - How: Claude explained what a composable is and pointed out what was missing in my code. Claude also found that the insert failed because useSupabaseUser() returns `sub`, not `id`. When I got stuck on the composable I asked Claude to edit the files, and it changed usePantry.ts and the top of index.vue.
 - What I did: Tested add, list and delete on localhost. Asked Clu(my name for claude code) if he coulde help me with the editing and solve the problem. 
+## 2026-10-19
+- Tool: Claude code
+- What: Will user A and user B have the same ingredients after the input?
+- How: Asked my friend Clu how it works with diffenrent accounts, do they share ingredients?
+- What I did: Tested using both chrome and firefox to create two different account. Made an input, milk and butter, reload the other accout to check if the ingredients list was still empty or did it put in new ingredients.

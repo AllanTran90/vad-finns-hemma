@@ -33,7 +33,7 @@ The Nuxt frontend talks to Supabase (auth + database with RLS) via
 @nuxtjs/supabase, and is deployed on Vercel.
 
 ### Sprint 2, week 43
-- [ ] Ingredient input
+- [x] Ingredient input
 - [ ] Cuisine selection
 - [ ] Server route to the Claude API
 - [ ] Zod validation
