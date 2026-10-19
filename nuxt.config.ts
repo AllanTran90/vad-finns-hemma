@@ -7,4 +7,7 @@ export default defineNuxtConfig({
     redirect: false,
     types: false,
   },
+  runtimeConfig: {
+    anthropicApiKey: "",
+  },
 });
