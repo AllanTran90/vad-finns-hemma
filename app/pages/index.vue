@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { CUISINES } from "#shared/cuisines";
+
 const supabase = useSupabaseClient();
 const ingredientName = ref("");
+const selectedCuisine = ref("");
+
 const {
   ingredients,
   errorMessage,
@@ -51,6 +55,17 @@ definePageMeta({
     </form>
 
     <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
+
+    <CuisineCard
+      v-for="cuisine in CUISINES"
+      :key="cuisine"
+      :name="cuisine"
+      :selected="cuisine === selectedCuisine"
+      @select="selectedCuisine = $event"
+    />
+
+    <p>Selected: {{ selectedCuisine }}</p>
+
 
     <button type="button" @click="signOut">Log out</button>
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
