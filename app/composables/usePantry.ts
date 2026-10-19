@@ -21,8 +21,15 @@ export function usePantry() {
   async function addIngredient(name: string) {
   errorMessage.value = "";
 
+  const cleanName = name.trim();
+
+  if (!cleanName) {
+    errorMessage.value = "Please enter an ingredient.";
+    return;
+  }
+
   const { error } = await supabase.from("pantry").insert({
-    name,
+    name: cleanName,
     user_id: user.value?.sub,
   });
 
