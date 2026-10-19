@@ -34,7 +34,7 @@ The Nuxt frontend talks to Supabase (auth + database with RLS) via
 
 ### Sprint 2, week 43
 - [x] Ingredient input
-- [ ] Cuisine selection
+- [x] Cuisine selection
 - [ ] Server route to the Claude API
 - [ ] Zod validation
 - [ ] Simple result view

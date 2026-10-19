@@ -22,5 +22,8 @@
 ## 2026-10-19
 - Tool: Claude code
 - What: Will user A and user B have the same ingredients after the input?
-- How: Asked my friend Clu how it works with diffenrent accounts, do they share ingredients?
-- What I did: Tested using both chrome and firefox to create two different account. Made an input, milk and butter, reload the other accout to check if the ingredients list was still empty or did it put in new ingredients.
+How will the user choose cuisine?
+- How: Asked my friend Clu how it works with different accounts, do they share ingredients?
+Asked Clu how the user choose a cuisine and how to create it.
+- What I did: Tested using both chrome and firefox to create two different accounts. Made an input, milk and butter, reload the other accout to check if the ingredients list was still empty or did it put in new ingredients.
+Made a file(cuisines.ts) in shared, that will be read by both frontend and backend. Also made CuisineCard.vue.
