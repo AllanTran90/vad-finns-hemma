@@ -56,6 +56,7 @@ definePageMeta({
 
     <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
 
+    <div class="cuisine-grid">
     <CuisineCard
       v-for="cuisine in CUISINES"
       :key="cuisine"
@@ -63,6 +64,7 @@ definePageMeta({
       :selected="cuisine === selectedCuisine"
       @select="selectedCuisine = $event"
     />
+    </div>
 
     <p>Selected: {{ selectedCuisine }}</p>
 
@@ -71,3 +73,11 @@ definePageMeta({
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
   </main>
 </template>
+
+<style scoped>
+.cuisine-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+</style>
