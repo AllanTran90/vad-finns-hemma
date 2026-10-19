@@ -66,9 +66,6 @@ definePageMeta({
     />
     </div>
 
-    <p>Selected: {{ selectedCuisine }}</p>
-
-
     <button type="button" @click="signOut">Log out</button>
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
   </main>
