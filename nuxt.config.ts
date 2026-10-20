@@ -11,3 +11,4 @@ export default defineNuxtConfig({
     anthropicApiKey: "",
   },
 });
+
