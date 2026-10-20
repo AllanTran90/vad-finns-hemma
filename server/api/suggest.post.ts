@@ -10,8 +10,11 @@ export default defineEventHandler(async (event) => {
     model: "claude-haiku-5-5",
     max_tokens: 2000,
     messages: [
-      { role: "user", content:`I want to cook ${body.cuisine} food. Answer in English.
-      Use metric units: grams, deciliters, tablespoons, teaspoons` },
+      {
+        role: "user",
+        content: `I want to cook ${body.cuisine} food. Answer in English.
+      Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}`,
+      },
     ],
   });
 
