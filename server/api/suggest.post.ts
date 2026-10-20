@@ -13,7 +13,19 @@ export default defineEventHandler(async (event) => {
       {
         role: "user",
         content: `I want to cook ${body.cuisine} food. Answer in English.
-      Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}`,
+      Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}.
+      Respond with JSON only, no other text.
+      Use exactly this format:
+      {
+        "name": "...",
+        "ingredients": ["150 g flour", "..."],
+        "instructions": ["...", "..."],
+        "cuisine": "...",
+        "kid_friendly": true,
+        "allergens": [],
+        "cook_time_minutes": 30
+}
+`,
       },
     ],
   });
