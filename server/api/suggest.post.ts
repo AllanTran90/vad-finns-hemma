@@ -1,9 +1,10 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { recipeSchema } from "#shared/schemas/recipe";
+import { ALLERGENS } from "#shared/allergens";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const config = useRuntimeConfig(event);
-
   const client = new Anthropic({ apiKey: config.anthropicApiKey });
 
   const message = await client.messages.create({
@@ -30,5 +31,11 @@ export default defineEventHandler(async (event) => {
     ],
   });
 
-  return { received: body, answer: message.content };
+  const textBlock = message.content.find((block) => block.type === "text");
+
+  const recipe = JSON.parse(textBlock.text);
+
+  const result = recipeSchema.safeParse(recipe);
+
+  return { received: body, result };
 });
