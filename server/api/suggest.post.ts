@@ -16,6 +16,8 @@ export default defineEventHandler(async (event) => {
         content: `I want to cook ${body.cuisine} food. Answer in English.
       Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}.
       Respond with JSON only, no other text.
+      Do not wrap the JSON in markdown code fences.
+      For "allergens", only use values from this list:${ALLERGENS.join(", ")}
       Use exactly this format:
       {
         "name": "...",
@@ -37,5 +39,13 @@ export default defineEventHandler(async (event) => {
 
   const result = recipeSchema.safeParse(recipe);
 
-  return { received: body, result };
+  if (!result.success) {
+    console.log("Zod error", result.error);
+    throw createError({
+      statusCode: 502,
+      statusMessage: "Could not get a valid recipe. Please try again.",
+    });
+  }
+
+  return result.data;
 });
