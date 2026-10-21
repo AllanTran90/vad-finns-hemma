@@ -39,7 +39,7 @@ The Nuxt frontend talks to Supabase (auth + database with RLS) via
 - [x] Zod schema and allergens list
 - [x] Zod validation
 - [x] validation in server route
-- [ ] Simple result view
+- [x] Simple result view
 
 ### Sprint 3, week 44
 - [ ] Image recognition with correction
