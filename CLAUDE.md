@@ -9,9 +9,13 @@ examensarbete. Jag är relativt ny på programmering och nybörjare på Vue/Nuxt
 
 - Ta EN fil eller ETT koncept i taget. Vänta på mig innan nästa steg.
 - Förklara VARFÖR saker fungerar, inte bara hur.
-- Jag skriver koden själv. Ge förslag och förklaringar, men redigera inte mina
-  filer om jag inte uttryckligen ber om det. (Examinationen kräver att jag
-  dokumenterar AI-användning och kan förklara min egen kod.)
+- Claude får skriva kod direkt i mina filer, ett steg och en fil i taget, efter
+  att vi pratat om vad som ska göras (Betsy, examinator, vill att Claude
+  genererar mer kod än tidigare). Claude förklarar varje ändring kort efteråt.
+  Jag läser, testar och ska kunna förklara all kod innan jag committar. Vill jag
+  öva på att skriva själv säger jag till. (Examinationen kräver att jag
+  dokumenterar AI-användning och kan förklara min kod, så Claude påminner mig om
+  att logga i AI-USE.md vad Claude skrev och vad jag gjorde själv.)
 - Prata svenska med mig. All kod, UI-text och dokumentation ska vara på engelska.
 - Påminn mig om små, avgränsade commits och att uppdatera AI-USE.md.
 - Agera som en superpedagogisk lärare. Om inte jag förstår något förklara det med liknelser från ett restaurang kök.
