@@ -7,27 +7,176 @@ defineProps<{
 </script>
 
 <template>
-  <article>
-    <h2>{{ recipe.name }}</h2>
-    <p>
-      {{ recipe.cuisine }} · {{ recipe.cook_time_minutes }} min ·
-      {{ recipe.kid_friendly ? "Kid friendly" : "Not for kids" }}
+  <div class="recipe">
+    <article class="card">
+      <h2 class="title">{{ recipe.name }}</h2>
+
+      <div class="chips">
+        <span class="chip chip-cuisine">{{ recipe.cuisine }}</span>
+        <span class="chip chip-time">{{ recipe.cook_time_minutes }} min</span>
+        <span v-if="recipe.kid_friendly" class="chip chip-kids">
+          Kid friendly
+        </span>
+      </div>
+
+      <div v-if="recipe.allergens.length">
+        <p class="label">Contains</p>
+        <div class="chips">
+          <span
+            v-for="allergen in recipe.allergens"
+            :key="allergen"
+            class="chip chip-allergen"
+          >
+            {{ allergen.replace("_", " ") }}
+          </span>
+        </div>
+      </div>
+
+      <section>
+        <h3>Ingredients</h3>
+        <ul class="ingredients">
+          <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+            {{ ingredient }}
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Instructions</h3>
+        <ol class="steps">
+          <li v-for="(step, index) in recipe.instructions" :key="index">
+            <span>{{ step }}</span>
+          </li>
+        </ol>
+      </section>
+    </article>
+
+    <p class="note muted">
+      AI can make mistakes. If you have allergies, always check the
+      ingredients yourself.
     </p>
-
-    <p v-if="recipe.allergens.length">
-      Contains: {{ recipe.allergens.join(", ") }}
-    </p>
-
-    <h3>Ingredients</h3>
-    <ul>
-      <li v-for="ingredient in recipe.ingredients" :key="ingredient">
-        {{ ingredient }}
-      </li>
-    </ul>
-
-    <h3>Instructions</h3>
-    <ol>
-      <li v-for="step in recipe.instructions" :key="step">{{ step }}</li>
-    </ol>
-  </article>
+  </div>
 </template>
+
+<style scoped>
+.recipe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  background: var(--color-surface);
+}
+
+.title {
+  font-size: 1.625rem;
+  line-height: 1.25;
+}
+
+h3 {
+  margin: 0 0 0.625rem;
+  font-size: 1.125rem;
+}
+
+.label {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.chip-cuisine {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.chip-time {
+  background: var(--color-bg);
+  color: var(--color-muted);
+}
+
+.chip-kids {
+  background: var(--color-tag-bg);
+  color: var(--color-tag-text);
+}
+
+.chip-allergen {
+  background: var(--color-warn-bg);
+  color: var(--color-warn-text);
+}
+
+ul,
+ol {
+  display: grid;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ingredients li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.ingredients li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.steps {
+  counter-reset: step;
+  gap: 0.75rem;
+}
+
+.steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.note {
+  margin: 0;
+  font-size: 0.8125rem;
+}
+</style>
