@@ -1,11 +1,17 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { recipeSchema } from "#shared/schemas/recipe";
 import { ALLERGENS } from "#shared/allergens";
+import { SURPRISE } from "#shared/cuisines";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const config = useRuntimeConfig(event);
   const client = new Anthropic({ apiKey: config.anthropicApiKey });
+
+  const wish =
+    body.cuisine === SURPRISE
+      ? 'a surprising dish from any cuisine in the world (you choose, and put the cuisine you chose in "cuisine")'
+      : `${body.cuisine} food`;
 
   const message = await client.messages.create({
     model: "claude-haiku-5-5",
@@ -13,7 +19,7 @@ export default defineEventHandler(async (event) => {
     messages: [
       {
         role: "user",
-        content: `I want to cook ${body.cuisine} food. Answer in English.
+        content: `I want to cook ${wish}. Answer in English.
       Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}.
       Respond with JSON only, no other text.
       Do not wrap the JSON in markdown code fences.

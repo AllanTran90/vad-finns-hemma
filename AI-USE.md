@@ -39,7 +39,13 @@ Made a file(cuisines.ts) in shared, that will be read by both frontend and backe
 - What I did: Wrote suggest.post.ts, installed the SDK, added the key to .env and Vercel, tested with curl. Changed the prompt to use ${body.cuisine} and tested units and language.
 
 ## 2026-10-21
-- Tool: Claude code
-- What: Finished validation of Claude's answer in suggest.post.ts. Read the text from the response, turn it into data, check it with the Zod schema and handle errors.
+- Tool: Claude code (and the Figma connector in Claude Code)
+- What: Finished validation of Claude's answer in suggest.post.ts. Read the text from the response, turn it into data, check it with the Zod schema and handle errors. 
+After my meeting with Hans and Betsy I change my working agreement with Clu, he'll generate more code now and I'll do the code review.
+Finished Sprint 2 (get recipe button, result view), made a UI design in Figma and started the styling. Added a "Surprise me" cuisine.
 - How: Claude explained .find(), JSON.parse, safeParse, createError and try/catch step by step. It pointed out my mistakes (the .find line was placed before `message` existed, readBlock does not exist, the allergen sentence in the prompt had no list, the import path in shared/) but I wrote the code. When I got to try/catch asked Claude for help.
+Told Clu that he'll be able to edit the files more freely from now on. 
+Under our new working agreement Claude wrote the code directly in my files and explained each change afterwards. Claude wrote useRecipe.ts (calls /api/suggest), RecipeCard.vue (result view) and the Get recipe button in index.vue. Claude generated three mobile screens in Figma (login, home, recipe). I chose the style myself: first "warm and cozy", then I asked for "fresh and green". Claude turned the Figma colors into CSS variables (main.css) with a dark mode, and restyled the start page, the pantry list and the cuisine cards with them. The "Surprise me" idea was mine, Claude wrote the code (a SURPRISE constant, a card, and a different sentence in the prompt).
 - What I did: Used .find() to get the text block (skipping the "thinking" block). Used JSON.parse to turn the text into an object. Checked it with recipeSchema.safeParse and threw a 502 with createError if the recipe is invalid. Tested with curl and saw both success and failure (changed the schema on purpose to see the Zod error). Added the allergen list (ALLERGENS.join) and a "no code fences" sentence to the prompt after Claude once answered with ```json and JSON.parse crashed. Added try/catch around JSON.parse.
+Told Clu to help me finish sprint 2, but make sure that he'll explain the code for me so I understand.
+Read and tested every change in the browser (the button is disabled until I pick a cuisine, the recipe shows up, the error handling works). Chose the design direction and gave feedback on it. Tested dark mode. Decided what the features should do (Surprise me should let Claude pick any cuisine in the world). Updated PROGRESS.md (Sprint 2 is done).

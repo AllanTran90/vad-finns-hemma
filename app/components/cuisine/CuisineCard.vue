@@ -22,24 +22,24 @@ const emit = defineEmits<{
 <style scoped>
 button {
     padding: 1rem;
-    border: 2px solid #e5e5e5;
-    border-radius: 12px;
-    background: white;
-    font-size: 1rem;
+    border: 2px solid var(--color-line);
+    border-radius: 14px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
     cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
 }
 
 @media (hover: hover) {
     button:hover {
-        border-color: #afeb55;
+        border-color: var(--color-primary);
     }
 }
 
 .selected{
-    border-color: #f59e0b;
-    background: #fffbeb;
+    border-color: var(--color-select-border);
+    background: var(--color-select-bg);
     font-weight: 600;
-
 }
 </style>

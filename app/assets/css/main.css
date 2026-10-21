@@ -1,0 +1,160 @@
+/* Design tokens. Names match the color variables in the Figma file
+   (color/primary -> --color-primary). */
+
+:root {
+  color-scheme: light;
+
+  --color-bg: #f4f9f3;
+  --color-surface: #ffffff;
+  --color-text: #1e2b22;
+  --color-muted: #5e7064;
+  --color-primary: #2f7d4f;
+  --color-on-primary: #ffffff;
+  --color-primary-soft: #ddefe2;
+  --color-line: #dce8dc;
+  --color-select-border: #2f7d4f;
+  --color-select-bg: #e8f5ec;
+  --color-tag-bg: #e6f3d8;
+  --color-tag-text: #3f6b1f;
+  --color-warn-bg: #fff0c9;
+  --color-warn-text: #8a5a00;
+}
+
+/* Dark mode follows the system setting, unless the user picked a theme
+   with data-theme on <html> (used by a theme toggle later). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg: #121a15;
+    --color-surface: #1b261f;
+    --color-text: #e6f0e8;
+    --color-muted: #9db0a2;
+    --color-primary: #4fa874;
+    --color-on-primary: #0b1f13;
+    --color-primary-soft: #1f3a2a;
+    --color-line: #2b3a30;
+    --color-select-border: #5cbd86;
+    --color-select-bg: #1b3326;
+    --color-tag-bg: #25361b;
+    --color-tag-text: #b5db8f;
+    --color-warn-bg: #3a2f10;
+    --color-warn-text: #f2c96b;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #121a15;
+  --color-surface: #1b261f;
+  --color-text: #e6f0e8;
+  --color-muted: #9db0a2;
+  --color-primary: #4fa874;
+  --color-on-primary: #0b1f13;
+  --color-primary-soft: #1f3a2a;
+  --color-line: #2b3a30;
+  --color-select-border: #5cbd86;
+  --color-select-bg: #1b3326;
+  --color-tag-bg: #25361b;
+  --color-tag-text: #b5db8f;
+  --color-warn-bg: #3a2f10;
+  --color-warn-text: #f2c96b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.4;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.875rem;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+/* Page container: one centered column, built for phones first. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 2.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+input::placeholder {
+  color: var(--color-muted);
+}
+
+/* Primary button */
+.btn {
+  padding: 0.875rem 1.25rem;
+  border: 0;
+  border-radius: 14px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Text-only button, for small actions like Delete and Log out */
+.btn-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+input:focus-visible,
+.btn:focus-visible,
+.btn-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+[role="alert"] {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--color-warn-bg);
+  color: var(--color-warn-text);
+}
