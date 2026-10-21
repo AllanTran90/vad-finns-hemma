@@ -10,3 +10,5 @@ export const recipeSchema = z.object({
   allergens: z.array(z.enum(ALLERGENS)),
   cook_time_minutes: z.number(),
 });
+
+export type Recipe = z.infer<typeof recipeSchema>;

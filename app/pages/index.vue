@@ -13,6 +13,24 @@ const {
   addIngredient,
 } = usePantry();
 
+const {
+  recipe,
+  loading,
+  errorMessage: recipeError,
+  getRecipe,
+} = useRecipe();
+
+const canGetRecipe = computed(
+  () => selectedCuisine.value && ingredients.value.length > 0 && !loading.value,
+);
+
+async function handleGetRecipe() {
+  await getRecipe(
+    selectedCuisine.value,
+    ingredients.value.map((ingredient) => ingredient.name),
+  );
+}
+
 async function signOut() {
   errorMessage.value = "";
   const { error } = await supabase.auth.signOut();
@@ -65,6 +83,12 @@ definePageMeta({
       @select="selectedCuisine = $event"
     />
     </div>
+
+    <button type="button" :disabled="!canGetRecipe" @click="handleGetRecipe">
+      {{ loading ? "Getting recipe..." : "Get recipe" }}
+    </button>
+    <p v-if="recipeError" role="alert">{{ recipeError }}</p>
+    <RecipeCard v-if="recipe" :recipe="recipe" />
 
     <button type="button" @click="signOut">Log out</button>
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
