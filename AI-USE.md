@@ -37,3 +37,9 @@ Made a file(cuisines.ts) in shared, that will be read by both frontend and backe
 - What: Prepared for the supervision meeting (flow chart and explanation of the app). Built the server route that calls the Claude API.  
 - How: Claude drew the flow chart and explained server routes, runtimeConfig, template strings and tokens. It pointed out my mistakes (empty apiKey, quotes instead of backticks, max_tokens too low) but I wrote the code.
 - What I did: Wrote suggest.post.ts, installed the SDK, added the key to .env and Vercel, tested with curl. Changed the prompt to use ${body.cuisine} and tested units and language.
+
+## 2026-10-21
+- Tool: Claude code
+- What: Finished validation of Claude's answer in suggest.post.ts. Read the text from the response, turn it into data, check it with the Zod schema and handle errors.
+- How: Claude explained .find(), JSON.parse, safeParse, createError and try/catch step by step. It pointed out my mistakes (the .find line was placed before `message` existed, readBlock does not exist, the allergen sentence in the prompt had no list, the import path in shared/) but I wrote the code. When I got to try/catch asked Claude for help.
+- What I did: Used .find() to get the text block (skipping the "thinking" block). Used JSON.parse to turn the text into an object. Checked it with recipeSchema.safeParse and threw a 502 with createError if the recipe is invalid. Tested with curl and saw both success and failure (changed the schema on purpose to see the Zod error). Added the allergen list (ALLERGENS.join) and a "no code fences" sentence to the prompt after Claude once answered with ```json and JSON.parse crashed. Added try/catch around JSON.parse.

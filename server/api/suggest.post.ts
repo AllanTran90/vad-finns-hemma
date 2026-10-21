@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
       Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}.
       Respond with JSON only, no other text.
       Do not wrap the JSON in markdown code fences.
-      For "allergens", only use values from this list:${ALLERGENS.join(", ")}
+      For "allergens", only use values from this list: ${ALLERGENS.join(", ")}
       Use exactly this format:
       {
         "name": "...",
@@ -35,7 +35,16 @@ export default defineEventHandler(async (event) => {
 
   const textBlock = message.content.find((block) => block.type === "text");
 
-  const recipe = JSON.parse(textBlock.text);
+  let recipe;
+  try {
+    recipe = JSON.parse(textBlock.text);
+  } catch (error) {
+    console.log("JSON parse error:", error);
+    throw createError({
+      statusCode: 502,
+      statusMessage: "Could not get a valid recipe. Please try again.",
+    });
+  }
 
   const result = recipeSchema.safeParse(recipe);
 
