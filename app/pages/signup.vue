@@ -20,15 +20,12 @@ async function signUp(email: string, password: string) {
 </script>
 
 <template>
-  <main>
-   <UiAuthForm
-  title="Create account"
-  password-autocomplete="new-password"
-  :error-message="errorMessage"
-  @submit="signUp"
-    
-  />
-
-</main>
-    <p>Already have an account? <NuxtLink to="/login">Log in</NuxtLink></p>
+  <UiAuthForm
+    title="Create account"
+    password-autocomplete="new-password"
+    :error-message="errorMessage"
+    @submit="signUp"
+  >
+    Already have an account? <NuxtLink to="/login">Log in</NuxtLink>
+  </UiAuthForm>
 </template>

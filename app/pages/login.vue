@@ -23,11 +23,11 @@ async function signIn(email: string, password: string) {
 
 <template>
   <UiAuthForm
-  title="Log in"
-  password-autocomplete="current-password"
-  :error-message="errorMessage"
-  @submit="signIn"
-    
-  />
-    <p>No account yet? <NuxtLink to="/signup">Create account</NuxtLink></p>
+    title="Log in"
+    password-autocomplete="current-password"
+    :error-message="errorMessage"
+    @submit="signIn"
+  >
+    No account yet? <NuxtLink to="/signup">Create account</NuxtLink>
+  </UiAuthForm>
 </template>
