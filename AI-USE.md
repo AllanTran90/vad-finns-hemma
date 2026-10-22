@@ -49,3 +49,9 @@ Under our new working agreement Claude wrote the code directly in my files and e
 - What I did: Used .find() to get the text block (skipping the "thinking" block). Used JSON.parse to turn the text into an object. Checked it with recipeSchema.safeParse and threw a 502 with createError if the recipe is invalid. Tested with curl and saw both success and failure (changed the schema on purpose to see the Zod error). Added the allergen list (ALLERGENS.join) and a "no code fences" sentence to the prompt after Claude once answered with ```json and JSON.parse crashed. Added try/catch around JSON.parse.
 Told Clu to help me finish sprint 2, but make sure that he'll explain the code for me so I understand.
 Read and tested every change in the browser (the button is disabled until I pick a cuisine, the recipe shows up, the error handling works). Chose the design direction and gave feedback on it. Tested dark mode. Decided what the features should do (Surprise me should let Claude pick any cuisine in the world). Updated PROGRESS.md (Sprint 2 is done).
+
+## 2026-10-22
+- Tool
+- What
+- How
+- What I did:
