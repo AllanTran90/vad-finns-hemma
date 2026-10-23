@@ -1,6 +1,19 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { recipeSchema } from "#shared/schemas/recipe";
 import { ALLERGENS } from "#shared/allergens";
+import type { Diet } from "#shared/diets";
+
+const KNOWN_ALLERGENS: readonly string[] = ALLERGENS;
+
+// What each diet means, written as a rule for the AI. "none" has no rule.
+const DIET_RULES: Record<Diet, string> = {
+  none: "",
+  pescatarian: "The recipe must be pescatarian: no meat and no poultry. Fish, seafood, dairy and eggs are allowed.",
+  lacto_ovo_vegetarian: "The recipe must be vegetarian: no meat, poultry, fish or seafood. Dairy and eggs are allowed.",
+  lacto_vegetarian: "The recipe must be lacto-vegetarian: no meat, poultry, fish, seafood or eggs. Dairy is allowed.",
+  ovo_vegetarian: "The recipe must be ovo-vegetarian: no meat, poultry, fish, seafood or dairy. Eggs are allowed.",
+  vegan: "The recipe must be vegan: no meat, poultry, fish, seafood, dairy, eggs or honey.",
+};
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -12,13 +25,27 @@ export default defineEventHandler(async (event) => {
 
   const wish = `${body.cuisine} food`;
 
+  // Only allow values from our own list, so nobody can sneak text into the prompt.
+  const avoid: string[] = Array.isArray(body.avoid)
+    ? body.avoid.filter((name: unknown) => KNOWN_ALLERGENS.includes(name as string))
+    : [];
+  // Same idea for the diet: only a known key is used, never the text itself.
+  const dietRule = DIET_RULES[body.diet as Diet] ?? "";
+  const avoidSentence = avoid.length
+    ? `The recipe must NOT contain these allergens: ${avoid.join(", ")}. Choose other ingredients instead.`
+    : "";
+
   const message = await client.messages.create({
     model: "claude-haiku-5-5",
-    max_tokens: 2000,
+    // The model may "think" before it answers, and the thinking also uses tokens.
+    // With diet and allergy rules the answer can get cut off if this is too low.
+    max_tokens: 4000,
     messages: [
       {
         role: "user",
         content: `I want to cook ${wish}. Answer in ${language}.
+      ${avoidSentence}
+      ${dietRule}
       Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}.
       Respond with JSON only, no other text.
       Do not wrap the JSON in markdown code fences.
@@ -46,6 +73,8 @@ export default defineEventHandler(async (event) => {
     recipe = JSON.parse(textBlock?.text ?? "");
   } catch (error) {
     console.log("JSON parse error:", error);
+    console.log("Raw text from Claude:", textBlock?.text);
+    console.log("Stop reason:", message.stop_reason);
     throw createError({
       statusCode: 502,
       statusMessage: "Could not get a valid recipe. Please try again.",

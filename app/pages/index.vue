@@ -16,6 +16,15 @@ const {
 } = usePantry();
 
 const {
+  allergens,
+  diet,
+  errorMessage: prefsError,
+  loadPreferences,
+  saveAllergens,
+  saveDiet,
+} = usePreferences();
+
+const {
   recipe,
   loading,
   errorMessage: recipeError,
@@ -36,6 +45,8 @@ async function handleGetRecipe() {
   await getRecipe(
     cuisine,
     ingredients.value.map((ingredient) => ingredient.name),
+    allergens.value,
+    diet.value,
   );
 }
 
@@ -60,7 +71,10 @@ async function handleAdd() {
   }
 }
 
-onMounted(loadIngredients);
+onMounted(() => {
+  loadIngredients();
+  loadPreferences();
+});
 
 definePageMeta({
   middleware: "auth",
@@ -115,6 +129,12 @@ definePageMeta({
       </div>
     </section>
 
+    <section class="section">
+      <DietPicker :selected="diet" @change="saveDiet" />
+      <AllergyPicker :selected="allergens" @change="saveAllergens" />
+      <p v-if="prefsError" role="alert">{{ prefsError }}</p>
+    </section>
+
     <button
       class="btn"
       type="button"
@@ -124,7 +144,7 @@ definePageMeta({
       {{ loading ? t("recipe.getting") : t("recipe.get") }}
     </button>
     <p v-if="recipeError" role="alert">{{ recipeError }}</p>
-    <RecipeCard v-if="recipe" :recipe="recipe" />
+    <RecipeCard v-if="recipe" :recipe="recipe" :avoid="allergens" />
 
     <button class="btn-link logout" type="button" @click="signOut">
       {{ t("auth.logOut") }}

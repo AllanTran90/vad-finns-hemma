@@ -1,16 +1,34 @@
 <script setup lang="ts">
 import type { Recipe } from "#shared/schemas/recipe";
 
-defineProps<{
-  recipe: Recipe;
-}>();
+const props = withDefaults(
+  defineProps<{
+    recipe: Recipe;
+    // The allergens the user wants to avoid.
+    avoid?: string[];
+  }>(),
+  { avoid: () => [] },
+);
 
 const { t } = useLang();
+
+// Allergens in the recipe that the user marked. The AI can make mistakes,
+// so we check the answer ourselves.
+const conflicts = computed(() =>
+  props.recipe.allergens.filter((allergen) => props.avoid.includes(allergen)),
+);
+
+const conflictNames = computed(() =>
+  conflicts.value.map((allergen) => t(`allergen.${allergen}`)).join(", "),
+);
 </script>
 
 <template>
   <div class="recipe">
     <article class="card">
+      <p v-if="conflicts.length" role="alert">
+        {{ t("recipe.allergyWarning", { allergens: conflictNames }) }}
+      </p>
       <h2 class="title">{{ recipe.name }}</h2>
 
       <div class="chips">

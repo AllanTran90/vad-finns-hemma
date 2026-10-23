@@ -6,7 +6,12 @@ export function useRecipe() {
   const loading = ref(false);
   const errorMessage = ref("");
 
-  async function getRecipe(cuisine: string, ingredients: string[]) {
+  async function getRecipe(
+    cuisine: string,
+    ingredients: string[],
+    avoid: string[],
+    diet: string,
+  ) {
     errorMessage.value = "";
     recipe.value = null;
     loading.value = true;
@@ -14,7 +19,7 @@ export function useRecipe() {
     try {
       recipe.value = await $fetch<Recipe>("/api/suggest", {
         method: "POST",
-        body: { cuisine, ingredients, lang: lang.value },
+        body: { cuisine, ingredients, avoid, diet, lang: lang.value },
       });
     } catch (error) {
       console.log("Get recipe error:", error);

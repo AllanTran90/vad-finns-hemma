@@ -17,6 +17,21 @@ const en = {
   "pantry.errorAddMany": "Could not save the ingredients. Please try again.",
   "pantry.errorDelete": "Could not delete ingredient. Please try again.",
 
+  // Allergies
+  "prefs.allergies": "Allergies",
+  "prefs.hint": "Recipes will avoid the ones you choose.",
+  "prefs.errorLoad": "Could not load your preferences. Please try again.",
+  "prefs.errorSave": "Could not save your preferences. Please try again.",
+
+  // Diets (the keys match the values in shared/diets.ts)
+  "diet.title": "Diet",
+  "diet.none": "No restrictions",
+  "diet.pescatarian": "Pescatarian (fish, no meat)",
+  "diet.lacto_ovo_vegetarian": "Vegetarian (dairy and eggs)",
+  "diet.lacto_vegetarian": "Lacto-vegetarian (dairy, no eggs)",
+  "diet.ovo_vegetarian": "Ovo-vegetarian (eggs, no dairy)",
+  "diet.vegan": "Vegan",
+
   // Photo scan
   "scan.title": "Or scan a photo",
   "scan.tip1": "Take the photo in good light.",
@@ -55,6 +70,8 @@ const en = {
   "recipe.error": "Could not get a recipe. Please try again.",
   "recipe.kidFriendly": "Kid friendly",
   "recipe.contains": "Contains",
+  "recipe.allergyWarning":
+    "Warning: this recipe contains {allergens}, which you marked as an allergy.",
   "recipe.ingredients": "Ingredients",
   "recipe.instructions": "Instructions",
   "recipe.disclaimer":
@@ -124,6 +141,19 @@ const sv: Record<MessageKey, string> = {
   "pantry.errorAddMany": "Kunde inte spara ingredienserna. Försök igen.",
   "pantry.errorDelete": "Kunde inte ta bort ingrediensen. Försök igen.",
 
+  "prefs.allergies": "Allergier",
+  "prefs.hint": "Recepten undviker det du väljer.",
+  "prefs.errorLoad": "Kunde inte hämta dina val. Försök igen.",
+  "prefs.errorSave": "Kunde inte spara dina val. Försök igen.",
+
+  "diet.title": "Kost",
+  "diet.none": "Inga begränsningar",
+  "diet.pescatarian": "Pescetarian (fisk, inget kött)",
+  "diet.lacto_ovo_vegetarian": "Vegetarian (mejeri och ägg)",
+  "diet.lacto_vegetarian": "Lakto-vegetarian (mejeri, inga ägg)",
+  "diet.ovo_vegetarian": "Ovo-vegetarian (ägg, inget mejeri)",
+  "diet.vegan": "Vegan",
+
   "scan.title": "Eller skanna ett foto",
   "scan.tip1": "Ta fotot i bra ljus.",
   "scan.tip2": "Lägg ut sakerna så att inget göms bakom något annat.",
@@ -160,6 +190,8 @@ const sv: Record<MessageKey, string> = {
   "recipe.error": "Kunde inte hämta ett recept. Försök igen.",
   "recipe.kidFriendly": "Barnvänligt",
   "recipe.contains": "Innehåller",
+  "recipe.allergyWarning":
+    "Varning: receptet innehåller {allergens}, som du markerat som allergi.",
   "recipe.ingredients": "Ingredienser",
   "recipe.instructions": "Gör så här",
   "recipe.disclaimer":
