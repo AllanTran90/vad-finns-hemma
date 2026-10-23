@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { CUISINES, SURPRISE } from "#shared/cuisines";
+import { CUISINES, SURPRISE, pickRandomCuisine } from "#shared/cuisines";
 
 const supabase = useSupabaseClient();
+const { t } = useLang();
 const ingredientName = ref("");
 const selectedCuisine = ref("");
 
@@ -11,6 +12,7 @@ const {
   loadIngredients,
   deleteIngredient,
   addIngredient,
+  addIngredients,
 } = usePantry();
 
 const {
@@ -25,8 +27,14 @@ const canGetRecipe = computed(
 );
 
 async function handleGetRecipe() {
+  // "Surprise me" is not a real cuisine, so we pick one of the real ones.
+  const cuisine =
+    selectedCuisine.value === SURPRISE
+      ? pickRandomCuisine()
+      : selectedCuisine.value;
+
   await getRecipe(
-    selectedCuisine.value,
+    cuisine,
     ingredients.value.map((ingredient) => ingredient.name),
   );
 }
@@ -37,7 +45,7 @@ async function signOut() {
 
   if (error) {
     console.log("Logout error:", error);
-    errorMessage.value = "Could not log out. Please try again.";
+    errorMessage.value = t("auth.logOutError");
     return;
   }
 
@@ -63,25 +71,33 @@ definePageMeta({
   <main class="page">
     <header class="header">
       <h1>Vad finns hemma?</h1>
-      <p class="muted">Add what you have, then pick a cuisine.</p>
+      <p class="muted">{{ t("app.tagline") }}</p>
     </header>
 
     <section class="section">
-      <h2>Your ingredients</h2>
+      <h2>{{ t("pantry.title") }}</h2>
       <form class="add-form" @submit.prevent="handleAdd">
         <input
           v-model="ingredientName"
           type="text"
-          placeholder="Ingredient"
+          :placeholder="t('pantry.placeholder')"
           required
         />
-        <button class="btn" type="submit">Add</button>
+        <button class="btn" type="submit">{{ t("pantry.add") }}</button>
       </form>
       <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
     </section>
 
     <section class="section">
-      <h2>Pick a cuisine</h2>
+      <h2>{{ t("scan.title") }}</h2>
+      <ScanPhoto
+        :existing="ingredients.map((ingredient) => ingredient.name)"
+        @confirm="addIngredients"
+      />
+    </section>
+
+    <section class="section">
+      <h2>{{ t("cuisine.title") }}</h2>
       <div class="cuisine-grid">
         <CuisineCard
           v-for="cuisine in CUISINES"
@@ -105,13 +121,13 @@ definePageMeta({
       :disabled="!canGetRecipe"
       @click="handleGetRecipe"
     >
-      {{ loading ? "Getting recipe..." : "Get recipe" }}
+      {{ loading ? t("recipe.getting") : t("recipe.get") }}
     </button>
     <p v-if="recipeError" role="alert">{{ recipeError }}</p>
     <RecipeCard v-if="recipe" :recipe="recipe" />
 
     <button class="btn-link logout" type="button" @click="signOut">
-      Log out
+      {{ t("auth.logOut") }}
     </button>
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
   </main>
