@@ -42,9 +42,9 @@ The Nuxt frontend talks to Supabase (auth + database with RLS) via
 - [x] Simple result view
 
 ### Sprint 3, week 44
-- [ ] Image recognition with correction
-- [ ] Saved pantry
-- [ ] Instructions on how to take the photo
+- [x] Image recognition with correction
+- [x] Saved pantry
+- [x] Instructions on how to take the photo
 
 ### Sprint 4, week 45
 - [ ] Favorites

@@ -63,3 +63,7 @@ Så här ska flödet bli när allt är klart. Markerat med [KLART] eller [KOMMER
 2. `02-detectedIngredients.md`
 3. `03-analyze-image.md`
 4. `04-useImageScan.md`
+5. `05-addIngredients.md` (23 okt)
+6. `06-ScanPhoto.md` (23 okt, steg 1, 9 och 10 i flödet ovan är nu KLARA)
+7. `07-ThemeToggle.md` (23 okt)
+8. `08-språkväxling.md` (23 okt)
