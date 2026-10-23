@@ -69,6 +69,11 @@ const en = {
   "recipe.get": "Get recipe",
   "recipe.getting": "Getting recipe...",
   "recipe.error": "Could not get a recipe. Please try again.",
+
+  // Favorites
+  "favorites.errorLoad": "Could not load your saved recipes. Please try again.",
+  "favorites.errorSave": "Could not save the recipe. Please try again.",
+  "favorites.errorDelete": "Could not remove the recipe. Please try again.",
   "recipe.kidFriendly": "Kid friendly",
   "recipe.contains": "Contains",
   "recipe.allergyWarning":
@@ -190,6 +195,11 @@ const sv: Record<MessageKey, string> = {
   "recipe.get": "Få recept",
   "recipe.getting": "Hämtar recept...",
   "recipe.error": "Kunde inte hämta ett recept. Försök igen.",
+
+  // Favorites
+  "favorites.errorLoad": "Kunde inte hämta dina sparade recept. Försök igen.",
+  "favorites.errorSave": "Kunde inte spara receptet. Försök igen.",
+  "favorites.errorDelete": "Kunde inte ta bort receptet. Försök igen.",
   "recipe.kidFriendly": "Barnvänligt",
   "recipe.contains": "Innehåller",
   "recipe.allergyWarning":
