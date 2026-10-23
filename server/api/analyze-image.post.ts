@@ -4,6 +4,8 @@ import { detectedIngredientsSchema } from "#shared/schemas/detectedIngredients";
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 export default defineEventHandler(async (event) => {
+  await requireUser(event);
+
   const body = await readBody(event);
 
   if (!body?.image || !ALLOWED_TYPES.includes(body.mediaType)) {

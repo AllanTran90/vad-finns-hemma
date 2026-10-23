@@ -58,12 +58,12 @@ Extras done in sprint 3:
 ### Sprint 4, week 45
 Planned order: allergies, favorites, guest account, error handling.
 
-- [ ] Allergies/dietary preferences
+- [x] Allergies/dietary preferences
   - [x] SQL: preferences table with RLS (supabase/schema.sql, run in Supabase)
   - [x] usePreferences.ts (load + upsert)
-  - [ ] AllergyPicker.vue (checkboxes from ALLERGENS)
-  - [ ] Connect on the start page and send allergies to /api/suggest
-  - [ ] Ask Claude to avoid them, and warn if the recipe still contains one
+  - [x] AllergyPicker.vue and DietPicker.vue (shared PillGroup and Foldout)
+  - [x] Connect on the start page and send allergies and diet to /api/suggest
+  - [x] Ask Claude to avoid them, and warn if the recipe still contains one
 - [ ] Favorites
   - [x] SQL: allergens column on favorites
   - [ ] useFavorites.ts (save, list, delete)
@@ -79,8 +79,9 @@ Planned order: allergies, favorites, guest account, error handling.
 - [ ] Error handling
   - [ ] Check every flow: no internet, empty AI answer, too big image,
     expired login
-  - [ ] Protect /api/suggest and /api/analyze-image (they do not check login
-    now, so anyone can use the Claude key). Consider a daily limit per user.
+  - [x] Protect /api/suggest and /api/analyze-image with requireUser
+    (server/utils/requireUser.ts, tested: logged out gives 401)
+  - [ ] Consider a daily limit per user (optional)
 
 ### Sprint 5, week 46
 - [ ] Tests

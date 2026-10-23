@@ -16,6 +16,8 @@ const DIET_RULES: Record<Diet, string> = {
 };
 
 export default defineEventHandler(async (event) => {
+  await requireUser(event);
+
   const body = await readBody(event);
   const config = useRuntimeConfig(event);
   const client = new Anthropic({ apiKey: config.anthropicApiKey });
