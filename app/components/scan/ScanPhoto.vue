@@ -12,11 +12,21 @@ const emit = defineEmits<{
 
 const { detected, loading, errorMessage, scanPhoto } = useImageScan();
 
-// The list the user edits. It starts as a copy of what the AI found, so the
-// user's corrections never touch the AI's original answer.
+// The list the user edits: only the NEW ingredients. It is a copy of what the AI
+// found, so the user's corrections never touch the AI's original answer.
 const items = ref<string[]>([]);
+// What the photo showed that is already in the pantry. Read only.
+const knownItems = ref<string[]>([]);
 const newItem = ref("");
 const scanned = ref(false);
+
+const existingNames = computed(
+  () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
+);
+
+function isKnown(name: string) {
+  return existingNames.value.has(name.trim().toLowerCase());
+}
 
 async function onFileChange(event: Event) {
   const input = event.target as HTMLInputElement;
@@ -35,16 +45,9 @@ async function onFileChange(event: Event) {
     return;
   }
 
-  items.value = [...detected.value];
+  items.value = detected.value.filter((name) => !isKnown(name));
+  knownItems.value = detected.value.filter(isKnown);
   scanned.value = true;
-}
-
-const existingNames = computed(
-  () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
-);
-
-function isKnown(name: string) {
-  return existingNames.value.has(name.trim().toLowerCase());
 }
 
 // Rows that are empty or already in the pantry will not be saved.
@@ -59,7 +62,11 @@ function addItem() {
     return;
   }
 
-  items.value.push(name);
+  // Already in the pantry: nothing to add.
+  if (!isKnown(name)) {
+    items.value.push(name);
+  }
+
   newItem.value = "";
 }
 
@@ -69,6 +76,7 @@ function removeItem(index: number) {
 
 function reset() {
   items.value = [];
+  knownItems.value = [];
   newItem.value = "";
   scanned.value = false;
 }
@@ -104,14 +112,15 @@ function confirm() {
 
     <div v-if="scanned" class="review">
       <h3>{{ t("scan.review") }}</h3>
-      <p v-if="items.length === 0" class="muted">
+      <p v-if="detected.length === 0" class="muted">
         {{ t("scan.nothing") }}
       </p>
 
-      <p v-else class="muted">
-        {{ t("scan.summary", { newCount, oldCount: items.length - newCount }) }}
+      <p v-else-if="items.length === 0" class="muted">
+        {{ t("scan.nothingNew") }}
       </p>
 
+      <h4 v-if="items.length">{{ t("scan.newTitle", { count: newCount }) }}</h4>
       <ul v-if="items.length" class="rows">
         <li v-for="(_, index) in items" :key="index">
           <input
@@ -122,9 +131,6 @@ function confirm() {
           <button class="btn-link" type="button" @click="removeItem(index)">
             {{ t("scan.remove") }}
           </button>
-          <span v-if="isKnown(items[index] ?? '')" class="known">
-            {{ t("scan.known") }}
-          </span>
         </li>
       </ul>
 
@@ -134,6 +140,13 @@ function confirm() {
           {{ t("scan.add") }}
         </button>
       </form>
+
+      <div v-if="knownItems.length">
+        <h4>{{ t("scan.knownTitle", { count: knownItems.length }) }}</h4>
+        <ul class="known-list">
+          <li v-for="(name, index) in knownItems" :key="index">{{ name }}</li>
+        </ul>
+      </div>
 
       <div class="actions">
         <button
@@ -209,14 +222,23 @@ function confirm() {
   list-style: none;
 }
 
-.rows li {
-  flex-wrap: wrap;
+.review h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
 }
 
-.known {
-  flex-basis: 100%;
-  padding: 0.125rem 0.625rem;
-  width: fit-content;
+.known-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.known-list li {
+  padding: 0.25rem 0.625rem;
   border-radius: 999px;
   background: var(--color-tag-bg);
   color: var(--color-tag-text);

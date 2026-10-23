@@ -61,3 +61,6 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What I did: Asked Claude to style the app and the login/signup pages, and told it
   how I wanted them to look. Claude made the changes in AuthForm.vue, login.vue and
   signup.vue, and I gave feedback until I was happy.
+
+## 2026-10-23
+

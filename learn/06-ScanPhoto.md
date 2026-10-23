@@ -117,21 +117,22 @@ När komponenten ropar `confirm` anropas `addIngredients` med listan.
 `05-addIngredients.md`). Listan med ingredienser högre upp på sidan fylls då
 på av sig själv.
 
-## Del 4: markera det som redan finns
+## Del 4: dela upp i "nya" och "finns redan"
 
 Problem: skannar du samma foto två gånger visar listan allt igen, och när du
 bekräftar händer ingenting. Det är rätt (inga dubbletter), men det ser ut som
 ett fel.
 
-Lösning: gästen får se vad som redan står på hyllan. Det är som att
-servitören skriver "finns redan i skafferiet" bredvid varje vara på notan.
+Första lösningen var en etikett på varje rad. Det blev rörigt när alla rader
+hade samma etikett. Bättre: två listor. Det är som att servitören delar notan i
+två högar: "det här är nytt" och "det här har ni redan på hyllan".
 
 ```ts
 const props = defineProps<{ existing: string[] }>();
 ```
-Komponenten får en ny **prop**: namnen på det som redan finns. En prop är info
-som sidan skickar NER till komponenten (som en lapp från köksmästaren till
-bordet). I `index.vue` skickas den så här:
+Komponenten får en **prop**: namnen på det som redan finns. En prop är info
+som sidan skickar NER till komponenten, som en lapp från köksmästaren. I
+`index.vue`:
 
 ```html
 <ScanPhoto :existing="ingredients.map((ingredient) => ingredient.name)" ... />
@@ -143,32 +144,38 @@ namn.
 const existingNames = computed(
   () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
 );
+function isKnown(name: string) {
+  return existingNames.value.has(name.trim().toLowerCase());
+}
 ```
-En `computed` är som en uppslagstavla som uppdaterar sig själv. Ändras
-skafferiet skrivs tavlan om automatiskt. Vi gör namnen till små bokstäver i en
-`Set`, samma knep som i `addIngredients`, så att "Milk" och "milk" räknas som
-samma.
+En `computed` är en uppslagstavla som uppdaterar sig själv. Namnen skrivs med
+små bokstäver i en `Set`, så att "Milk" och "milk" räknas som samma.
+`isKnown` svarar ja eller nej på "står den här redan på hyllan?".
 
 ```ts
-function isKnown(name: string) { ... }
+items.value = detected.value.filter((name) => !isKnown(name));
+knownItems.value = detected.value.filter(isKnown);
+```
+Direkt efter skanningen delar vi fotots lista i två högar med `filter`:
+
+- `items`: det som är NYTT. Det är den enda listan du kan rätta (ändra, ta bort).
+- `knownItems`: det som redan finns. Den visas bara som små piller och går inte
+  att ändra. Det finns ju inget att rätta, det är redan sparat.
+
+I mallen blir det två rubriker med antal: "New (3)" och "Already in your
+pantry (9)". Är allt redan sparat står det "Everything in the photo is already
+in your pantry.".
+
+```ts
 const newCount = computed(
   () => items.value.filter((name) => name.trim() && !isKnown(name)).length,
 );
 ```
-`isKnown` svarar ja/nej på "finns den redan?". `newCount` räknar hur många
-rader som är nya, alltså inte tomma och inte redan i skafferiet. Eftersom det
-är en `computed` uppdateras siffran direkt när du skriver i en ruta eller tar
-bort en rad.
+Knappen säger "Add 3 to my ingredients" och är avstängd när `newCount` är 0.
+Siffran uppdateras direkt när du skriver, tar bort eller lägger till rader.
 
-I mallen använder vi det på tre ställen:
-
-- En rad ovanför listan: "3 new, 9 already in your pantry."
-- En liten grön etikett "Already in your pantry" under varje rad som redan finns.
-- Knappen säger "Add 3 to my ingredients" och är avstängd när det inte finns
-  något nytt (`newCount === 0`).
-
-Resultatet är att du direkt ser vad som kommer att hända, i stället för att
-gissa.
+Skriver du själv in en vara som redan finns (`addItem`) läggs den inte till i
+listan, för det finns inget att spara.
 
 `addIngredients` kollar fortfarande dubbletter själv. Dubbel säkerhet:
 komponenten visar bara, funktionen skyddar skafferiet på riktigt.
