@@ -4,6 +4,8 @@ import type { Recipe } from "#shared/schemas/recipe";
 defineProps<{
   recipe: Recipe;
 }>();
+
+const { t } = useLang();
 </script>
 
 <template>
@@ -15,25 +17,25 @@ defineProps<{
         <span class="chip chip-cuisine">{{ recipe.cuisine }}</span>
         <span class="chip chip-time">{{ recipe.cook_time_minutes }} min</span>
         <span v-if="recipe.kid_friendly" class="chip chip-kids">
-          Kid friendly
+          {{ t("recipe.kidFriendly") }}
         </span>
       </div>
 
       <div v-if="recipe.allergens.length">
-        <p class="label">Contains</p>
+        <p class="label">{{ t("recipe.contains") }}</p>
         <div class="chips">
           <span
             v-for="allergen in recipe.allergens"
             :key="allergen"
             class="chip chip-allergen"
           >
-            {{ allergen.replace("_", " ") }}
+            {{ t(`allergen.${allergen}`) }}
           </span>
         </div>
       </div>
 
       <section>
-        <h3>Ingredients</h3>
+        <h3>{{ t("recipe.ingredients") }}</h3>
         <ul class="ingredients">
           <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
             {{ ingredient }}
@@ -42,7 +44,7 @@ defineProps<{
       </section>
 
       <section>
-        <h3>Instructions</h3>
+        <h3>{{ t("recipe.instructions") }}</h3>
         <ol class="steps">
           <li v-for="(step, index) in recipe.instructions" :key="index">
             <span>{{ step }}</span>
@@ -52,8 +54,7 @@ defineProps<{
     </article>
 
     <p class="note muted">
-      AI can make mistakes. If you have allergies, always check the
-      ingredients yourself.
+      {{ t("recipe.disclaimer") }}
     </p>
   </div>
 </template>

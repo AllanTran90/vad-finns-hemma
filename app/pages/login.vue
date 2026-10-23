@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 const supabase = useSupabaseClient();
+const { t } = useLang();
 const errorMessage = ref("");
 
 async function signIn(email: string, password: string) {
@@ -13,7 +14,7 @@ async function signIn(email: string, password: string) {
 
   if (error) {
     console.log("Login error:", error);
-    errorMessage.value = "Wrong email or password. Please try again.";
+    errorMessage.value = t("auth.loginError");
     return;
   }
 
@@ -23,11 +24,12 @@ async function signIn(email: string, password: string) {
 
 <template>
   <UiAuthForm
-    title="Log in"
+    :title="t('auth.logIn')"
     password-autocomplete="current-password"
     :error-message="errorMessage"
     @submit="signIn"
   >
-    No account yet? <NuxtLink to="/signup">Create account</NuxtLink>
+    {{ t("auth.noAccount") }}
+    <NuxtLink to="/signup">{{ t("auth.createAccount") }}</NuxtLink>
   </UiAuthForm>
 </template>

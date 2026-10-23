@@ -2,6 +2,8 @@
 defineProps<{
   ingredients: { id: string; name: string }[];
 }>();
+const { t } = useLang();
+
 const emit = defineEmits<{
   delete: [id: string];
 }>();
@@ -11,11 +13,11 @@ const emit = defineEmits<{
     <li v-for="ingredient in ingredients" :key="ingredient.id">
       <span>{{ ingredient.name }}</span>
       <button class="btn-link" type="button" @click="emit('delete', ingredient.id)">
-        Delete
+        {{ t("pantry.delete") }}
       </button>
     </li>
   </ul>
-  <p v-else class="muted">No ingredients yet. Add what you have at home.</p>
+  <p v-else class="muted">{{ t("pantry.empty") }}</p>
 </template>
 
 <style scoped>

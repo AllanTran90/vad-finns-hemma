@@ -20,6 +20,7 @@ async function resizeToBase64(file: File) {
 }
 
 export function useImageScan() {
+  const { lang, t } = useLang();
   const detected = ref<string[]>([]);
   const loading = ref(false);
   const errorMessage = ref("");
@@ -33,12 +34,12 @@ export function useImageScan() {
       const image = await resizeToBase64(file);
       const result = await $fetch<DetectedIngredients>("/api/analyze-image", {
         method: "POST",
-        body: { image, mediaType: "image/jpeg" },
+        body: { image, mediaType: "image/jpeg", lang: lang.value },
       });
       detected.value = result.ingredients;
     } catch (error) {
       console.log("Scan photo error:", error);
-      errorMessage.value = "Could not read the photo. Please try again.";
+      errorMessage.value = t("scan.error");
     } finally {
       loading.value = false;
     }

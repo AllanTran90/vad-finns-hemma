@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { MessageKey } from "#shared/i18n";
+
+const { t } = useLang();
+
 defineProps<{
     name: string;
     selected: boolean;
@@ -14,7 +18,7 @@ const emit = defineEmits<{
     :class="{ selected: selected}"
     @click="emit('select', name)"
     >
-        {{ name }}
+        {{ t(`cuisine.${name}` as MessageKey) }}
     </button>
     
 </template>

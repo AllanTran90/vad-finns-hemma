@@ -1,6 +1,7 @@
 import type { Recipe } from "#shared/schemas/recipe";
 
 export function useRecipe() {
+  const { lang, t } = useLang();
   const recipe = ref<Recipe | null>(null);
   const loading = ref(false);
   const errorMessage = ref("");
@@ -13,11 +14,11 @@ export function useRecipe() {
     try {
       recipe.value = await $fetch<Recipe>("/api/suggest", {
         method: "POST",
-        body: { cuisine, ingredients },
+        body: { cuisine, ingredients, lang: lang.value },
       });
     } catch (error) {
       console.log("Get recipe error:", error);
-      errorMessage.value = "Could not get a recipe. Please try again.";
+      errorMessage.value = t("recipe.error");
     } finally {
       loading.value = false;
     }

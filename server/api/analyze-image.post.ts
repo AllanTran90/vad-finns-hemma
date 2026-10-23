@@ -13,6 +13,11 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  // Only "sv" switches language; anything else falls back to English.
+  const isSwedish = body.lang === "sv";
+  const language = isSwedish ? "Swedish" : "English";
+  const example = isSwedish ? '"tomat" and "mjölk"' : '"tomato" and "milk"';
+
   const config = useRuntimeConfig(event);
   const client = new Anthropic({ apiKey: config.anthropicApiKey });
 
@@ -34,7 +39,7 @@ export default defineEventHandler(async (event) => {
           {
             type: "text",
             text: `List the food ingredients you can see in this photo.
-      Use simple, singular English names, for example "tomato" and "milk".
+      Use simple, singular ${language} names, for example ${example}.
       Only include food you can clearly see. Do not guess what is hidden.
       Respond with JSON only, no other text.
       Do not wrap the JSON in markdown code fences.

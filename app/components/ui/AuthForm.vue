@@ -8,6 +8,8 @@ defineProps<{
   errorMessage?: string;
 }>();
 
+const { t } = useLang();
+
 const email = ref("");
 const password = ref("");
 const showPassword = ref(false);
@@ -23,7 +25,7 @@ const emit = defineEmits<{
         <Icon name="lucide:chef-hat" size="2rem" />
       </span>
       <p class="brand-name">Vad finns hemma?</p>
-      <p class="muted">Turn what's in your fridge into dinner.</p>
+      <p class="muted">{{ t("auth.tagline") }}</p>
     </div>
 
     <div class="card">
@@ -32,7 +34,7 @@ const emit = defineEmits<{
         <input
           v-model="email"
           type="email"
-          placeholder="Email"
+          :placeholder="t('auth.email')"
           autocomplete="email"
           required
         />
@@ -40,14 +42,14 @@ const emit = defineEmits<{
           <input
             v-model="password"
             :type="showPassword ? 'text' : 'password'"
-            placeholder="Password"
+            :placeholder="t('auth.password')"
             :autocomplete="passwordAutocomplete"
             required
           />
           <button
             class="toggle"
             type="button"
-            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            :aria-label="showPassword ? t('auth.hidePassword') : t('auth.showPassword')"
             @click="showPassword = !showPassword"
           >
             <Icon :name="showPassword ? 'lucide:eye-off' : 'lucide:eye'" />
