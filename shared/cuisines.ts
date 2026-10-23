@@ -1,5 +1,9 @@
-export const CUISINES = ["Swedish", "Chinese", "Vietnamese", "Japanese", "French", "Spanish"] as const;
+export const CUISINES = ["Swedish", "Chinese", "Vietnamese", "Japanese", "French", "Spanish", "Korean", "Italian"] as const;
 //as const lockes the list.
 
-// Special choice: Claude picks any cuisine in the world.
+// Special choice: we pick a random cuisine from the list above.
 export const SURPRISE = "Surprise me";
+
+export function pickRandomCuisine() {
+  return CUISINES[Math.floor(Math.random() * CUISINES.length)];
+}
