@@ -5,5 +5,6 @@ export const CUISINES = ["Swedish", "Chinese", "Vietnamese", "Japanese", "French
 export const SURPRISE = "Surprise me";
 
 export function pickRandomCuisine() {
-  return CUISINES[Math.floor(Math.random() * CUISINES.length)];
+  // The index is always valid, but TypeScript cannot know that, so we add a fallback.
+  return CUISINES[Math.floor(Math.random() * CUISINES.length)] ?? CUISINES[0];
 }
