@@ -91,6 +91,16 @@ Planned order: allergies, favorites, guest account, error handling.
 - [ ] License
 
 ### Could have (only if there is time)
+- [x] Camera button for the photo scan (capture="environment", tested on
+  Samsung A55, plus a gallery button)
+- [ ] Choose which courses to get: starter, main course, dessert (multi-select).
+  The recipe schema in shared/schemas/recipe.ts must then handle a list of
+  dishes, not just one.
+- [ ] Choose menu style: restaurant (fine dining) or regular home cooking.
+  Only a change in the prompt sent to /api/suggest, so do it after the
+  course choice.
+- [ ] Own camera view with getUserMedia (switch front/back camera). Not needed
+  for the MVP, the phone's own camera app already works.
 - [ ] Translate ingredient names when the language is switched
   (now they stay as the user wrote them)
 - [ ] Run /code-review and /security-review before hand-in
