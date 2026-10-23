@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
 
   let recipe;
   try {
-    recipe = JSON.parse(textBlock.text);
+    recipe = JSON.parse(textBlock?.text ?? "");
   } catch (error) {
     console.log("JSON parse error:", error);
     throw createError({

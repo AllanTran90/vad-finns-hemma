@@ -1,5 +1,6 @@
 export function usePantry() {
-  const supabase = useSupabaseClient();
+  // `any` because we have no generated database types (types: false).
+  const supabase = useSupabaseClient<any>();
   const errorMessage = ref("");
   const user = useSupabaseUser();
   const ingredients = ref<{ id: string; name: string }[]>([]);

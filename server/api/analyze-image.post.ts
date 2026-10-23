@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
   let detected;
   try {
-    detected = JSON.parse(textBlock.text);
+    detected = JSON.parse(textBlock?.text ?? "");
   } catch (error) {
     console.log("JSON parse error:", error);
     console.log("Raw text from Claude:", textBlock?.text);
