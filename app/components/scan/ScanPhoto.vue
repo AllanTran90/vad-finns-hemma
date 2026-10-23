@@ -20,6 +20,14 @@ const knownItems = ref<string[]>([]);
 const newItem = ref("");
 const scanned = ref(false);
 
+// Two ways to get a photo. "capture" opens the back camera directly on a phone;
+// without it the phone shows its normal photo picker. On a computer, both just
+// open a file dialog.
+const sources = [
+  { label: "scan.camera", capture: "environment" },
+  { label: "scan.gallery", capture: undefined },
+] as const;
+
 const existingNames = computed(
   () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
 );
@@ -97,16 +105,24 @@ function confirm() {
       <li>{{ t("scan.tip3") }}</li>
     </ul>
 
-    <label class="btn upload" :class="{ disabled: loading }">
-      {{ loading ? t("scan.reading") : t("scan.choose") }}
-      <input
-        class="file-input"
-        type="file"
-        accept="image/*"
-        :disabled="loading"
-        @change="onFileChange"
-      />
-    </label>
+    <div class="sources">
+      <label
+        v-for="source in sources"
+        :key="source.label"
+        class="btn upload"
+        :class="{ disabled: loading }"
+      >
+        {{ loading ? t("scan.reading") : t(source.label) }}
+        <input
+          class="file-input"
+          type="file"
+          accept="image/*"
+          :capture="source.capture"
+          :disabled="loading"
+          @change="onFileChange"
+        />
+      </label>
+    </div>
 
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
 
@@ -176,6 +192,12 @@ function confirm() {
   margin: 0;
   padding-left: 1.25rem;
   font-size: 0.875rem;
+}
+
+.sources {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* The real file input is hidden; the label acts as the button. */
