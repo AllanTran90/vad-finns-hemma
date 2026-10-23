@@ -51,7 +51,13 @@ Told Clu to help me finish sprint 2, but make sure that he'll explain the code f
 Read and tested every change in the browser (the button is disabled until I pick a cuisine, the recipe shows up, the error handling works). Chose the design direction and gave feedback on it. Tested dark mode. Decided what the features should do (Surprise me should let Claude pick any cuisine in the world). Updated PROGRESS.md (Sprint 2 is done).
 
 ## 2026-10-22
-- Tool
-- What
-- How
-- What I did:
+- Tool: Claude Code
+- What: Photo recognition of ingredients        (Sprint 3 start). Styled the login/signup pages. Wrote learning notes.
+- How: Claude wrote the Zod schema (detectedIngredients.ts), the server route
+  analyze-image.post.ts (sends the photo to the Claude API and validates the answer),
+  and the useImageScan composable (resizes the image in the browser before upload).
+  Claude also restyled AuthForm.vue (password toggle, switch-link slot) and wrote the
+  notes in learn/ explaining each new file. Claude explained each change afterwards.
+- What I did: Asked Claude to style the app and the login/signup pages, and told it
+  how I wanted them to look. Claude made the changes in AuthForm.vue, login.vue and
+  signup.vue, and I gave feedback until I was happy.
