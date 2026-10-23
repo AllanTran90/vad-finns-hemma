@@ -1,4 +1,4 @@
-## Current status (14 Oct)
+## Current status (23 Oct)
 
 Done:
 
@@ -14,11 +14,13 @@ Done:
 - [x] Logout button in app/pages/index.vue
 - [x] supabase/schema.sql (so future sessions know where the schema is)
 
-Planned folder structure that is not created yet:
-app/components/ (pantry/, dish/, ui/), app/composables/, server/api/,
-shared/schemas/
+Folder structure (all created):
+app/components/ (pantry/, cuisine/, recipe/, scan/, ui/), app/composables/,
+app/pages/, server/api/, shared/ (schemas/, cuisines.ts, allergens.ts,
+i18n.ts)
 
-Not decided: should the start page be open or require login?
+Decided: the start page requires login. A guest gets a temporary account
+(Supabase anonymous sign-in) and can later turn it into a real account.
 
 ## Sprint plan (hand-in 16 Nov, supervision 21 Oct and 4 Nov)
 
@@ -46,10 +48,39 @@ The Nuxt frontend talks to Supabase (auth + database with RLS) via
 - [x] Saved pantry
 - [x] Instructions on how to take the photo
 
+Extras done in sprint 3:
+- [x] Already-owned ingredients are shown in their own list after a scan
+- [x] Dark mode toggle (cookie)
+- [x] Swedish/English toggle for the whole app and the AI answers
+  (shared/i18n.ts, useLang.ts)
+- [x] Korean and Italian cuisines, "Surprise me" picks a random cuisine
+
 ### Sprint 4, week 45
-- [ ] Favorites
+Planned order: allergies, favorites, guest account, error handling.
+
 - [ ] Allergies/dietary preferences
+  - [x] SQL: preferences table with RLS (supabase/schema.sql, run in Supabase)
+  - [x] usePreferences.ts (load + upsert)
+  - [ ] AllergyPicker.vue (checkboxes from ALLERGENS)
+  - [ ] Connect on the start page and send allergies to /api/suggest
+  - [ ] Ask Claude to avoid them, and warn if the recipe still contains one
+- [ ] Favorites
+  - [x] SQL: allergens column on favorites
+  - [ ] useFavorites.ts (save, list, delete)
+  - [ ] Heart button on RecipeCard and a list of saved recipes
+- [ ] Guest account
+  - [ ] Turn on Anonymous sign-ins in Supabase
+  - [ ] "Continue as guest" button on the login page
+  - [ ] Banner "Create an account to keep your data" (updateUser with email
+    and password keeps the same user id, so the data stays)
+  - Note: a guest session stays after refresh, but is lost if the browser
+    data is cleared or the device changes. If time runs out, this becomes a
+    "Could have".
 - [ ] Error handling
+  - [ ] Check every flow: no internet, empty AI answer, too big image,
+    expired login
+  - [ ] Protect /api/suggest and /api/analyze-image (they do not check login
+    now, so anyone can use the Claude key). Consider a daily limit per user.
 
 ### Sprint 5, week 46
 - [ ] Tests
@@ -57,3 +88,8 @@ The Nuxt frontend talks to Supabase (auth + database with RLS) via
 - [ ] Documentation
 - [ ] README
 - [ ] License
+
+### Could have (only if there is time)
+- [ ] Translate ingredient names when the language is switched
+  (now they stay as the user wrote them)
+- [ ] Run /code-review and /security-review before hand-in
