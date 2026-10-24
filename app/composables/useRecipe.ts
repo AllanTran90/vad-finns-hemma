@@ -23,11 +23,7 @@ export function useRecipe() {
       });
     } catch (error) {
       console.log("Get recipe error:", error);
-      // 429 means the daily limit is used up, which needs its own message.
-      errorMessage.value =
-        (error as { statusCode?: number }).statusCode === 429
-          ? t("recipe.errorLimit")
-          : t("recipe.error");
+      errorMessage.value = t(apiErrorKey(error, "recipe.error"));
     } finally {
       loading.value = false;
     }
