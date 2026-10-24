@@ -21,28 +21,37 @@ export function usePantry() {
   }
 
   async function addIngredient(name: string) {
-  errorMessage.value = "";
+    errorMessage.value = "";
 
-  const cleanName = name.trim();
+    const cleanName = name.trim();
 
-  if (!cleanName) {
-    errorMessage.value = t("pantry.errorEmpty");
-    return;
+    if (!cleanName) {
+      errorMessage.value = t("pantry.errorEmpty");
+      return;
+    }
+
+    const alreadyThere = ingredients.value.some(
+      (ingredient) => ingredient.name.toLowerCase() === cleanName.toLowerCase(),
+    );
+
+    if (alreadyThere) {
+      errorMessage.value = t("pantry.errorDuplicate");
+      return;
+    }
+
+    const { error } = await supabase.from("pantry").insert({
+      name: cleanName,
+      user_id: user.value?.sub,
+    });
+
+    if (error) {
+      console.log("Add ingredient error:", error);
+      errorMessage.value = t("pantry.errorAdd");
+      return;
+    }
+
+    await loadIngredients();
   }
-
-  const { error } = await supabase.from("pantry").insert({
-    name: cleanName,
-    user_id: user.value?.sub,
-  });
-
-  if (error) {
-    console.log("Add ingredient error:", error);
-    errorMessage.value = t("pantry.errorAdd");
-    return;
-  }
-
-  await loadIngredients();
-}
 
   // Saves many ingredients in one request, e.g. the list from a photo scan.
   // Skips empty names and names that are already in the pantry.
