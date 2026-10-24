@@ -6,6 +6,7 @@ defineProps<{
   title: string;
   passwordAutocomplete: string;
   errorMessage?: string;
+  infoMessage?: string;
 }>();
 
 const { t } = useLang();
@@ -59,6 +60,7 @@ const emit = defineEmits<{
         <button class="btn" type="submit">{{ title }}</button>
       </form>
       <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
+      <p v-if="infoMessage" role="status">{{ infoMessage }}</p>
     </div>
 
     <p class="switch">

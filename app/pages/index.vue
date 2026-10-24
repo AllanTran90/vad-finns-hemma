@@ -5,10 +5,11 @@ const supabase = useSupabaseClient();
 const { t } = useLang();
 const ingredientName = ref("");
 const selectedCuisine = ref("");
+const logoutError = ref("");
 
 const {
   ingredients,
-  errorMessage,
+  errorMessage: pantryError,
   loadIngredients,
   deleteIngredient,
   addIngredient,
@@ -75,12 +76,12 @@ async function toggleFavorite() {
 }
 
 async function signOut() {
-  errorMessage.value = "";
+  logoutError.value = "";
   const { error } = await supabase.auth.signOut();
 
   if (error) {
     console.log("Logout error:", error);
-    errorMessage.value = t("auth.logOutError");
+    logoutError.value = t("auth.logOutError");
     return;
   }
 
@@ -90,7 +91,7 @@ async function signOut() {
 async function handleAdd() {
   await addIngredient(ingredientName.value);
 
-  if (!errorMessage.value) {
+  if (!pantryError.value) {
     ingredientName.value = "";
   }
 }
@@ -124,6 +125,7 @@ definePageMeta({
         />
         <button class="btn" type="submit">{{ t("pantry.add") }}</button>
       </form>
+      <p v-if="pantryError" role="alert">{{ pantryError }}</p>
       <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
     </section>
 
@@ -190,7 +192,7 @@ definePageMeta({
     <button class="btn-link logout" type="button" @click="signOut">
       {{ t("auth.logOut") }}
     </button>
-    <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
+    <p v-if="logoutError" role="alert">{{ logoutError }}</p>
   </main>
 </template>
 

@@ -41,6 +41,7 @@ const en = {
   "scan.gallery": "Choose from gallery",
   "scan.reading": "Reading photo...",
   "scan.error": "Could not read the photo. Please try again.",
+  "scan.errorLimit": "You have reached today's limit. Please try again tomorrow.",
   "scan.review": "Check the list",
   "scan.nothing": "Nothing was found. Add items below or try another photo.",
   "scan.nothingNew": "Everything in the photo is already in your pantry.",
@@ -69,6 +70,7 @@ const en = {
   "recipe.get": "Get recipe",
   "recipe.getting": "Getting recipe...",
   "recipe.error": "Could not get a recipe. Please try again.",
+  "recipe.errorLimit": "You have reached today's limit. Please try again tomorrow.",
 
   // Favorites
   "favorites.title": "Saved recipes",
@@ -127,6 +129,7 @@ const en = {
     "Could not create account. Please check your email and password.",
   "auth.logOut": "Log out",
   "auth.logOutError": "Could not log out. Please try again.",
+  "auth.checkEmail": "Check your email and click the link to confirm your account. Then you can log in.",
 
   // Toggles
   "theme.toLight": "Switch to light mode",
@@ -172,6 +175,7 @@ const sv: Record<MessageKey, string> = {
   "scan.gallery": "Välj från galleriet",
   "scan.reading": "Läser fotot...",
   "scan.error": "Kunde inte läsa fotot. Försök igen.",
+  "scan.errorLimit": "Du har nått dagens gräns. Försök igen i morgon.",
   "scan.review": "Kontrollera listan",
   "scan.nothing":
     "Hittade ingenting. Lägg till själv nedan eller prova ett annat foto.",
@@ -199,6 +203,7 @@ const sv: Record<MessageKey, string> = {
   "recipe.get": "Få recept",
   "recipe.getting": "Hämtar recept...",
   "recipe.error": "Kunde inte hämta ett recept. Försök igen.",
+  "recipe.errorLimit": "Du har nått dagens gräns. Försök igen i morgon.",
 
   // Favorites
   "favorites.title": "Sparade recept",
@@ -254,6 +259,7 @@ const sv: Record<MessageKey, string> = {
   "auth.signupError": "Kunde inte skapa kontot. Kontrollera e-post och lösenord.",
   "auth.logOut": "Logga ut",
   "auth.logOutError": "Kunde inte logga ut. Försök igen.",
+  "auth.checkEmail": "Kolla din e-post och klicka på länken för att bekräfta kontot. Sedan kan du logga in.",
 
   "theme.toLight": "Byt till ljust läge",
   "theme.toDark": "Byt till mörkt läge",

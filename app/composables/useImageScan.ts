@@ -39,7 +39,11 @@ export function useImageScan() {
       detected.value = result.ingredients;
     } catch (error) {
       console.log("Scan photo error:", error);
-      errorMessage.value = t("scan.error");
+      // 429 means the daily limit is used up, which needs its own message.
+      errorMessage.value =
+        (error as { statusCode?: number }).statusCode === 429
+          ? t("scan.errorLimit")
+          : t("scan.error");
     } finally {
       loading.value = false;
     }
