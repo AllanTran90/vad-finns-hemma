@@ -1,4 +1,4 @@
-## Current status (23 Oct)
+## Current status (24 Oct)
 
 Done:
 
@@ -64,10 +64,11 @@ Planned order: allergies, favorites, guest account, error handling.
   - [x] AllergyPicker.vue and DietPicker.vue (shared PillGroup and Foldout)
   - [x] Connect on the start page and send allergies and diet to /api/suggest
   - [x] Ask Claude to avoid them, and warn if the recipe still contains one
-- [ ] Favorites
+- [x] Favorites
   - [x] SQL: allergens column on favorites
-  - [ ] useFavorites.ts (save, list, delete)
-  - [ ] Heart button on RecipeCard and a list of saved recipes
+  - [x] useFavorites.ts (save, list, delete)
+  - [x] Heart button on RecipeCard and a list of saved recipes
+    (FavoritesList.vue, shown on the start page)
 - [ ] Guest account
   - [ ] Turn on Anonymous sign-ins in Supabase
   - [ ] "Continue as guest" button on the login page
@@ -81,7 +82,37 @@ Planned order: allergies, favorites, guest account, error handling.
     expired login
   - [x] Protect /api/suggest and /api/analyze-image with requireUser
     (server/utils/requireUser.ts, tested: logged out gives 401)
-  - [ ] Consider a daily limit per user (optional)
+  - [ ] Daily limit per user (now Must, see code review below)
+
+### Code review (24 Oct), fix before hand-in
+Priority order. The server trusts too much of what the browser sends.
+
+- [ ] 1. Zod schema for the request in /api/suggest
+  (shared/schemas/suggestRequest.ts): cuisine from CUISINES, 1-50
+  ingredients of max 60 characters, avoid/diet/lang from our lists. Return 400
+  on invalid input. Then remove the manual avoid/diet filters.
+- [ ] 2. Vitest + tests for the request schema (and the recipe schema)
+- [ ] 3. Max size for the image in /api/analyze-image
+- [ ] 4. Show pantry errors under the form (not at the logout button), and
+  give logout its own error ref
+- [ ] 5. Check "Confirm email" in Supabase: if on, signup must show
+  "Check your email" instead of navigating to /
+- [ ] 6. Daily limit per user (usage table: user_id, date, count)
+
+Smaller things, when there is time:
+- [ ] addIngredient (form) should skip duplicates like addIngredients does
+- [ ] Remove or explain unused pantry columns (category, quantity, unit,
+  expires_at)
+- [ ] recipeSchema: .min(1) on strings and lists, .int().positive() on
+  cook_time_minutes
+- [ ] Redirect a logged-in user from /login to /
+- [ ] .env.example with variable names only
+- [ ] Run Prettier (indentation in usePantry.ts, CuisineCard.vue, auth.ts)
+- [ ] findFavorite compares by name: two recipes with the same name count
+  as one favorite (fine for now)
+- [ ] Idea: use Claude tool use with a JSON schema instead of JSON.parse
+- [ ] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL
+  needs a Vercel login)
 
 ### Sprint 5, week 46
 - [ ] Tests
