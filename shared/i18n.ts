@@ -14,6 +14,7 @@ const en = {
   "pantry.errorLoad": "Could not load ingredients. Please try again.",
   "pantry.errorEmpty": "Please enter an ingredient.",
   "pantry.errorAdd": "Could not add ingredient. Please try again.",
+  "pantry.errorDuplicate": "That ingredient is already in your pantry.",
   "pantry.errorAddMany": "Could not save the ingredients. Please try again.",
   "pantry.errorDelete": "Could not delete ingredient. Please try again.",
 
@@ -41,7 +42,6 @@ const en = {
   "scan.gallery": "Choose from gallery",
   "scan.reading": "Reading photo...",
   "scan.error": "Could not read the photo. Please try again.",
-  "scan.errorLimit": "You have reached today's limit. Please try again tomorrow.",
   "scan.review": "Check the list",
   "scan.nothing": "Nothing was found. Add items below or try another photo.",
   "scan.nothingNew": "Everything in the photo is already in your pantry.",
@@ -70,7 +70,6 @@ const en = {
   "recipe.get": "Get recipe",
   "recipe.getting": "Getting recipe...",
   "recipe.error": "Could not get a recipe. Please try again.",
-  "recipe.errorLimit": "You have reached today's limit. Please try again tomorrow.",
 
   // Favorites
   "favorites.title": "Saved recipes",
@@ -130,6 +129,19 @@ const en = {
   "auth.logOut": "Log out",
   "auth.logOutError": "Could not log out. Please try again.",
   "auth.checkEmail": "Check your email and click the link to confirm your account. Then you can log in.",
+  "auth.rateLimit": "Too many attempts right now. Please wait a while and try again.",
+  "auth.guest": "Continue as guest",
+  "auth.guestError": "Could not start a guest session. Please try again.",
+
+  // Guest account
+  "guest.title": "You are using a guest account",
+  "guest.text": "Create an account to keep your ingredients and saved recipes.",
+  "guest.checkEmail": "Check your email and click the link to finish creating your account.",
+
+  // Errors that can happen in any call to our server
+  "error.offline": "No internet connection. Check your connection and try again.",
+  "error.sessionExpired": "Your login has expired. Please log in again.",
+  "error.limit": "You have reached today's limit. Please try again tomorrow.",
 
   // Toggles
   "theme.toLight": "Switch to light mode",
@@ -151,6 +163,7 @@ const sv: Record<MessageKey, string> = {
   "pantry.errorLoad": "Kunde inte hämta ingredienserna. Försök igen.",
   "pantry.errorEmpty": "Skriv in en ingrediens.",
   "pantry.errorAdd": "Kunde inte lägga till ingrediensen. Försök igen.",
+  "pantry.errorDuplicate": "Den ingrediensen finns redan i ditt skafferi.",
   "pantry.errorAddMany": "Kunde inte spara ingredienserna. Försök igen.",
   "pantry.errorDelete": "Kunde inte ta bort ingrediensen. Försök igen.",
 
@@ -175,7 +188,6 @@ const sv: Record<MessageKey, string> = {
   "scan.gallery": "Välj från galleriet",
   "scan.reading": "Läser fotot...",
   "scan.error": "Kunde inte läsa fotot. Försök igen.",
-  "scan.errorLimit": "Du har nått dagens gräns. Försök igen i morgon.",
   "scan.review": "Kontrollera listan",
   "scan.nothing":
     "Hittade ingenting. Lägg till själv nedan eller prova ett annat foto.",
@@ -203,7 +215,6 @@ const sv: Record<MessageKey, string> = {
   "recipe.get": "Få recept",
   "recipe.getting": "Hämtar recept...",
   "recipe.error": "Kunde inte hämta ett recept. Försök igen.",
-  "recipe.errorLimit": "Du har nått dagens gräns. Försök igen i morgon.",
 
   // Favorites
   "favorites.title": "Sparade recept",
@@ -260,6 +271,19 @@ const sv: Record<MessageKey, string> = {
   "auth.logOut": "Logga ut",
   "auth.logOutError": "Kunde inte logga ut. Försök igen.",
   "auth.checkEmail": "Kolla din e-post och klicka på länken för att bekräfta kontot. Sedan kan du logga in.",
+  "auth.rateLimit": "För många försök just nu. Vänta en stund och försök igen.",
+  "auth.guest": "Fortsätt som gäst",
+  "auth.guestError": "Kunde inte starta gästläget. Försök igen.",
+
+  // Guest account
+  "guest.title": "Du använder ett gästkonto",
+  "guest.text": "Skapa ett konto för att behålla dina ingredienser och sparade recept.",
+  "guest.checkEmail": "Kolla din e-post och klicka på länken för att slutföra kontot.",
+
+  // Errors that can happen in any call to our server
+  "error.offline": "Ingen internetanslutning. Kontrollera anslutningen och försök igen.",
+  "error.sessionExpired": "Din inloggning har gått ut. Logga in igen.",
+  "error.limit": "Du har nått dagens gräns. Försök igen i morgon.",
 
   "theme.toLight": "Byt till ljust läge",
   "theme.toDark": "Byt till mörkt läge",
