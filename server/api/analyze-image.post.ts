@@ -1,21 +1,22 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { detectedIngredientsSchema } from "#shared/schemas/detectedIngredients";
-
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+import { analyzeRequestSchema } from "#shared/schemas/analyzeRequest";
 
 export default defineEventHandler(async (event) => {
   await requireUser(event);
 
-  const body = await readBody(event);
-
-  if (!body?.image || !ALLOWED_TYPES.includes(body.mediaType)) {
+  // Checks the image type and size (and the language) before Claude is called.
+  const parsed = analyzeRequestSchema.safeParse(await readBody(event));
+  if (!parsed.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Please send a JPEG, PNG or WebP image.",
+      statusMessage: "Please send a JPEG, PNG or WebP image (max about 1.5 MB).",
     });
   }
+  const body = parsed.data;
 
-  // Only "sv" switches language; anything else falls back to English.
+  await requireQuota(event);
+
   const isSwedish = body.lang === "sv";
   const language = isSwedish ? "Swedish" : "English";
   const example = isSwedish ? '"tomat" and "mjölk"' : '"tomato" and "milk"';

@@ -1,9 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { recipeSchema } from "#shared/schemas/recipe";
+import { suggestRequestSchema } from "#shared/schemas/suggestRequest";
 import { ALLERGENS } from "#shared/allergens";
 import type { Diet } from "#shared/diets";
-
-const KNOWN_ALLERGENS: readonly string[] = ALLERGENS;
 
 // What each diet means, written as a rule for the AI. "none" has no rule.
 const DIET_RULES: Record<Diet, string> = {
@@ -18,23 +17,26 @@ const DIET_RULES: Record<Diet, string> = {
 export default defineEventHandler(async (event) => {
   await requireUser(event);
 
-  const body = await readBody(event);
+  // The schema only lets values from our own lists through, so nobody can sneak
+  // text into the prompt. Anything else gives a 400 before Claude is called.
+  const parsed = suggestRequestSchema.safeParse(await readBody(event));
+  if (!parsed.success) {
+    throw createError({ statusCode: 400, statusMessage: "Invalid request." });
+  }
+  const body = parsed.data;
+
+  await requireQuota(event);
+
   const config = useRuntimeConfig(event);
   const client = new Anthropic({ apiKey: config.anthropicApiKey });
 
-  // Only "sv" switches language; anything else falls back to English.
   const language = body.lang === "sv" ? "Swedish" : "English";
 
   const wish = `${body.cuisine} food`;
 
-  // Only allow values from our own list, so nobody can sneak text into the prompt.
-  const avoid: string[] = Array.isArray(body.avoid)
-    ? body.avoid.filter((name: unknown) => KNOWN_ALLERGENS.includes(name as string))
-    : [];
-  // Same idea for the diet: only a known key is used, never the text itself.
-  const dietRule = DIET_RULES[body.diet as Diet] ?? "";
-  const avoidSentence = avoid.length
-    ? `The recipe must NOT contain these allergens: ${avoid.join(", ")}. Choose other ingredients instead.`
+  const dietRule = DIET_RULES[body.diet];
+  const avoidSentence = body.avoid.length
+    ? `The recipe must NOT contain these allergens: ${body.avoid.join(", ")}. Choose other ingredients instead.`
     : "";
 
   const message = await client.messages.create({

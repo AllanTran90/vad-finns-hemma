@@ -116,3 +116,41 @@ alter table public.preferences
     'ovo_vegetarian',
     'vegan'
   ));
+
+
+-- Daily limit for Claude calls (added after the code review, 24 Oct)
+-- One row per user and day. RLS is on and there are no policies, so the browser
+-- cannot read or change it. Only the function below can, and it checks auth.uid().
+create table public.usage (
+  user_id uuid not null references auth.users (id) on delete cascade,
+  day date not null default current_date,
+  requests int not null default 0,
+  primary key (user_id, day)
+);
+
+alter table public.usage enable row level security;
+
+-- Counts one call for the logged-in user. Returns true if the call is allowed,
+-- false if the user has already used max_per_day calls today.
+create function public.increment_usage(max_per_day int)
+returns boolean
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  new_requests int;
+begin
+  insert into public.usage as u (user_id, day, requests)
+  values (auth.uid(), current_date, 1)
+  on conflict (user_id, day) do update
+    set requests = u.requests + 1
+    where u.requests < max_per_day
+  returning u.requests into new_requests;
+
+  return new_requests is not null;
+end;
+$$;
+
+revoke execute on function public.increment_usage(int) from public, anon;
+grant execute on function public.increment_usage(int) to authenticated;
