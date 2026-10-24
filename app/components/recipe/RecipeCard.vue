@@ -6,9 +6,16 @@ const props = withDefaults(
     recipe: Recipe;
     // The allergens the user wants to avoid.
     avoid?: string[];
+    // Whether the recipe is in the user's favorites (the heart is filled).
+    saved?: boolean;
   }>(),
-  { avoid: () => [] },
+  { avoid: () => [], saved: false },
 );
+
+const emit = defineEmits<{
+  // The parent saves or removes the recipe; the card only reports the click.
+  toggle: [];
+}>();
 
 const { t } = useLang();
 
@@ -29,7 +36,19 @@ const conflictNames = computed(() =>
       <p v-if="conflicts.length" role="alert">
         {{ t("recipe.allergyWarning", { allergens: conflictNames }) }}
       </p>
-      <h2 class="title">{{ recipe.name }}</h2>
+      <div class="header">
+        <h2 class="title">{{ recipe.name }}</h2>
+        <button
+          class="heart"
+          :class="{ saved }"
+          type="button"
+          :aria-pressed="saved"
+          :aria-label="saved ? t('favorites.remove') : t('favorites.save')"
+          @click="emit('toggle')"
+        >
+          {{ saved ? "♥" : "♡" }}
+        </button>
+      </div>
 
       <div class="chips">
         <span class="chip chip-cuisine">{{ recipe.cuisine }}</span>
@@ -94,9 +113,31 @@ const conflictNames = computed(() =>
   background: var(--color-surface);
 }
 
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .title {
   font-size: 1.625rem;
   line-height: 1.25;
+}
+
+.heart {
+  flex: none;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background: none;
+  color: var(--color-muted);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.heart.saved {
+  color: var(--color-primary);
 }
 
 h3 {

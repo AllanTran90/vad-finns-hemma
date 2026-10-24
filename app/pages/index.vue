@@ -31,6 +31,15 @@ const {
   getRecipe,
 } = useRecipe();
 
+const {
+  favorites,
+  errorMessage: favoritesError,
+  loadFavorites,
+  findFavorite,
+  saveFavorite,
+  deleteFavorite,
+} = useFavorites();
+
 const canGetRecipe = computed(
   () => selectedCuisine.value && ingredients.value.length > 0 && !loading.value,
 );
@@ -48,6 +57,21 @@ async function handleGetRecipe() {
     allergens.value,
     diet.value,
   );
+}
+
+// The heart on the recipe card: remove the recipe if it is saved, otherwise save it.
+async function toggleFavorite() {
+  if (!recipe.value) {
+    return;
+  }
+
+  const saved = findFavorite(recipe.value);
+
+  if (saved) {
+    await deleteFavorite(saved.id);
+  } else {
+    await saveFavorite(recipe.value);
+  }
 }
 
 async function signOut() {
@@ -74,6 +98,7 @@ async function handleAdd() {
 onMounted(() => {
   loadIngredients();
   loadPreferences();
+  loadFavorites();
 });
 
 definePageMeta({
@@ -144,7 +169,23 @@ definePageMeta({
       {{ loading ? t("recipe.getting") : t("recipe.get") }}
     </button>
     <p v-if="recipeError" role="alert">{{ recipeError }}</p>
-    <RecipeCard v-if="recipe" :recipe="recipe" :avoid="allergens" />
+    <RecipeCard
+      v-if="recipe"
+      :recipe="recipe"
+      :avoid="allergens"
+      :saved="!!findFavorite(recipe)"
+      @toggle="toggleFavorite"
+    />
+    <p v-if="favoritesError" role="alert">{{ favoritesError }}</p>
+
+    <section class="section">
+      <h2>{{ t("favorites.title") }}</h2>
+      <FavoritesList
+        :favorites="favorites"
+        :avoid="allergens"
+        @delete="deleteFavorite"
+      />
+    </section>
 
     <button class="btn-link logout" type="button" @click="signOut">
       {{ t("auth.logOut") }}

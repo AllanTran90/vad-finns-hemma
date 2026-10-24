@@ -71,6 +71,10 @@ const en = {
   "recipe.error": "Could not get a recipe. Please try again.",
 
   // Favorites
+  "favorites.title": "Saved recipes",
+  "favorites.empty": "No saved recipes yet. Tap the heart on a recipe to save it.",
+  "favorites.save": "Save recipe",
+  "favorites.remove": "Remove from saved",
   "favorites.errorLoad": "Could not load your saved recipes. Please try again.",
   "favorites.errorSave": "Could not save the recipe. Please try again.",
   "favorites.errorDelete": "Could not remove the recipe. Please try again.",
@@ -197,6 +201,10 @@ const sv: Record<MessageKey, string> = {
   "recipe.error": "Kunde inte hämta ett recept. Försök igen.",
 
   // Favorites
+  "favorites.title": "Sparade recept",
+  "favorites.empty": "Inga sparade recept än. Tryck på hjärtat på ett recept för att spara det.",
+  "favorites.save": "Spara receptet",
+  "favorites.remove": "Ta bort från sparade",
   "favorites.errorLoad": "Kunde inte hämta dina sparade recept. Försök igen.",
   "favorites.errorSave": "Kunde inte spara receptet. Försök igen.",
   "favorites.errorDelete": "Kunde inte ta bort receptet. Försök igen.",
