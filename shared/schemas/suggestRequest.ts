@@ -1,0 +1,18 @@
+import { z } from "zod";
+import { ALLERGENS } from "../allergens";
+import { CUISINES } from "../cuisines";
+import { DIETS } from "../diets";
+import { LANGS } from "../i18n";
+
+// What the browser is allowed to send to /api/suggest.
+// The limits on ingredients stop someone from sending thousands of words,
+// because every word in the prompt costs money.
+export const suggestRequestSchema = z.object({
+  cuisine: z.enum(CUISINES),
+  ingredients: z.array(z.string().trim().min(1).max(60)).min(1).max(50),
+  avoid: z.array(z.enum(ALLERGENS)).default([]),
+  diet: z.enum(DIETS).default("none"),
+  lang: z.enum(LANGS).default("en"),
+});
+
+export type SuggestRequest = z.infer<typeof suggestRequestSchema>;
