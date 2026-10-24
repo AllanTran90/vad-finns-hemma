@@ -82,22 +82,24 @@ Planned order: allergies, favorites, guest account, error handling.
     expired login
   - [x] Protect /api/suggest and /api/analyze-image with requireUser
     (server/utils/requireUser.ts, tested: logged out gives 401)
-  - [ ] Daily limit per user (now Must, see code review below)
+  - [x] Daily limit per user (see code review below)
 
 ### Code review (24 Oct), fix before hand-in
 Priority order. The server trusts too much of what the browser sends.
 
-- [ ] 1. Zod schema for the request in /api/suggest
+- [x] 1. Zod schema for the request in /api/suggest
   (shared/schemas/suggestRequest.ts): cuisine from CUISINES, 1-50
   ingredients of max 60 characters, avoid/diet/lang from our lists. Return 400
   on invalid input. Then remove the manual avoid/diet filters.
-- [ ] 2. Vitest + tests for the request schema (and the recipe schema)
-- [ ] 3. Max size for the image in /api/analyze-image
-- [ ] 4. Show pantry errors under the form (not at the logout button), and
+- [x] 2. Vitest + tests for the request schema (and the recipe schema)
+- [x] 3. Max size for the image in /api/analyze-image
+- [x] 4. Show pantry errors under the form (not at the logout button), and
   give logout its own error ref
-- [ ] 5. Check "Confirm email" in Supabase: if on, signup must show
+- [x] 5. Check "Confirm email" in Supabase: if on, signup must show
   "Check your email" instead of navigating to /
-- [ ] 6. Daily limit per user (usage table: user_id, date, count)
+- [x] 6. Daily limit per user (usage table + increment_usage function in
+  supabase/schema.sql, server/utils/requireQuota.ts, 30 calls per day).
+  SQL must be run in Supabase before it works!
 
 Smaller things, when there is time:
 - [ ] addIngredient (form) should skip duplicates like addIngredients does
@@ -115,7 +117,7 @@ Smaller things, when there is time:
   needs a Vercel login)
 
 ### Sprint 5, week 46
-- [ ] Tests
+- [x] Tests (Vitest, tests/ folder: request schemas and recipe schema)
 - [ ] Mobile polish
 - [ ] Documentation
 - [ ] README
