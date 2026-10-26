@@ -78,6 +78,13 @@ async function toggleFavorite() {
 
 async function signOut() {
   logoutError.value = "";
+
+  // A guest has no email or password to log in with again, so logging out
+  // means the data is lost. Ask first.
+  if (user.value?.is_anonymous && !window.confirm(t("guest.logoutConfirm"))) {
+    return;
+  }
+
   const { error } = await supabase.auth.signOut();
 
   if (error) {

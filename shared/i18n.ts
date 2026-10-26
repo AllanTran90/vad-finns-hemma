@@ -135,7 +135,10 @@ const en = {
 
   // Guest account
   "guest.title": "You are using a guest account",
-  "guest.text": "Create an account to keep your ingredients and saved recipes.",
+  "guest.text":
+    "If you log out, your ingredients and saved recipes are gone. Create an account to keep them.",
+  "guest.logoutConfirm":
+    "You are a guest. If you log out, all your ingredients and saved recipes are lost. Log out anyway?",
   "guest.checkEmail": "Check your email and click the link to finish creating your account.",
 
   // Errors that can happen in any call to our server
@@ -277,7 +280,10 @@ const sv: Record<MessageKey, string> = {
 
   // Guest account
   "guest.title": "Du använder ett gästkonto",
-  "guest.text": "Skapa ett konto för att behålla dina ingredienser och sparade recept.",
+  "guest.text":
+    "Loggar du ut försvinner dina ingredienser och sparade recept. Skapa ett konto för att behålla dem.",
+  "guest.logoutConfirm":
+    "Du är gäst. Loggar du ut försvinner alla dina ingredienser och sparade recept. Vill du logga ut ändå?",
   "guest.checkEmail": "Kolla din e-post och klicka på länken för att slutföra kontot.",
 
   // Errors that can happen in any call to our server
