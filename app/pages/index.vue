@@ -2,6 +2,7 @@
 import { CUISINES, SURPRISE, pickRandomCuisine } from "#shared/cuisines";
 
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 const { t } = useLang();
 const ingredientName = ref("");
 const selectedCuisine = ref("");
@@ -113,6 +114,8 @@ definePageMeta({
       <h1>Vad finns hemma?</h1>
       <p class="muted">{{ t("app.tagline") }}</p>
     </header>
+
+    <GuestBanner v-if="user?.is_anonymous" />
 
     <section class="section">
       <h2>{{ t("pantry.title") }}</h2>

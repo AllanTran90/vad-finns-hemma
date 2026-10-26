@@ -66,6 +66,7 @@ const emit = defineEmits<{
     <p class="switch">
       <slot />
     </p>
+    <slot name="extra" />
   </main>
 </template>
 

@@ -14,7 +14,9 @@ async function signUp(email: string, password: string) {
 
   if (error) {
     console.log("Signup error:", error);
-    errorMessage.value = t("auth.signupError");
+    // 429 means Supabase has sent too many emails for now, not that the input is wrong.
+    errorMessage.value =
+      error.status === 429 ? t("auth.rateLimit") : t("auth.signupError");
     return;
   }
 
@@ -27,6 +29,10 @@ async function signUp(email: string, password: string) {
 
   await navigateTo("/");
 }
+
+definePageMeta({
+  middleware: "guest-only",
+});
 </script>
 
 <template>
