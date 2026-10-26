@@ -1,11 +1,13 @@
-import type { Recipe } from "#shared/schemas/recipe";
+import { z } from "zod";
+import type { Database } from "#shared/database.types";
+import { recipeSchema, type Recipe } from "#shared/schemas/recipe";
 
 // A saved recipe is a Recipe plus the id of its row in the database.
-export type Favorite = Recipe & { id: string };
+const favoriteSchema = recipeSchema.extend({ id: z.string() });
+export type Favorite = z.infer<typeof favoriteSchema>;
 
 export function useFavorites() {
-  // `any` because we have no generated database types (types: false).
-  const supabase = useSupabaseClient<any>();
+  const supabase = useSupabaseClient<Database>();
   const { t } = useLang();
   const user = useSupabaseUser();
   const errorMessage = ref("");
@@ -24,7 +26,18 @@ export function useFavorites() {
       errorMessage.value = t("favorites.errorLoad");
       return;
     }
-    favorites.value = data;
+
+    // The database allows empty (null) values in some columns, but a Favorite never
+    // has them. Checking each row with the recipe schema gives us the right type,
+    // and one broken row does not hide the others.
+    favorites.value = data.flatMap((row) => {
+      const parsed = favoriteSchema.safeParse(row);
+      if (!parsed.success) {
+        console.log("Skipping invalid favorite:", row.id, parsed.error);
+        return [];
+      }
+      return [parsed.data];
+    });
   }
 
   // A recipe has no id until it is saved, so we compare by name.
@@ -40,9 +53,15 @@ export function useFavorites() {
       return;
     }
 
+    const userId = user.value?.sub;
+    if (!userId) {
+      errorMessage.value = t("error.sessionExpired");
+      return;
+    }
+
     const { error } = await supabase.from("favorites").insert({
       ...recipe,
-      user_id: user.value?.sub,
+      user_id: userId,
     });
 
     if (error) {

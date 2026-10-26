@@ -1,6 +1,9 @@
+import type { Database } from "#shared/database.types";
+
+type PantryInsert = Database["public"]["Tables"]["pantry"]["Insert"];
+
 export function usePantry() {
-  // `any` because we have no generated database types (types: false).
-  const supabase = useSupabaseClient<any>();
+  const supabase = useSupabaseClient<Database>();
   const { t } = useLang();
   const errorMessage = ref("");
   const user = useSupabaseUser();
@@ -39,9 +42,16 @@ export function usePantry() {
       return;
     }
 
+    // The database needs to know who owns the row. No user means the login is gone.
+    const userId = user.value?.sub;
+    if (!userId) {
+      errorMessage.value = t("error.sessionExpired");
+      return;
+    }
+
     const { error } = await supabase.from("pantry").insert({
       name: cleanName,
-      user_id: user.value?.sub,
+      user_id: userId,
     });
 
     if (error) {
@@ -58,10 +68,16 @@ export function usePantry() {
   async function addIngredients(names: string[]) {
     errorMessage.value = "";
 
+    const userId = user.value?.sub;
+    if (!userId) {
+      errorMessage.value = t("error.sessionExpired");
+      return;
+    }
+
     const known = new Set(
       ingredients.value.map((ingredient) => ingredient.name.toLowerCase()),
     );
-    const rows = [];
+    const rows: PantryInsert[] = [];
 
     for (const name of names) {
       const cleanName = name.trim();
@@ -72,7 +88,7 @@ export function usePantry() {
       }
 
       known.add(key);
-      rows.push({ name: cleanName, user_id: user.value?.sub });
+      rows.push({ name: cleanName, user_id: userId });
     }
 
     if (rows.length === 0) {

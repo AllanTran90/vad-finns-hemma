@@ -1,8 +1,8 @@
+import type { Database } from "#shared/database.types";
 import type { Diet } from "#shared/diets";
 
 export function usePreferences() {
-  // `any` because we have no generated database types (types: false).
-  const supabase = useSupabaseClient<any>();
+  const supabase = useSupabaseClient<Database>();
   const user = useSupabaseUser();
   const { t } = useLang();
   const allergens = ref<string[]>([]);
@@ -32,8 +32,14 @@ export function usePreferences() {
   // upsert = insert the row, or update it if the user already has one.
   // Only the columns we send are changed, so saving allergens never touches diet.
   async function savePreferences(fields: { allergens?: string[]; diet?: Diet }) {
+    const userId = user.value?.sub;
+    if (!userId) {
+      errorMessage.value = t("error.sessionExpired");
+      return false;
+    }
+
     const { error } = await supabase.from("preferences").upsert({
-      user_id: user.value?.sub,
+      user_id: userId,
       ...fields,
       updated_at: new Date().toISOString(),
     });

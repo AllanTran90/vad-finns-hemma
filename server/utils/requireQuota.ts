@@ -1,5 +1,6 @@
 import type { H3Event } from "h3";
 import { serverSupabaseClient } from "#supabase/server";
+import type { Database } from "#shared/database.types";
 
 // How many Claude calls one user may make per day (recipes and photo scans together).
 const DAILY_LIMIT = 30;
@@ -8,7 +9,7 @@ const DAILY_LIMIT = 30;
 // has used up the day. Call it after requireUser and after validating the body,
 // so broken requests do not use up the limit. See increment_usage in supabase/schema.sql.
 export async function requireQuota(event: H3Event) {
-  const supabase = await serverSupabaseClient(event);
+  const supabase = await serverSupabaseClient<Database>(event);
   const { data, error } = await supabase.rpc("increment_usage", {
     max_per_day: DAILY_LIMIT,
   });
