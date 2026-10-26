@@ -430,3 +430,7 @@ tests/          Vitest tests
 - [AI-USE.md](AI-USE.md): a log of how I used AI during the project
 - [PROGRESS.md](PROGRESS.md): the plan and the status
 - [learn/](learn/): my notes explaining the code
+
+## License
+
+MIT, see [license](license).

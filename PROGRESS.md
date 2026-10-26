@@ -129,7 +129,7 @@ Smaller things, when there is time:
 - [ ] Mobile polish
 - [x] Documentation (README with a step by step setup guide)
 - [x] README
-- [ ] License
+- [x] License (MIT)
 
 ### Could have (only if there is time)
 - [x] Camera button for the photo scan (capture="environment", tested on
