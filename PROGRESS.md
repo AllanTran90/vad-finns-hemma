@@ -69,17 +69,17 @@ Planned order: allergies, favorites, guest account, error handling.
   - [x] useFavorites.ts (save, list, delete)
   - [x] Heart button on RecipeCard and a list of saved recipes
     (FavoritesList.vue, shown on the start page)
-- [ ] Guest account
+- [x] Guest account (code done; Anonymous sign-ins must be turned on in Supabase)
   - [ ] Turn on Anonymous sign-ins in Supabase
-  - [ ] "Continue as guest" button on the login page
-  - [ ] Banner "Create an account to keep your data" (updateUser with email
+  - [x] "Continue as guest" button on the login page
+  - [x] Banner "Create an account to keep your data" (updateUser with email
     and password keeps the same user id, so the data stays)
   - Note: a guest session stays after refresh, but is lost if the browser
     data is cleared or the device changes. If time runs out, this becomes a
     "Could have".
-- [ ] Error handling
-  - [ ] Check every flow: no internet, empty AI answer, too big image,
-    expired login
+- [x] Error handling
+  - [x] Check every flow: no internet, empty AI answer, too big image,
+    expired login (apiErrorKey.ts, stricter recipeSchema, size limit)
   - [x] Protect /api/suggest and /api/analyze-image with requireUser
     (server/utils/requireUser.ts, tested: logged out gives 401)
   - [x] Daily limit per user (see code review below)
@@ -102,13 +102,13 @@ Priority order. The server trusts too much of what the browser sends.
   SQL must be run in Supabase before it works!
 
 Smaller things, when there is time:
-- [ ] addIngredient (form) should skip duplicates like addIngredients does
+- [x] addIngredient (form) should skip duplicates like addIngredients does
 - [ ] Remove or explain unused pantry columns (category, quantity, unit,
   expires_at)
-- [ ] recipeSchema: .min(1) on strings and lists, .int().positive() on
+- [x] recipeSchema: .min(1) on strings and lists, .int().positive() on
   cook_time_minutes
-- [ ] Redirect a logged-in user from /login to /
-- [ ] .env.example with variable names only
+- [x] Redirect a logged-in user from /login to /
+- [x] .env.example with variable names only
 - [ ] Run Prettier (indentation in usePantry.ts, CuisineCard.vue, auth.ts)
 - [ ] findFavorite compares by name: two recipes with the same name count
   as one favorite (fine for now)
