@@ -23,3 +23,6 @@ export const ALLERGENS = [
 "brazil_nuts",
 "macadamias",
 ] as const;
+
+
+export type Allergen = (typeof ALLERGENS)[number];
