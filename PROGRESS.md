@@ -24,6 +24,14 @@ Decided: the start page requires login. A guest gets a temporary account
 
 ## Sprint plan (hand-in 16 Nov, supervision 21 Oct and 4 Nov)
 
+### Plan for the next days (decided 26 Oct)
+1. Finish all Must (deploy check, mobile, README, license, documentation,
+   DRY, unused pantry columns).
+2. Then the Could have list.
+3. Fri 30 Oct: go through everything (/code-review, /security-review, test
+   every flow, be able to explain all code). The weekend is a buffer for fixes.
+4. Wed 4 Nov: supervision with Hans and Betsy.
+
 ### Sprint 1, week 42
 - [x] Foundation
 - [x] Supabase
@@ -70,7 +78,7 @@ Planned order: allergies, favorites, guest account, error handling.
   - [x] Heart button on RecipeCard and a list of saved recipes
     (FavoritesList.vue, shown on the start page)
 - [x] Guest account (code done; Anonymous sign-ins must be turned on in Supabase)
-  - [ ] Turn on Anonymous sign-ins in Supabase
+  - [x] Turn on Anonymous sign-ins in Supabase
   - [x] "Continue as guest" button on the login page
   - [x] Banner "Create an account to keep your data" (updateUser with email
     and password keeps the same user id, so the data stays)
@@ -119,8 +127,8 @@ Smaller things, when there is time:
 ### Sprint 5, week 46
 - [x] Tests (Vitest, tests/ folder: request schemas and recipe schema)
 - [ ] Mobile polish
-- [ ] Documentation
-- [ ] README
+- [x] Documentation (README with a step by step setup guide)
+- [x] README
 - [ ] License
 
 ### Could have (only if there is time)
