@@ -37,7 +37,8 @@ This is my thesis project (examensarbete) at Yrgo, web development.
 
 This guide takes you from nothing to a working copy of the app on your own
 computer. It takes about 30 minutes. Just follow the steps in order and copy and
-paste exactly what is written in the grey boxes.
+paste exactly what is written in the grey boxes. Almost everything is done in
+the terminal. Only the accounts and the keys have to be done in the browser.
 
 What you need
 
@@ -46,41 +47,71 @@ What you need
 - An [Anthropic](https://console.anthropic.com) account with a few dollars of
   credit (the AI that suggests recipes). Every recipe costs a fraction of a cent.
 
-> Windows tip: use PowerShell wherever this guide says "terminal". Press
-> the Windows key, type `PowerShell` and press Enter.
-> Mac tip: press `Cmd + Space`, type `Terminal` and press Enter.
+> Windows: use PowerShell wherever this guide says "terminal". Press the Windows
+> key, type `PowerShell` and press Enter.
+> Mac: press `Cmd + Space`, type `Terminal` and press Enter.
 
-### Step 1. Install Node.js
+### Step 1. Install Node.js and Git (in the terminal)
 
-Node.js is the program that runs the app.
+Node.js is the program that runs the app. Git downloads the code. Copy the
+commands for your computer, one at a time.
 
-1. Go to https://nodejs.org and download the version marked LTS.
-2. Open the downloaded file and click Next/Continue until it is installed.
-3. Close and reopen your terminal, then type this and press Enter:
+Windows (PowerShell):
+
+```bash
+winget install OpenJS.NodeJS.LTS
+```
+
+```bash
+winget install Git.Git
+```
+
+Mac:
+
+```bash
+brew install node git
+```
+
+If the Mac says `brew: command not found`, install Homebrew first (it asks for
+your computer password, which is not shown while you type), then run the `brew`
+command above again:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Linux (Ubuntu and similar):
+
+```bash
+sudo apt install nodejs npm git
+```
+
+Now close the terminal, open it again and check that both worked:
 
 ```bash
 node -v
+git --version
 ```
 
-If you see a number like `v22.11.0` it worked. If you see "command not found",
-restart your computer and try again.
+If you see version numbers (for example `v22.11.0`) it worked. If you still see
+"command not found", restart your computer and try again.
 
-### Step 2. Download the code
-
-1. Go to https://github.com/AllanTran90/vad-finns-hemma
-2. Click the green Code button, then Download ZIP.
-3. Unzip the file (double-click it). You get a folder called
-   `vad-finns-hemma-main`. Move it to your Documents folder.
-4. In the terminal, go into the folder:
+### Step 2. Download the code (in the terminal)
 
 ```bash
-cd Documents/vad-finns-hemma-main
+git clone https://github.com/AllanTran90/vad-finns-hemma.git
 ```
 
-(Tip: you can also type `cd ` with a space, then drag the folder from your file
-browser into the terminal window and press Enter.)
+```bash
+cd vad-finns-hemma
+```
 
-### Step 3. Create the database (Supabase)
+The code is now in a folder called `vad-finns-hemma`, and the terminal is inside
+it. Every command below is run from this folder.
+
+### Step 3. Create the database (in the browser)
+
+Supabase is the database and the login system.
 
 1. Go to https://supabase.com, sign up and click New project. Choose any
    name, make up a database password (save it somewhere) and click Create new
@@ -260,10 +291,9 @@ grant execute on function public.increment_usage(int) to authenticated;
    a link in an email, and Supabase only sends a few emails per hour on the free
    plan.
 
-### Step 4. Get your Supabase keys
+### Step 4. Get your keys (in the browser)
 
-You need two things from Supabase. Keep this page open, you will paste them in
-Step 6.
+Supabase keys. Keep this page open, you paste them in Step 5.
 
 - Project URL: click the Connect button at the top of the Supabase page
   (or go to Project Settings, then Data API). It looks like
@@ -274,17 +304,16 @@ Step 6.
 Do not use the key called `secret` or `service_role`. It gives full access
 to your database and must never be put in the app.
 
-### Step 5. Get your AI key (Anthropic)
+AI key (Anthropic):
 
 1. Go to https://console.anthropic.com and sign up.
 2. Under Billing, add a few dollars of credit.
 3. Under API Keys, click Create Key, give it a name and copy the key
    (it starts with `sk-ant-`). You only see it once, so paste it somewhere safe.
 
-### Step 6. Put the keys in the app
+### Step 5. Put the keys in the app (in the terminal)
 
-Back in the terminal (you should still be inside the `vad-finns-hemma-main`
-folder), make a copy of the settings file:
+Make a copy of the settings file:
 
 ```bash
 cp .env.example .env
@@ -292,9 +321,16 @@ cp .env.example .env
 
 (On Windows PowerShell, use `copy .env.example .env` instead.)
 
-Now open the new file called `.env` in any text editor (Notepad, TextEdit, VS
-Code). It looks like this. Paste each key after the `=` sign, with no spaces
-and no quotes, and save the file:
+Open the new file in a text editor from the terminal:
+
+```bash
+open -e .env
+```
+
+(On Windows PowerShell, use `notepad .env` instead.)
+
+It looks like this. Paste each key after the `=` sign, with no spaces and no
+quotes, and save the file:
 
 ```
 NUXT_ANTHROPIC_API_KEY=sk-ant-your-key-here
@@ -302,13 +338,9 @@ NUXT_PUBLIC_SUPABASE_URL=https://abcdefgh.supabase.co
 NUXT_PUBLIC_SUPABASE_KEY=your-publishable-key-here
 ```
 
-> The file starts with a dot, so it can be hidden. On Mac press
-> `Cmd + Shift + .` in the Finder to show hidden files.
+### Step 6. Install and start the app (in the terminal)
 
-### Step 7. Start the app
-
-In the terminal, run these two commands, one at a time. The first one downloads
-everything the app needs and takes a minute or two.
+The first command downloads everything the app needs and takes a minute or two.
 
 ```bash
 npm install
@@ -323,19 +355,21 @@ browser. Create an account (or click Continue as guest), add a few
 ingredients, pick a cuisine and press Get recipe.
 
 To stop the app, click in the terminal and press `Ctrl + C`. To start it again
-later, go into the folder (Step 2, point 4) and run `npm run dev`.
+later, open the terminal, run `cd vad-finns-hemma` and then `npm run dev`.
 
 ### If something goes wrong
 
 | What you see | What to do |
 | --- | --- |
-| `command not found: node` or `npm` | Node.js is not installed, or the terminal was not restarted. Redo Step 1. |
-| `No such file or directory` after `cd` | You are in the wrong place. Redo Step 2, point 4. |
+| `command not found: node`, `npm` or `git` | It is not installed, or the terminal was not restarted. Redo Step 1. |
+| `winget` is not recognized (Windows) | Install Node.js from https://nodejs.org (the LTS version) and Git from https://git-scm.com instead, then restart the terminal. |
+| `No such file or directory` after `cd` | You are in the wrong place. Redo Step 2 and make sure the clone finished. |
+| `open -e .env` does nothing or says no such file | You are not in the `vad-finns-hemma` folder, or the `cp` command in Step 5 was not run. |
 | The page does not open | Check that the terminal still shows `npm run dev` running, and that you used the address it printed. |
 | "Could not load ingredients" or errors about a missing table | The SQL in Step 3 was not run. Run it in the Supabase SQL Editor. |
 | "Continue as guest" shows an error | Anonymous sign-ins are off. Redo Step 3, point 5. |
 | "Too many attempts right now" when creating an account | Supabase limits emails. Turn Confirm email off (Step 3, point 6) or wait an hour. |
-| "Could not get a recipe" | The AI key is wrong or has no credit. Check Step 5 and `.env`, then stop the app (`Ctrl + C`) and start it again. |
+| "Could not get a recipe" | The AI key is wrong or has no credit. Check Step 4 and `.env`, then stop the app (`Ctrl + C`) and start it again. |
 | You changed `.env` and nothing happened | Stop the app (`Ctrl + C`) and start it again with `npm run dev`. |
 
 ### Put it on the internet (optional)
