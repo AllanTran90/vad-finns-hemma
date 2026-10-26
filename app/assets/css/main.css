@@ -78,7 +78,8 @@ body {
 
 h1 {
   margin: 0;
-  font-size: 1.875rem;
+  /* Shrinks a little on very small phones. */
+  font-size: clamp(1.5rem, 7vw, 1.875rem);
   line-height: 1.2;
 }
 
@@ -91,7 +92,9 @@ h2 {
   color: var(--color-muted);
 }
 
-/* Page container: one centered column, built for phones first. */
+/* Page container: one centered column, built for phones first.
+   It gets wider on tablets and computers (the start page also uses two columns
+   from 64rem, see index.vue). */
 .page {
   display: flex;
   flex-direction: column;
@@ -100,6 +103,26 @@ h2 {
   max-width: 30rem;
   margin: 0 auto;
   padding: 4rem 1.25rem 2.5rem;
+}
+
+@media (min-width: 40rem) {
+  .page {
+    max-width: 40rem;
+    padding-top: 5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .page {
+    max-width: 72rem;
+  }
+}
+
+/* Very small phones, for example 320 px wide. */
+@media (max-width: 22rem) {
+  .page {
+    padding-inline: 1rem;
+  }
 }
 
 input {

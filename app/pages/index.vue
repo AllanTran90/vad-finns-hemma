@@ -124,80 +124,86 @@ definePageMeta({
 
     <GuestBanner v-if="user?.is_anonymous" />
 
-    <section class="section">
-      <h2>{{ t("pantry.title") }}</h2>
-      <form class="add-form" @submit.prevent="handleAdd">
-        <input
-          v-model="ingredientName"
-          type="text"
-          :placeholder="t('pantry.placeholder')"
-          required
-        />
-        <button class="btn" type="submit">{{ t("pantry.add") }}</button>
-      </form>
-      <p v-if="pantryError" role="alert">{{ pantryError }}</p>
-      <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
-    </section>
+    <div class="layout">
+      <div class="column">
+        <section class="section">
+          <h2>{{ t("pantry.title") }}</h2>
+          <form class="add-form" @submit.prevent="handleAdd">
+            <input
+              v-model="ingredientName"
+              type="text"
+              :placeholder="t('pantry.placeholder')"
+              required
+            />
+            <button class="btn" type="submit">{{ t("pantry.add") }}</button>
+          </form>
+          <p v-if="pantryError" role="alert">{{ pantryError }}</p>
+          <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
+        </section>
 
-    <section class="section">
-      <h2>{{ t("scan.title") }}</h2>
-      <ScanPhoto
-        :existing="ingredients.map((ingredient) => ingredient.name)"
-        @confirm="addIngredients"
-      />
-    </section>
-
-    <section class="section">
-      <h2>{{ t("cuisine.title") }}</h2>
-      <div class="cuisine-grid">
-        <CuisineCard
-          v-for="cuisine in CUISINES"
-          :key="cuisine"
-          :name="cuisine"
-          :selected="cuisine === selectedCuisine"
-          @select="selectedCuisine = $event"
-        />
-        <CuisineCard
-          class="surprise"
-          :name="SURPRISE"
-          :selected="selectedCuisine === SURPRISE"
-          @select="selectedCuisine = $event"
-        />
+        <section class="section">
+          <h2>{{ t("scan.title") }}</h2>
+          <ScanPhoto
+            :existing="ingredients.map((ingredient) => ingredient.name)"
+            @confirm="addIngredients"
+          />
+        </section>
       </div>
-    </section>
 
-    <section class="section">
-      <DietPicker :selected="diet" @change="saveDiet" />
-      <AllergyPicker :selected="allergens" @change="saveAllergens" />
-      <p v-if="prefsError" role="alert">{{ prefsError }}</p>
-    </section>
+      <div class="column">
+        <section class="section">
+          <h2>{{ t("cuisine.title") }}</h2>
+          <div class="cuisine-grid">
+            <CuisineCard
+              v-for="cuisine in CUISINES"
+              :key="cuisine"
+              :name="cuisine"
+              :selected="cuisine === selectedCuisine"
+              @select="selectedCuisine = $event"
+            />
+            <CuisineCard
+              class="surprise"
+              :name="SURPRISE"
+              :selected="selectedCuisine === SURPRISE"
+              @select="selectedCuisine = $event"
+            />
+          </div>
+        </section>
 
-    <button
-      class="btn"
-      type="button"
-      :disabled="!canGetRecipe"
-      @click="handleGetRecipe"
-    >
-      {{ loading ? t("recipe.getting") : t("recipe.get") }}
-    </button>
-    <p v-if="recipeError" role="alert">{{ recipeError }}</p>
-    <RecipeCard
-      v-if="recipe"
-      :recipe="recipe"
-      :avoid="allergens"
-      :saved="!!findFavorite(recipe)"
-      @toggle="toggleFavorite"
-    />
-    <p v-if="favoritesError" role="alert">{{ favoritesError }}</p>
+        <section class="section">
+          <DietPicker :selected="diet" @change="saveDiet" />
+          <AllergyPicker :selected="allergens" @change="saveAllergens" />
+          <p v-if="prefsError" role="alert">{{ prefsError }}</p>
+        </section>
 
-    <section class="section">
-      <h2>{{ t("favorites.title") }}</h2>
-      <FavoritesList
-        :favorites="favorites"
-        :avoid="allergens"
-        @delete="deleteFavorite"
-      />
-    </section>
+        <button
+          class="btn"
+          type="button"
+          :disabled="!canGetRecipe"
+          @click="handleGetRecipe"
+        >
+          {{ loading ? t("recipe.getting") : t("recipe.get") }}
+        </button>
+        <p v-if="recipeError" role="alert">{{ recipeError }}</p>
+        <RecipeCard
+          v-if="recipe"
+          :recipe="recipe"
+          :avoid="allergens"
+          :saved="!!findFavorite(recipe)"
+          @toggle="toggleFavorite"
+        />
+        <p v-if="favoritesError" role="alert">{{ favoritesError }}</p>
+
+        <section class="section">
+          <h2>{{ t("favorites.title") }}</h2>
+          <FavoritesList
+            :favorites="favorites"
+            :avoid="allergens"
+            @delete="deleteFavorite"
+          />
+        </section>
+      </div>
+    </div>
 
     <button class="btn-link logout" type="button" @click="signOut">
       {{ t("auth.logOut") }}
@@ -237,6 +243,31 @@ definePageMeta({
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  .cuisine-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* One column on phones and tablets. On a wide screen the page gets two columns:
+   what you have (pantry and photo) on the left, what you want (cuisine, diet,
+   recipe and favorites) on the right. */
+.layout,
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    align-items: start;
+    gap: 2rem;
+  }
 }
 
 .surprise {
