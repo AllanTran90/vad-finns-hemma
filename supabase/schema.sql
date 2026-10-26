@@ -1,4 +1,14 @@
--- Pantry table
+-- Vad finns hemma? Database schema
+--
+-- How to use: open the Supabase SQL Editor (New query), paste this whole file
+-- and press Cmd+Enter (Ctrl+Enter on Windows). Use a new, empty project:
+-- running it twice gives "already exists" errors.
+--
+-- Every table has row level security (RLS), so each user only sees their own rows.
+-- If you change this file, also change shared/database.types.ts.
+
+
+-- Pantry: the ingredients a user has at home
 create table public.pantry (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
@@ -12,7 +22,6 @@ create table public.pantry (
 
 alter table public.pantry enable row level security;
 
--- Pantry policies
 create policy "Users can view own pantry"
   on public.pantry for select
   to authenticated
@@ -34,7 +43,8 @@ create policy "Users can delete own pantry"
   to authenticated
   using ((select auth.uid()) = user_id);
 
--- Favorites table
+
+-- Favorites: saved recipes
 create table public.favorites (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
@@ -44,13 +54,12 @@ create table public.favorites (
   cook_time_minutes integer,
   cuisine text,
   kid_friendly boolean,
+  allergens jsonb not null default '[]'::jsonb,
   created_at timestamptz not null default now()
 );
 
 alter table public.favorites enable row level security;
 
-
--- Favorites policies
 create policy "Users can view own favorites"
   on public.favorites for select
   to authenticated
@@ -73,21 +82,25 @@ create policy "Users can delete own favorites"
   using ((select auth.uid()) = user_id);
 
 
--- Favorites: allergens of the saved recipe (added in sprint 4)
-alter table public.favorites
-  add column allergens jsonb not null default '[]'::jsonb;
-
-
--- Preferences table: one row per user (added in sprint 4)
+-- Preferences: allergies and diet, one row per user
 create table public.preferences (
   user_id uuid primary key references auth.users (id) on delete cascade,
   allergens text[] not null default '{}',
+  diet text not null default 'none'
+    check (diet in (
+      'none',
+      'pescatarian',
+      'lacto_ovo_vegetarian',
+      'lacto_vegetarian',
+      'ovo_vegetarian',
+      'vegan'
+    )),
   updated_at timestamptz not null default now()
 );
 
 alter table public.preferences enable row level security;
 
--- Preferences policies (insert + update are both needed for upsert)
+-- Insert and update are both needed for upsert.
 create policy "Users can view own preferences"
   on public.preferences for select
   to authenticated
@@ -105,22 +118,9 @@ create policy "Users can update own preferences"
   with check ((select auth.uid()) = user_id);
 
 
--- Preferences: diet (added in sprint 4)
-alter table public.preferences
-  add column diet text not null default 'none'
-  check (diet in (
-    'none',
-    'pescatarian',
-    'lacto_ovo_vegetarian',
-    'lacto_vegetarian',
-    'ovo_vegetarian',
-    'vegan'
-  ));
-
-
--- Daily limit for Claude calls (added after the code review, 24 Oct)
--- One row per user and day. RLS is on and there are no policies, so the browser
--- cannot read or change it. Only the function below can, and it checks auth.uid().
+-- Usage: daily limit for Claude calls, one row per user and day.
+-- RLS is on and there are no policies, so the browser cannot read or change it.
+-- Only the function below can, and it checks auth.uid().
 create table public.usage (
   user_id uuid not null references auth.users (id) on delete cascade,
   day date not null default current_date,
