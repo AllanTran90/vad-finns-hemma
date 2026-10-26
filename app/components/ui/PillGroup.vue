@@ -58,7 +58,10 @@ function choose(value: string) {
 
 .pill {
   position: relative;
-  padding: 0.375rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 0.875rem;
   border: 1px solid var(--color-line);
   border-radius: 999px;
   background: var(--color-bg);

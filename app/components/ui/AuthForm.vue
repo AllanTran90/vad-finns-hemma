@@ -66,7 +66,9 @@ const emit = defineEmits<{
     <p class="switch">
       <slot />
     </p>
-    <slot name="extra" />
+    <div v-if="$slots.extra" class="extra">
+      <slot name="extra" />
+    </div>
   </main>
 </template>
 
@@ -126,9 +128,15 @@ const emit = defineEmits<{
   text-align: center;
 }
 
-.switch a {
+/* The link comes from the page through the slot, so it needs :deep to be styled here. */
+.switch :deep(a) {
   color: var(--color-primary);
   font-weight: 600;
+}
+
+.extra {
+  display: flex;
+  justify-content: center;
 }
 
 form {

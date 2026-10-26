@@ -34,7 +34,8 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem;
+  /* Less padding on top and at the right: the delete button brings its own. */
+  padding: 0 0.5rem 0 1rem;
 }
 
 li + li {

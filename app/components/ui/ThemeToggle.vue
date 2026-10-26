@@ -43,7 +43,9 @@ useHead({
 
 <style scoped>
 .theme-toggle {
-  position: fixed;
+  /* absolute, not fixed: a fixed button stays on the screen and covers the
+     content when you scroll on a phone. */
+  position: absolute;
   top: 1rem;
   right: 1rem;
   z-index: 10;

@@ -127,7 +127,11 @@ const conflictNames = computed(() =>
 
 .heart {
   flex: none;
-  padding: 0.25rem 0.5rem;
+  display: grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
   border: none;
   background: none;
   color: var(--color-muted);

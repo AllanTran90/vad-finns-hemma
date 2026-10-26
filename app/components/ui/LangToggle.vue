@@ -19,7 +19,7 @@ useHead({ htmlAttrs: { lang: () => lang.value } });
 <style scoped>
 /* Sits to the left of the theme button (1rem + 2.75rem + 0.5rem). */
 .lang-toggle {
-  position: fixed;
+  position: absolute;
   top: 1rem;
   right: 4.25rem;
   z-index: 10;

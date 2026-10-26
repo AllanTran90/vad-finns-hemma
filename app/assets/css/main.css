@@ -135,7 +135,11 @@ input::placeholder {
 
 /* Text-only button, for small actions like Delete and Log out */
 .btn-link {
-  padding: 0;
+  /* At least 44 px high, so it is easy to hit with a thumb. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.5rem;
   border: 0;
   background: none;
   color: var(--color-primary);
