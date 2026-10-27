@@ -13,10 +13,6 @@ create table public.pantry (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
   name text not null,
-  category text,
-  quantity numeric,
-  unit text,
-  expires_at date,
   created_at timestamptz not null default now()
 );
 

@@ -20,20 +20,12 @@ export type Database = {
           id: string;
           user_id: string;
           name: string;
-          category: string | null;
-          quantity: number | null;
-          unit: string | null;
-          expires_at: string | null;
           created_at: string;
         };
         Insert: {
           id?: string;
           user_id: string;
           name: string;
-          category?: string | null;
-          quantity?: number | null;
-          unit?: string | null;
-          expires_at?: string | null;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["pantry"]["Insert"]>;
