@@ -46,7 +46,7 @@ const conflictNames = computed(() =>
           :aria-label="saved ? t('favorites.remove') : t('favorites.save')"
           @click="emit('toggle')"
         >
-          {{ saved ? "♥" : "♡" }}
+          <Icon name="lucide:chef-hat" size="1.5rem" />
         </button>
       </div>
 
@@ -135,12 +135,13 @@ const conflictNames = computed(() =>
   border: none;
   background: none;
   color: var(--color-muted);
-  font-size: 1.75rem;
-  line-height: 1;
+  border-radius: 50%;
   cursor: pointer;
 }
 
+/* Saved: a green icon on a soft green circle. A line icon cannot be filled. */
 .heart.saved {
+  background: var(--color-primary-soft);
   color: var(--color-primary);
 }
 
@@ -242,5 +243,12 @@ ol {
 .note {
   margin: 0;
   font-size: 0.8125rem;
+}
+
+.title {
+  font-size: 1.625rem;
+  line-height: 1.25;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 </style>
