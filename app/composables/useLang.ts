@@ -7,7 +7,9 @@ export function useLang() {
   });
   // useState is shared by every component that calls useLang(), so they all
   // switch language at the same time. The cookie only remembers the choice.
-  const lang = useState<Lang>("lang", () => (cookie.value === "sv" ? "sv" : "en"));
+  const lang = useState<Lang>("lang", () =>
+    cookie.value === "sv" ? "sv" : "en",
+  );
 
   // Reading lang.value inside t() makes templates redraw when the language changes.
   function t(key: MessageKey, params?: Record<string, string | number>) {

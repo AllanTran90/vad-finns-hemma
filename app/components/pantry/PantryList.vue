@@ -12,7 +12,11 @@ const emit = defineEmits<{
   <ul v-if="ingredients.length" class="list">
     <li v-for="ingredient in ingredients" :key="ingredient.id">
       <span>{{ ingredient.name }}</span>
-      <button class="btn-link" type="button" @click="emit('delete', ingredient.id)">
+      <button
+        class="btn-link"
+        type="button"
+        @click="emit('delete', ingredient.id)"
+      >
         {{ t("pantry.delete") }}
       </button>
     </li>

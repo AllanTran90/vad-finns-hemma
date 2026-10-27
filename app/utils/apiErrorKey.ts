@@ -13,7 +13,11 @@ export function apiErrorKey(error: unknown, fallback: MessageKey): MessageKey {
     return "error.limit";
   }
   // No answer from the server at all, and the browser says it is offline.
-  if (!status && typeof navigator !== "undefined" && navigator.onLine === false) {
+  if (
+    !status &&
+    typeof navigator !== "undefined" &&
+    navigator.onLine === false
+  ) {
     return "error.offline";
   }
   return fallback;

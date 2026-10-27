@@ -12,8 +12,12 @@ describe("analyzeRequestSchema", () => {
   });
 
   it("rejects a missing or empty image", () => {
-    expect(analyzeRequestSchema.safeParse({ mediaType: "image/png" }).success).toBe(false);
-    expect(analyzeRequestSchema.safeParse({ ...valid, image: "" }).success).toBe(false);
+    expect(
+      analyzeRequestSchema.safeParse({ mediaType: "image/png" }).success,
+    ).toBe(false);
+    expect(
+      analyzeRequestSchema.safeParse({ ...valid, image: "" }).success,
+    ).toBe(false);
   });
 
   it("rejects an image that is too big", () => {

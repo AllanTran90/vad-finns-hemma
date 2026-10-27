@@ -50,7 +50,9 @@ const emit = defineEmits<{
           <button
             class="toggle"
             type="button"
-            :aria-label="showPassword ? t('auth.hidePassword') : t('auth.showPassword')"
+            :aria-label="
+              showPassword ? t('auth.hidePassword') : t('auth.showPassword')
+            "
             @click="showPassword = !showPassword"
           >
             <Icon :name="showPassword ? 'lucide:eye-off' : 'lucide:eye'" />

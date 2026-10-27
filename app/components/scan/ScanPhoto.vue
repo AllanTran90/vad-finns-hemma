@@ -151,7 +151,11 @@ function confirm() {
       </ul>
 
       <form class="add-row" @submit.prevent="addItem">
-        <input v-model="newItem" type="text" :placeholder="t('scan.addPlaceholder')" />
+        <input
+          v-model="newItem"
+          type="text"
+          :placeholder="t('scan.addPlaceholder')"
+        />
         <button class="btn-link" type="submit">
           {{ t("scan.add") }}
         </button>

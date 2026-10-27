@@ -16,7 +16,11 @@ const emit = defineEmits<{
 
 <template>
   <div v-if="favorites.length" class="list">
-    <UiFoldout v-for="favorite in favorites" :key="favorite.id" :title="favorite.name">
+    <UiFoldout
+      v-for="favorite in favorites"
+      :key="favorite.id"
+      :title="favorite.name"
+    >
       <RecipeCard
         :recipe="favorite"
         :avoid="avoid"

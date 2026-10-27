@@ -7,11 +7,16 @@ import type { Diet } from "#shared/diets";
 // What each diet means, written as a rule for the AI. "none" has no rule.
 const DIET_RULES: Record<Diet, string> = {
   none: "",
-  pescatarian: "The recipe must be pescatarian: no meat and no poultry. Fish, seafood, dairy and eggs are allowed.",
-  lacto_ovo_vegetarian: "The recipe must be vegetarian: no meat, poultry, fish or seafood. Dairy and eggs are allowed.",
-  lacto_vegetarian: "The recipe must be lacto-vegetarian: no meat, poultry, fish, seafood or eggs. Dairy is allowed.",
-  ovo_vegetarian: "The recipe must be ovo-vegetarian: no meat, poultry, fish, seafood or dairy. Eggs are allowed.",
-  vegan: "The recipe must be vegan: no meat, poultry, fish, seafood, dairy, eggs or honey.",
+  pescatarian:
+    "The recipe must be pescatarian: no meat and no poultry. Fish, seafood, dairy and eggs are allowed.",
+  lacto_ovo_vegetarian:
+    "The recipe must be vegetarian: no meat, poultry, fish or seafood. Dairy and eggs are allowed.",
+  lacto_vegetarian:
+    "The recipe must be lacto-vegetarian: no meat, poultry, fish, seafood or eggs. Dairy is allowed.",
+  ovo_vegetarian:
+    "The recipe must be ovo-vegetarian: no meat, poultry, fish, seafood or dairy. Eggs are allowed.",
+  vegan:
+    "The recipe must be vegan: no meat, poultry, fish, seafood, dairy, eggs or honey.",
 };
 
 export default defineEventHandler(async (event) => {

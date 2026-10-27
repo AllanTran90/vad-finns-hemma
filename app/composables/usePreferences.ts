@@ -31,7 +31,10 @@ export function usePreferences() {
 
   // upsert = insert the row, or update it if the user already has one.
   // Only the columns we send are changed, so saving allergens never touches diet.
-  async function savePreferences(fields: { allergens?: string[]; diet?: Diet }) {
+  async function savePreferences(fields: {
+    allergens?: string[];
+    diet?: Diet;
+  }) {
     const userId = user.value?.sub;
     if (!userId) {
       errorMessage.value = t("error.sessionExpired");

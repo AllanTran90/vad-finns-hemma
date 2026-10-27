@@ -73,7 +73,8 @@ const en = {
 
   // Favorites
   "favorites.title": "Saved recipes",
-  "favorites.empty": "No saved recipes yet. Tap the heart on a recipe to save it.",
+  "favorites.empty":
+    "No saved recipes yet. Tap the heart on a recipe to save it.",
   "favorites.save": "Save recipe",
   "favorites.remove": "Remove from saved",
   "favorites.errorLoad": "Could not load your saved recipes. Please try again.",
@@ -128,8 +129,10 @@ const en = {
     "Could not create account. Please check your email and password.",
   "auth.logOut": "Log out",
   "auth.logOutError": "Could not log out. Please try again.",
-  "auth.checkEmail": "Check your email and click the link to confirm your account. Then you can log in.",
-  "auth.rateLimit": "Too many attempts right now. Please wait a while and try again.",
+  "auth.checkEmail":
+    "Check your email and click the link to confirm your account. Then you can log in.",
+  "auth.rateLimit":
+    "Too many attempts right now. Please wait a while and try again.",
   "auth.guest": "Continue as guest",
   "auth.guestError": "Could not start a guest session. Please try again.",
 
@@ -139,10 +142,12 @@ const en = {
     "If you log out, your ingredients and saved recipes are gone. Create an account to keep them.",
   "guest.logoutConfirm":
     "You are a guest. If you log out, all your ingredients and saved recipes are lost. Log out anyway?",
-  "guest.checkEmail": "Check your email and click the link to finish creating your account.",
+  "guest.checkEmail":
+    "Check your email and click the link to finish creating your account.",
 
   // Errors that can happen in any call to our server
-  "error.offline": "No internet connection. Check your connection and try again.",
+  "error.offline":
+    "No internet connection. Check your connection and try again.",
   "error.sessionExpired": "Your login has expired. Please log in again.",
   "error.limit": "You have reached today's limit. Please try again tomorrow.",
 
@@ -221,7 +226,8 @@ const sv: Record<MessageKey, string> = {
 
   // Favorites
   "favorites.title": "Sparade recept",
-  "favorites.empty": "Inga sparade recept än. Tryck på hjärtat på ett recept för att spara det.",
+  "favorites.empty":
+    "Inga sparade recept än. Tryck på hjärtat på ett recept för att spara det.",
   "favorites.save": "Spara receptet",
   "favorites.remove": "Ta bort från sparade",
   "favorites.errorLoad": "Kunde inte hämta dina sparade recept. Försök igen.",
@@ -270,10 +276,12 @@ const sv: Record<MessageKey, string> = {
   "auth.noAccount": "Har du inget konto än?",
   "auth.haveAccount": "Har du redan ett konto?",
   "auth.loginError": "Fel e-post eller lösenord. Försök igen.",
-  "auth.signupError": "Kunde inte skapa kontot. Kontrollera e-post och lösenord.",
+  "auth.signupError":
+    "Kunde inte skapa kontot. Kontrollera e-post och lösenord.",
   "auth.logOut": "Logga ut",
   "auth.logOutError": "Kunde inte logga ut. Försök igen.",
-  "auth.checkEmail": "Kolla din e-post och klicka på länken för att bekräfta kontot. Sedan kan du logga in.",
+  "auth.checkEmail":
+    "Kolla din e-post och klicka på länken för att bekräfta kontot. Sedan kan du logga in.",
   "auth.rateLimit": "För många försök just nu. Vänta en stund och försök igen.",
   "auth.guest": "Fortsätt som gäst",
   "auth.guestError": "Kunde inte starta gästläget. Försök igen.",
@@ -284,10 +292,12 @@ const sv: Record<MessageKey, string> = {
     "Loggar du ut försvinner dina ingredienser och sparade recept. Skapa ett konto för att behålla dem.",
   "guest.logoutConfirm":
     "Du är gäst. Loggar du ut försvinner alla dina ingredienser och sparade recept. Vill du logga ut ändå?",
-  "guest.checkEmail": "Kolla din e-post och klicka på länken för att slutföra kontot.",
+  "guest.checkEmail":
+    "Kolla din e-post och klicka på länken för att slutföra kontot.",
 
   // Errors that can happen in any call to our server
-  "error.offline": "Ingen internetanslutning. Kontrollera anslutningen och försök igen.",
+  "error.offline":
+    "Ingen internetanslutning. Kontrollera anslutningen och försök igen.",
   "error.sessionExpired": "Din inloggning har gått ut. Logga in igen.",
   "error.limit": "Du har nått dagens gräns. Försök igen i morgon.",
 

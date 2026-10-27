@@ -29,24 +29,39 @@ describe("recipeSchema", () => {
   });
 
   it("rejects the wrong type, for example cook time as text", () => {
-    const result = recipeSchema.safeParse({ ...valid, cook_time_minutes: "soon" });
+    const result = recipeSchema.safeParse({
+      ...valid,
+      cook_time_minutes: "soon",
+    });
 
     expect(result.success).toBe(false);
   });
 
   it("rejects empty texts and empty lists", () => {
     expect(recipeSchema.safeParse({ ...valid, name: "" }).success).toBe(false);
-    expect(recipeSchema.safeParse({ ...valid, ingredients: [] }).success).toBe(false);
-    expect(recipeSchema.safeParse({ ...valid, instructions: [""] }).success).toBe(false);
+    expect(recipeSchema.safeParse({ ...valid, ingredients: [] }).success).toBe(
+      false,
+    );
+    expect(
+      recipeSchema.safeParse({ ...valid, instructions: [""] }).success,
+    ).toBe(false);
   });
 
   it("rejects zero, negative and fractional cooking time", () => {
-    expect(recipeSchema.safeParse({ ...valid, cook_time_minutes: 0 }).success).toBe(false);
-    expect(recipeSchema.safeParse({ ...valid, cook_time_minutes: -5 }).success).toBe(false);
-    expect(recipeSchema.safeParse({ ...valid, cook_time_minutes: 12.5 }).success).toBe(false);
+    expect(
+      recipeSchema.safeParse({ ...valid, cook_time_minutes: 0 }).success,
+    ).toBe(false);
+    expect(
+      recipeSchema.safeParse({ ...valid, cook_time_minutes: -5 }).success,
+    ).toBe(false);
+    expect(
+      recipeSchema.safeParse({ ...valid, cook_time_minutes: 12.5 }).success,
+    ).toBe(false);
   });
 
   it("accepts a recipe without allergens", () => {
-    expect(recipeSchema.safeParse({ ...valid, allergens: [] }).success).toBe(true);
+    expect(recipeSchema.safeParse({ ...valid, allergens: [] }).success).toBe(
+      true,
+    );
   });
 });

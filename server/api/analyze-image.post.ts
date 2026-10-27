@@ -10,7 +10,8 @@ export default defineEventHandler(async (event) => {
   if (!parsed.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Please send a JPEG, PNG or WebP image (max about 1.5 MB).",
+      statusMessage:
+        "Please send a JPEG, PNG or WebP image (max about 1.5 MB).",
     });
   }
   const body = parsed.data;

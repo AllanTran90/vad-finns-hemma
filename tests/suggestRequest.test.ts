@@ -26,18 +26,28 @@ describe("suggestRequestSchema", () => {
   });
 
   it("rejects missing or empty ingredients", () => {
-    expect(suggestRequestSchema.safeParse({ cuisine: "Italian" }).success).toBe(false);
-    expect(suggestRequestSchema.safeParse({ ...valid, ingredients: [] }).success).toBe(false);
+    expect(suggestRequestSchema.safeParse({ cuisine: "Italian" }).success).toBe(
+      false,
+    );
+    expect(
+      suggestRequestSchema.safeParse({ ...valid, ingredients: [] }).success,
+    ).toBe(false);
   });
 
   it("rejects an ingredient that is only spaces", () => {
-    const result = suggestRequestSchema.safeParse({ ...valid, ingredients: ["   "] });
+    const result = suggestRequestSchema.safeParse({
+      ...valid,
+      ingredients: ["   "],
+    });
 
     expect(result.success).toBe(false);
   });
 
   it("trims spaces around ingredients", () => {
-    const result = suggestRequestSchema.safeParse({ ...valid, ingredients: ["  milk "] });
+    const result = suggestRequestSchema.safeParse({
+      ...valid,
+      ingredients: ["  milk "],
+    });
 
     expect(result.data?.ingredients).toEqual(["milk"]);
   });
@@ -45,7 +55,9 @@ describe("suggestRequestSchema", () => {
   it("rejects too many ingredients", () => {
     const ingredients = Array.from({ length: 51 }, (_, i) => `item ${i}`);
 
-    expect(suggestRequestSchema.safeParse({ ...valid, ingredients }).success).toBe(false);
+    expect(
+      suggestRequestSchema.safeParse({ ...valid, ingredients }).success,
+    ).toBe(false);
   });
 
   it("rejects a very long ingredient", () => {
@@ -58,9 +70,15 @@ describe("suggestRequestSchema", () => {
   });
 
   it("rejects an allergen, diet or language that is not in our lists", () => {
-    expect(suggestRequestSchema.safeParse({ ...valid, avoid: ["unicorn"] }).success).toBe(false);
-    expect(suggestRequestSchema.safeParse({ ...valid, diet: "carnivore" }).success).toBe(false);
-    expect(suggestRequestSchema.safeParse({ ...valid, lang: "fr" }).success).toBe(false);
+    expect(
+      suggestRequestSchema.safeParse({ ...valid, avoid: ["unicorn"] }).success,
+    ).toBe(false);
+    expect(
+      suggestRequestSchema.safeParse({ ...valid, diet: "carnivore" }).success,
+    ).toBe(false);
+    expect(
+      suggestRequestSchema.safeParse({ ...valid, lang: "fr" }).success,
+    ).toBe(false);
   });
 
   it("accepts known allergens, diet and language", () => {

@@ -4,46 +4,48 @@ import type { MessageKey } from "#shared/i18n";
 const { t } = useLang();
 
 defineProps<{
-    name: string;
-    selected: boolean;
+  name: string;
+  selected: boolean;
 }>();
 
 const emit = defineEmits<{
-    select: [name: string];
+  select: [name: string];
 }>();
 </script>
 
 <template>
-    <button type="button" 
-    :class="{ selected: selected}"
+  <button
+    type="button"
+    :class="{ selected: selected }"
     @click="emit('select', name)"
-    >
-        {{ t(`cuisine.${name}` as MessageKey) }}
-    </button>
-    
+  >
+    {{ t(`cuisine.${name}` as MessageKey) }}
+  </button>
 </template>
 
 <style scoped>
 button {
-    padding: 1rem;
-    border: 2px solid var(--color-line);
-    border-radius: 14px;
-    background: var(--color-surface);
-    color: var(--color-text);
-    font: inherit;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
+  padding: 1rem;
+  border: 2px solid var(--color-line);
+  border-radius: 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 @media (hover: hover) {
-    button:hover {
-        border-color: var(--color-primary);
-    }
+  button:hover {
+    border-color: var(--color-primary);
+  }
 }
 
-.selected{
-    border-color: var(--color-select-border);
-    background: var(--color-select-bg);
-    font-weight: 600;
+.selected {
+  border-color: var(--color-select-border);
+  background: var(--color-select-bg);
+  font-weight: 600;
 }
 </style>

@@ -111,13 +111,14 @@ Priority order. The server trusts too much of what the browser sends.
 
 Smaller things, when there is time:
 - [x] addIngredient (form) should skip duplicates like addIngredients does
-- [ ] Remove or explain unused pantry columns (category, quantity, unit,
+- [x] Remove or explain unused pantry columns (category, quantity, unit,
   expires_at)
 - [x] recipeSchema: .min(1) on strings and lists, .int().positive() on
   cook_time_minutes
 - [x] Redirect a logged-in user from /login to /
 - [x] .env.example with variable names only
-- [ ] Run Prettier (indentation in usePantry.ts, CuisineCard.vue, auth.ts)
+- [x] Run Prettier (indentation in usePantry.ts, CuisineCard.vue, auth.ts)
+  (installed as devDependency, settings in .prettierrc)
 - [ ] findFavorite compares by name: two recipes with the same name count
   as one favorite (fine for now)
 - [ ] Idea: use Claude tool use with a JSON schema instead of JSON.parse

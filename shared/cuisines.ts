@@ -1,4 +1,13 @@
-export const CUISINES = ["Swedish", "Chinese", "Vietnamese", "Japanese", "French", "Spanish", "Korean", "Italian"] as const;
+export const CUISINES = [
+  "Swedish",
+  "Chinese",
+  "Vietnamese",
+  "Japanese",
+  "French",
+  "Spanish",
+  "Korean",
+  "Italian",
+] as const;
 //as const lockes the list.
 
 // Special choice: we pick a random cuisine from the list above.

@@ -26,12 +26,7 @@ const {
   saveDiet,
 } = usePreferences();
 
-const {
-  recipe,
-  loading,
-  errorMessage: recipeError,
-  getRecipe,
-} = useRecipe();
+const { recipe, loading, errorMessage: recipeError, getRecipe } = useRecipe();
 
 const {
   favorites,

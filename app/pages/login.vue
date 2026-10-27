@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const supabase = useSupabaseClient();
 const { t } = useLang();
 const errorMessage = ref("");
