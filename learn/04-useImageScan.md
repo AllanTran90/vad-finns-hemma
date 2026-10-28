@@ -32,7 +32,7 @@ Läser in bildfilen så att webbläsaren kan rita den.
 ```ts
 const scale = Math.min(1, MAX_SIZE / Math.max(bitmap.width, bitmap.height));
 ```
-Hur mycket ska bilden krympas? Den längsta sidan ska bli högst 1280 px
+Hur mycket ska bilden krympas? Den längsta sidan ska bli högst 1568 px
 (`MAX_SIZE`). `Math.max` hittar den längsta sidan. `Math.min(1, ...)` ser till
 att små bilder aldrig förstoras.
 

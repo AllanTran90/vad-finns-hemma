@@ -1,6 +1,6 @@
 import type { DetectedIngredients } from "#shared/schemas/detectedIngredients";
 
-const MAX_SIZE = 1280;
+const MAX_SIZE = 1568;
 
 // Shrinks the photo in the browser and returns it as base64 (without the
 // "data:image/jpeg;base64," prefix). Phone photos are too big to send as is.
