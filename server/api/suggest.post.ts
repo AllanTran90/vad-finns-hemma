@@ -55,7 +55,11 @@ export default defineEventHandler(async (event) => {
         content: `I want to cook ${wish}. Answer in ${language}.
       ${avoidSentence}
       ${dietRule}
-      Use metric units: grams, deciliters, tablespoons, teaspoons. ingredients: ${body.ingredients.join(", ")}.
+      Use metric units: grams, deciliters, tablespoons, teaspoons.
+      The ingredients I have at home: ${body.ingredients.join(", ")}.
+      Only use these ingredients. You do not have to use all of them.
+      You may also use basic staples that I did not list: salt, pepper, water, cooking oil and sugar.
+      Do not add any other ingredient. If the cuisine normally needs more, choose a simpler dish that works with what I have.
       Respond with JSON only, no other text.
       Do not wrap the JSON in markdown code fences.
       Keep the JSON keys and the allergen values exactly as written (in English).
