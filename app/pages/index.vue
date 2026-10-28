@@ -56,7 +56,7 @@ async function handleGetRecipe() {
   );
 }
 
-// The heart on the recipe card: remove the recipe if it is saved, otherwise save it.
+// The save button on the recipe card: remove the recipe if it is saved, otherwise save it.
 async function toggleFavorite() {
   if (!recipe.value) {
     return;

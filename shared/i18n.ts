@@ -74,7 +74,7 @@ const en = {
   // Favorites
   "favorites.title": "Saved recipes",
   "favorites.empty":
-    "No saved recipes yet. Tap the heart on a recipe to save it.",
+    "No saved recipes yet. Tap the chef hat on a recipe to save it.",
   "favorites.save": "Save recipe",
   "favorites.remove": "Remove from saved",
   "favorites.errorLoad": "Could not load your saved recipes. Please try again.",
@@ -227,7 +227,7 @@ const sv: Record<MessageKey, string> = {
   // Favorites
   "favorites.title": "Sparade recept",
   "favorites.empty":
-    "Inga sparade recept än. Tryck på hjärtat på ett recept för att spara det.",
+    "Inga sparade recept än. Tryck på kockmössan på ett recept för att spara det.",
   "favorites.save": "Spara receptet",
   "favorites.remove": "Ta bort från sparade",
   "favorites.errorLoad": "Kunde inte hämta dina sparade recept. Försök igen.",

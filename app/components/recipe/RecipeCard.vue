@@ -6,7 +6,7 @@ const props = withDefaults(
     recipe: Recipe;
     // The allergens the user wants to avoid.
     avoid?: string[];
-    // Whether the recipe is in the user's favorites (the heart is filled).
+    // Whether the recipe is in the user's favorites (the save button is highlighted).
     saved?: boolean;
   }>(),
   { avoid: () => [], saved: false },
@@ -39,7 +39,7 @@ const conflictNames = computed(() =>
       <div class="header">
         <h2 class="title">{{ recipe.name }}</h2>
         <button
-          class="heart"
+          class="save-button"
           :class="{ saved }"
           type="button"
           :aria-pressed="saved"
@@ -125,7 +125,7 @@ const conflictNames = computed(() =>
   line-height: 1.25;
 }
 
-.heart {
+.save-button {
   flex: none;
   display: grid;
   place-items: center;
@@ -140,7 +140,7 @@ const conflictNames = computed(() =>
 }
 
 /* Saved: a green icon on a soft green circle. A line icon cannot be filled. */
-.heart.saved {
+.save-button.saved {
   background: var(--color-primary-soft);
   color: var(--color-primary);
 }
