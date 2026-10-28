@@ -127,7 +127,8 @@ Smaller things, when there is time:
 
 ### Sprint 5, week 46
 - [x] Tests (Vitest, tests/ folder: request schemas and recipe schema)
-- [ ] Mobile polish
+- [x] Mobile polish (tested at 360 px: login, signup, recipe, save, allergies,
+  diet, photo scan and the guest flow)
 - [x] Documentation (README with a step by step setup guide)
 - [x] README
 - [x] License (MIT)
@@ -145,6 +146,11 @@ Smaller things, when there is time:
   and show them in their own "You need to buy" list. Needs a new field in
   shared/schemas/recipe.ts and a new part in RecipeCard.vue. (Now the prompt
   only allows the listed ingredients plus basic staples.)
+- [ ] Own confirm dialog for guest logout, in the app's style. The browser's
+  confirm() shows "Cancel" and "OK" in the browser's language, not the app's.
+- [ ] Photo scan sometimes lists food that is not in the photo. Try a stricter
+  prompt ("if unsure, leave it out") in server/api/analyze-image.post.ts first,
+  then Sonnet for the image analysis only (about 2 cents per scan).
 - [ ] Own camera view with getUserMedia (switch front/back camera). Not needed
   for the MVP, the phone's own camera app already works.
 - [ ] Translate ingredient names when the language is switched
