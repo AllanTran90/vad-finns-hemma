@@ -141,6 +141,10 @@ Smaller things, when there is time:
 - [ ] Choose menu style: restaurant (fine dining) or regular home cooking.
   Only a change in the prompt sent to /api/suggest, so do it after the
   course choice.
+- [ ] Shopping list: let the AI use a few ingredients the user does not have,
+  and show them in their own "You need to buy" list. Needs a new field in
+  shared/schemas/recipe.ts and a new part in RecipeCard.vue. (Now the prompt
+  only allows the listed ingredients plus basic staples.)
 - [ ] Own camera view with getUserMedia (switch front/back camera). Not needed
   for the MVP, the phone's own camera app already works.
 - [ ] Translate ingredient names when the language is switched
