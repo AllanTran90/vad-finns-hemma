@@ -121,9 +121,25 @@ Smaller things, when there is time:
   (installed as devDependency, settings in .prettierrc)
 - [ ] findFavorite compares by name: two recipes with the same name count
   as one favorite (fine for now)
-- [ ] Idea: use Claude tool use with a JSON schema instead of JSON.parse
+- [x] Idea: use Claude tool use with a JSON schema instead of JSON.parse
+  (done 29 Oct with structured outputs, see below)
 - [ ] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL
   needs a Vercel login)
+
+### Code review (29 Oct, new model)
+- [x] Pantry limits shared with the server (shared/limits.ts): max 50
+  ingredients of max 60 characters. Before, a bigger pantry gave a 400 and
+  only "could not get a recipe".
+- [x] server/utils/askClaude.ts: one shared Claude call for both routes (DRY),
+  with structured outputs (the API answers in the Zod schema's shape, no
+  JSON.parse), stop_reason check, and 503 "AI is busy" when Claude is down
+- [x] Stricter types: Allergen[] and Diet instead of string
+- [x] A guest who logs in to a real account is warned first
+- [ ] Check Auth > Rate Limits in Supabase: how many anonymous sign-ins per
+  IP and hour? Each guest gets 30 Claude calls per day, so new guest accounts
+  can get around the daily limit. Write it as a known limitation in the report.
+- [ ] Known limitation: a call that fails at Claude still counts towards the
+  daily limit (the quota is checked before the call)
 
 ### Sprint 5, week 46
 - [x] Tests (Vitest, tests/ folder: request schemas and recipe schema)
