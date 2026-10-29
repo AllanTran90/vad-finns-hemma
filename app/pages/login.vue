@@ -1,10 +1,17 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 const { t } = useLang();
 const errorMessage = ref("");
 
 async function signIn(email: string, password: string) {
   errorMessage.value = "";
+
+  // Logging in replaces the guest session, and the guest's data cannot be
+  // reached again. Same warning as when a guest logs out (see index.vue).
+  if (user.value?.is_anonymous && !window.confirm(t("guest.loginConfirm"))) {
+    return;
+  }
 
   const { error } = await supabase.auth.signInWithPassword({
     email: email,
