@@ -430,3 +430,7 @@ tests/          Vitest tests
 ## License
 
 MIT, see [license](license).
+
+## Author
+
+Allan Tran
