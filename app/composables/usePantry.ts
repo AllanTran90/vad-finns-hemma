@@ -1,4 +1,5 @@
 import type { Database } from "#shared/database.types";
+import { MAX_INGREDIENTS, MAX_INGREDIENT_LENGTH } from "#shared/limits";
 
 type PantryInsert = Database["public"]["Tables"]["pantry"]["Insert"];
 
@@ -42,6 +43,19 @@ export function usePantry() {
       return;
     }
 
+    // Same limits as /api/suggest, so the recipe button never gets a 400.
+    if (cleanName.length > MAX_INGREDIENT_LENGTH) {
+      errorMessage.value = t("pantry.errorTooLong", {
+        max: MAX_INGREDIENT_LENGTH,
+      });
+      return;
+    }
+
+    if (ingredients.value.length >= MAX_INGREDIENTS) {
+      errorMessage.value = t("pantry.errorFull", { max: MAX_INGREDIENTS });
+      return;
+    }
+
     // The database needs to know who owns the row. No user means the login is gone.
     const userId = user.value?.sub;
     if (!userId) {
@@ -64,7 +78,9 @@ export function usePantry() {
   }
 
   // Saves many ingredients in one request, e.g. the list from a photo scan.
-  // Skips empty names and names that are already in the pantry.
+  // Skips empty names and names that are already in the pantry. Names that are
+  // too long, or do not fit in a full pantry, are skipped and counted, so the
+  // user is told about them instead of losing them silently.
   async function addIngredients(names: string[]) {
     errorMessage.value = "";
 
@@ -78,6 +94,7 @@ export function usePantry() {
       ingredients.value.map((ingredient) => ingredient.name.toLowerCase()),
     );
     const rows: PantryInsert[] = [];
+    let skipped = 0;
 
     for (const name of names) {
       const cleanName = name.trim();
@@ -87,23 +104,35 @@ export function usePantry() {
         continue;
       }
 
+      const isFull = ingredients.value.length + rows.length >= MAX_INGREDIENTS;
+      if (cleanName.length > MAX_INGREDIENT_LENGTH || isFull) {
+        skipped++;
+        continue;
+      }
+
       known.add(key);
       rows.push({ name: cleanName, user_id: userId });
     }
 
-    if (rows.length === 0) {
-      return;
+    if (rows.length > 0) {
+      const { error } = await supabase.from("pantry").insert(rows);
+
+      if (error) {
+        console.log("Add ingredients error:", error);
+        errorMessage.value = t("pantry.errorAddMany");
+        return;
+      }
+
+      await loadIngredients();
     }
 
-    const { error } = await supabase.from("pantry").insert(rows);
-
-    if (error) {
-      console.log("Add ingredients error:", error);
-      errorMessage.value = t("pantry.errorAddMany");
-      return;
+    if (skipped > 0) {
+      errorMessage.value = t("pantry.errorSkipped", {
+        count: skipped,
+        max: MAX_INGREDIENTS,
+        length: MAX_INGREDIENT_LENGTH,
+      });
     }
-
-    await loadIngredients();
   }
 
   async function deleteIngredient(id: string) {

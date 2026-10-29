@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { MAX_INGREDIENT_LENGTH } from "#shared/limits";
+
 const props = defineProps<{
   // Names already in the pantry, used to mark rows that are not new.
   existing: string[];
@@ -142,6 +144,7 @@ function confirm() {
           <input
             v-model="items[index]"
             type="text"
+            :maxlength="MAX_INGREDIENT_LENGTH"
             :aria-label="t('scan.ingredientN', { n: index + 1 })"
           />
           <button class="btn-link" type="button" @click="removeItem(index)">
@@ -154,6 +157,7 @@ function confirm() {
         <input
           v-model="newItem"
           type="text"
+          :maxlength="MAX_INGREDIENT_LENGTH"
           :placeholder="t('scan.addPlaceholder')"
         />
         <button class="btn-link" type="submit">

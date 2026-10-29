@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CUISINES, SURPRISE, pickRandomCuisine } from "#shared/cuisines";
+import { MAX_INGREDIENT_LENGTH } from "#shared/limits";
 
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
@@ -128,6 +129,7 @@ definePageMeta({
               v-model="ingredientName"
               type="text"
               :placeholder="t('pantry.placeholder')"
+              :maxlength="MAX_INGREDIENT_LENGTH"
               required
             />
             <button class="btn" type="submit">{{ t("pantry.add") }}</button>

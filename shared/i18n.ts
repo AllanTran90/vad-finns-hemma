@@ -17,6 +17,11 @@ const en = {
   "pantry.errorDuplicate": "That ingredient is already in your pantry.",
   "pantry.errorAddMany": "Could not save the ingredients. Please try again.",
   "pantry.errorDelete": "Could not delete ingredient. Please try again.",
+  "pantry.errorTooLong": "Please keep ingredient names under {max} characters.",
+  "pantry.errorFull":
+    "Your pantry is full ({max} ingredients). Delete some first.",
+  "pantry.errorSkipped":
+    "{count} ingredient(s) were not added: the pantry holds at most {max}, and each name can be at most {length} characters.",
 
   // Allergies
   "prefs.allergies": "Allergies",
@@ -142,6 +147,8 @@ const en = {
     "If you log out, your ingredients and saved recipes are gone. Create an account to keep them.",
   "guest.logoutConfirm":
     "You are a guest. If you log out, all your ingredients and saved recipes are lost. Log out anyway?",
+  "guest.loginConfirm":
+    "You are a guest. If you log in to another account, your guest ingredients and saved recipes are lost. Continue?",
   "guest.checkEmail":
     "Check your email and click the link to finish creating your account.",
 
@@ -150,6 +157,7 @@ const en = {
     "No internet connection. Check your connection and try again.",
   "error.sessionExpired": "Your login has expired. Please log in again.",
   "error.limit": "You have reached today's limit. Please try again tomorrow.",
+  "error.aiBusy": "The AI is busy right now. Please try again in a minute.",
 
   // Toggles
   "theme.toLight": "Switch to light mode",
@@ -174,6 +182,11 @@ const sv: Record<MessageKey, string> = {
   "pantry.errorDuplicate": "Den ingrediensen finns redan i ditt skafferi.",
   "pantry.errorAddMany": "Kunde inte spara ingredienserna. Försök igen.",
   "pantry.errorDelete": "Kunde inte ta bort ingrediensen. Försök igen.",
+  "pantry.errorTooLong": "Ingrediensens namn får vara högst {max} tecken.",
+  "pantry.errorFull":
+    "Skafferiet är fullt ({max} ingredienser). Ta bort några först.",
+  "pantry.errorSkipped":
+    "{count} ingrediens(er) lades inte till: skafferiet rymmer högst {max}, och varje namn får vara högst {length} tecken.",
 
   "prefs.allergies": "Allergier",
   "prefs.hint": "Recepten undviker det du väljer.",
@@ -292,6 +305,8 @@ const sv: Record<MessageKey, string> = {
     "Loggar du ut försvinner dina ingredienser och sparade recept. Skapa ett konto för att behålla dem.",
   "guest.logoutConfirm":
     "Du är gäst. Loggar du ut försvinner alla dina ingredienser och sparade recept. Vill du logga ut ändå?",
+  "guest.loginConfirm":
+    "Du är gäst. Loggar du in på ett annat konto försvinner gästens ingredienser och sparade recept. Fortsätta?",
   "guest.checkEmail":
     "Kolla din e-post och klicka på länken för att slutföra kontot.",
 
@@ -300,6 +315,7 @@ const sv: Record<MessageKey, string> = {
     "Ingen internetanslutning. Kontrollera anslutningen och försök igen.",
   "error.sessionExpired": "Din inloggning har gått ut. Logga in igen.",
   "error.limit": "Du har nått dagens gräns. Försök igen i morgon.",
+  "error.aiBusy": "AI:n är upptagen just nu. Försök igen om en minut.",
 
   "theme.toLight": "Byt till ljust läge",
   "theme.toDark": "Byt till mörkt läge",
