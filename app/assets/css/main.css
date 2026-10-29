@@ -80,6 +80,10 @@ body {
     Roboto,
     sans-serif;
   line-height: 1.4;
+  /* A long word without spaces (e.g. a 60 letter ingredient) breaks onto the
+     next line instead of pushing out of its box. "anywhere" also lets flex
+     rows shrink, which "break-word" does not. */
+  overflow-wrap: anywhere;
 }
 
 h1 {

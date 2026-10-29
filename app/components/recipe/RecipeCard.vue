@@ -121,6 +121,7 @@ const conflictNames = computed(() =>
 }
 
 .title {
+  min-width: 0;
   font-size: 1.625rem;
   line-height: 1.25;
 }
@@ -243,12 +244,5 @@ ol {
 .note {
   margin: 0;
   font-size: 0.8125rem;
-}
-
-.title {
-  font-size: 1.625rem;
-  line-height: 1.25;
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 </style>
