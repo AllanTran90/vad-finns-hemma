@@ -60,6 +60,12 @@ async function createAccount() {
     </form>
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
     <p v-if="infoMessage" role="status">{{ infoMessage }}</p>
+    <!-- The form above can only create a NEW account. This is the way to an
+         existing one. /login warns the guest that the guest data is lost. -->
+    <p class="login-link">
+      {{ t("auth.haveAccount") }}
+      <NuxtLink to="/login">{{ t("auth.logIn") }}</NuxtLink>
+    </p>
   </section>
 </template>
 
@@ -77,6 +83,11 @@ async function createAccount() {
 .guest h2,
 .guest p {
   margin: 0;
+}
+
+.login-link a {
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 form {
