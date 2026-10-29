@@ -12,6 +12,10 @@ export function apiErrorKey(error: unknown, fallback: MessageKey): MessageKey {
   if (status === 429) {
     return "error.limit";
   }
+  // Our server says Claude is overloaded or down (see server/utils/askClaude.ts).
+  if (status === 503) {
+    return "error.aiBusy";
+  }
   // No answer from the server at all, and the browser says it is offline.
   if (
     !status &&

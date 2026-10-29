@@ -1,7 +1,5 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { recipeSchema } from "#shared/schemas/recipe";
 import { suggestRequestSchema } from "#shared/schemas/suggestRequest";
-import { ALLERGENS } from "#shared/allergens";
 import type { Diet } from "#shared/diets";
 
 // What each diet means, written as a rule for the AI. "none" has no rule.
@@ -32,9 +30,6 @@ export default defineEventHandler(async (event) => {
 
   await requireQuota(event);
 
-  const config = useRuntimeConfig(event);
-  const client = new Anthropic({ apiKey: config.anthropicApiKey });
-
   const language = body.lang === "sv" ? "Swedish" : "English";
 
   const wish = `${body.cuisine} food`;
@@ -44,15 +39,11 @@ export default defineEventHandler(async (event) => {
     ? `The recipe must NOT contain these allergens: ${body.avoid.join(", ")}. Choose other ingredients instead.`
     : "";
 
-  const message = await client.messages.create({
-    model: "claude-haiku-5-5",
-    // The model may "think" before it answers, and the thinking also uses tokens.
-    // With diet and allergy rules the answer can get cut off if this is too low.
-    max_tokens: 4000,
-    messages: [
-      {
-        role: "user",
-        content: `I want to cook ${wish}. Answer in ${language}.
+  // The answer's shape comes from recipeSchema (structured outputs, see askClaude),
+  // so the prompt only has to explain what to cook and how to fill in the fields.
+  return askClaude(
+    event,
+    `I want to cook ${wish}. Answer in ${language}.
       ${avoidSentence}
       ${dietRule}
       Use metric units: grams, deciliters, tablespoons, teaspoons.
@@ -60,49 +51,9 @@ export default defineEventHandler(async (event) => {
       Only use these ingredients. You do not have to use all of them.
       You may also use basic staples that I did not list: salt, pepper, water, cooking oil and sugar.
       Do not add any other ingredient. If the cuisine normally needs more, choose a simpler dish that works with what I have.
-      Respond with JSON only, no other text.
-      Do not wrap the JSON in markdown code fences.
-      Keep the JSON keys and the allergen values exactly as written (in English).
-      For "allergens", only use values from this list: ${ALLERGENS.join(", ")}
-      Use exactly this format:
-      {
-        "name": "...",
-        "ingredients": ["150 g flour", "..."],
-        "instructions": ["...", "..."],
-        "cuisine": "...",
-        "kid_friendly": true,
-        "allergens": [],
-        "cook_time_minutes": 30
-}
-`,
-      },
-    ],
-  });
-
-  const textBlock = message.content.find((block) => block.type === "text");
-
-  let recipe;
-  try {
-    recipe = JSON.parse(textBlock?.text ?? "");
-  } catch (error) {
-    console.log("JSON parse error:", error);
-    console.log("Raw text from Claude:", textBlock?.text);
-    console.log("Stop reason:", message.stop_reason);
-    throw createError({
-      statusCode: 502,
-      statusMessage: "Could not get a valid recipe. Please try again.",
-    });
-  }
-
-  const result = recipeSchema.safeParse(recipe);
-
-  if (!result.success) {
-    console.log("Zod error", result.error);
-    throw createError({
-      statusCode: 502,
-      statusMessage: "Could not get a valid recipe. Please try again.",
-    });
-  }
-
-  return result.data;
+      Write each ingredient with its amount, for example "150 g flour".
+      In "allergens", list every allergen the recipe contains.`,
+    recipeSchema,
+    "Could not get a valid recipe. Please try again.",
+  );
 });

@@ -14,6 +14,12 @@ describe("apiErrorKey", () => {
     );
   });
 
+  it("maps 503 to the AI busy text", () => {
+    expect(apiErrorKey({ statusCode: 503 }, "recipe.error")).toBe(
+      "error.aiBusy",
+    );
+  });
+
   it("uses the fallback for other errors", () => {
     expect(apiErrorKey({ statusCode: 502 }, "scan.error")).toBe("scan.error");
     expect(apiErrorKey(new Error("boom"), "scan.error")).toBe("scan.error");

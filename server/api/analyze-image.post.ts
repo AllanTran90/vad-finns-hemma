@@ -1,4 +1,3 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { detectedIngredientsSchema } from "#shared/schemas/detectedIngredients";
 import { analyzeRequestSchema } from "#shared/schemas/analyzeRequest";
 
@@ -22,63 +21,26 @@ export default defineEventHandler(async (event) => {
   const language = isSwedish ? "Swedish" : "English";
   const example = isSwedish ? '"tomat" and "mjölk"' : '"tomato" and "milk"';
 
-  const config = useRuntimeConfig(event);
-  const client = new Anthropic({ apiKey: config.anthropicApiKey });
-
-  const message = await client.messages.create({
-    model: "claude-haiku-5-5",
-    max_tokens: 4000,
-    messages: [
+  return askClaude(
+    event,
+    [
       {
-        role: "user",
-        content: [
-          {
-            type: "image",
-            source: {
-              type: "base64",
-              media_type: body.mediaType,
-              data: body.image,
-            },
-          },
-          {
-            type: "text",
-            text: `List the food ingredients you can see in this photo.
+        type: "image",
+        source: {
+          type: "base64",
+          media_type: body.mediaType,
+          data: body.image,
+        },
+      },
+      {
+        type: "text",
+        text: `List the food ingredients you can see in this photo.
       Use simple, singular ${language} names, for example ${example}.
       Only include food you can clearly see. Do not guess what is hidden.
-      Respond with JSON only, no other text.
-      Do not wrap the JSON in markdown code fences.
-      Use exactly this format:
-      { "ingredients": ["...", "..."] }
-      If you see no food, respond with { "ingredients": [] }`,
-          },
-        ],
+      If you see no food, answer with an empty list.`,
       },
     ],
-  });
-
-  const textBlock = message.content.find((block) => block.type === "text");
-
-  let detected;
-  try {
-    detected = JSON.parse(textBlock?.text ?? "");
-  } catch (error) {
-    console.log("JSON parse error:", error);
-    console.log("Raw text from Claude:", textBlock?.text);
-    throw createError({
-      statusCode: 502,
-      statusMessage: "Could not read the photo. Please try again.",
-    });
-  }
-
-  const result = detectedIngredientsSchema.safeParse(detected);
-
-  if (!result.success) {
-    console.log("Zod error", result.error);
-    throw createError({
-      statusCode: 502,
-      statusMessage: "Could not read the photo. Please try again.",
-    });
-  }
-
-  return result.data;
+    detectedIngredientsSchema,
+    "Could not read the photo. Please try again.",
+  );
 });
