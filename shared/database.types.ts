@@ -62,13 +62,13 @@ export type Database = {
       preferences: {
         Row: {
           user_id: string;
-          allergens: string[];
+          allergens: Allergen[];
           diet: Diet;
           updated_at: string;
         };
         Insert: {
           user_id: string;
-          allergens?: string[];
+          allergens?: Allergen[];
           diet?: Diet;
           updated_at?: string;
         };

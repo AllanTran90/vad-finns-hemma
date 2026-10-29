@@ -1,3 +1,5 @@
+import type { Allergen } from "#shared/allergens";
+import type { Diet } from "#shared/diets";
 import type { Recipe } from "#shared/schemas/recipe";
 
 export function useRecipe() {
@@ -9,8 +11,8 @@ export function useRecipe() {
   async function getRecipe(
     cuisine: string,
     ingredients: string[],
-    avoid: string[],
-    diet: string,
+    avoid: Allergen[],
+    diet: Diet,
   ) {
     errorMessage.value = "";
     recipe.value = null;

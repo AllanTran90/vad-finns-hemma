@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ALLERGENS } from "#shared/allergens";
+import { ALLERGENS, type Allergen } from "#shared/allergens";
 
 defineProps<{
-  selected: string[];
+  selected: Allergen[];
 }>();
 
+// PillGroup works with plain strings. Every option comes from ALLERGENS, so what
+// it sends back is always a list of real allergens (hence `as Allergen[]` below).
 const emit = defineEmits<{
-  change: [allergens: string[]];
+  change: [allergens: Allergen[]];
 }>();
 
 const { t } = useLang();
@@ -27,7 +29,7 @@ const options = computed(() =>
       tone="warn"
       :options="options"
       :selected="selected"
-      @change="emit('change', $event)"
+      @change="emit('change', $event as Allergen[])"
     />
   </UiFoldout>
 </template>

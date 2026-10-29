@@ -1,11 +1,12 @@
 import type { Database } from "#shared/database.types";
+import type { Allergen } from "#shared/allergens";
 import type { Diet } from "#shared/diets";
 
 export function usePreferences() {
   const supabase = useSupabaseClient<Database>();
   const user = useSupabaseUser();
   const { t } = useLang();
-  const allergens = ref<string[]>([]);
+  const allergens = ref<Allergen[]>([]);
   const diet = ref<Diet>("none");
   const errorMessage = ref("");
 
@@ -32,7 +33,7 @@ export function usePreferences() {
   // upsert = insert the row, or update it if the user already has one.
   // Only the columns we send are changed, so saving allergens never touches diet.
   async function savePreferences(fields: {
-    allergens?: string[];
+    allergens?: Allergen[];
     diet?: Diet;
   }) {
     const userId = user.value?.sub;
@@ -55,7 +56,7 @@ export function usePreferences() {
     return !error;
   }
 
-  async function saveAllergens(next: string[]) {
+  async function saveAllergens(next: Allergen[]) {
     errorMessage.value = "";
 
     // Show the change right away, and go back if saving fails.
