@@ -2,4 +2,5 @@
 // forms in the browser, so the two always agree. If the forms let more through
 // than the server accepts, the user only sees "could not get a recipe".
 export const MAX_INGREDIENTS = 50;
-export const MAX_INGREDIENT_LENGTH = 60;
+// Even "kokosmjölk, osötad" is only 18 characters, so 40 leaves plenty of room.
+export const MAX_INGREDIENT_LENGTH = 40;

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { MAX_INGREDIENT_LENGTH } from "../shared/limits";
 import { suggestRequestSchema } from "../shared/schemas/suggestRequest";
 
 const valid = { cuisine: "Italian", ingredients: ["tomato", "pasta"] };
@@ -60,13 +61,18 @@ describe("suggestRequestSchema", () => {
     ).toBe(false);
   });
 
-  it("rejects a very long ingredient", () => {
-    const result = suggestRequestSchema.safeParse({
+  it("rejects a very long ingredient, but accepts one at the limit", () => {
+    const tooLong = suggestRequestSchema.safeParse({
       ...valid,
-      ingredients: ["a".repeat(61)],
+      ingredients: ["a".repeat(MAX_INGREDIENT_LENGTH + 1)],
+    });
+    const atLimit = suggestRequestSchema.safeParse({
+      ...valid,
+      ingredients: ["a".repeat(MAX_INGREDIENT_LENGTH)],
     });
 
-    expect(result.success).toBe(false);
+    expect(tooLong.success).toBe(false);
+    expect(atLimit.success).toBe(true);
   });
 
   it("rejects an allergen, diet or language that is not in our lists", () => {
