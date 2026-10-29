@@ -144,9 +144,14 @@ Smaller things, when there is time:
       JSON.parse), stop_reason check, and 503 "AI is busy" when Claude is down
 - [x] Stricter types: Allergen[] and Diet instead of string
 - [x] A guest who logs in to a real account is warned first
-- [ ] Check Auth > Rate Limits in Supabase: how many anonymous sign-ins per
-      IP and hour? Each guest gets 30 Claude calls per day, so new guest accounts
-      can get around the daily limit. Write it as a known limitation in the report.
+- [x] Checked Auth > Rate Limits in Supabase (29 Oct): anonymous sign-ins are
+      limited to 30 per hour per IP address. With 30 Claude calls per guest and
+      day, one IP can make at most about 900 calls per hour. Haiku is cheap, so
+      the cost stays small. Kept at 30, since many people share the school's IP.
+      Write it as a known limitation in the report.
+- [ ] Emails are limited to 2 per hour for the whole project. A third signup
+      within an hour gets "too many attempts" (auth.rateLimit). Decide: turn off
+      "Confirm email", or tell testers in the README to use "Continue as guest".
 - [ ] Known limitation: a call that fails at Claude still counts towards the
       daily limit (the quota is checked before the call)
 
