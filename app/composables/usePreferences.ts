@@ -10,6 +10,11 @@ export function usePreferences() {
   const diet = ref<Diet>("none");
   const errorMessage = ref("");
 
+  // What the database really has. When a save fails we go back to this, not to what
+  // the screen showed a moment ago, because another save may have finished in between.
+  let savedAllergens: Allergen[] = [];
+  let savedDiet: Diet = "none";
+
   async function loadPreferences() {
     errorMessage.value = "";
 
@@ -28,6 +33,8 @@ export function usePreferences() {
 
     allergens.value = data?.allergens ?? [];
     diet.value = data?.diet ?? "none";
+    savedAllergens = allergens.value;
+    savedDiet = diet.value;
   }
 
   // upsert = insert the row, or update it if the user already has one.
@@ -59,23 +66,25 @@ export function usePreferences() {
   async function saveAllergens(next: Allergen[]) {
     errorMessage.value = "";
 
-    // Show the change right away, and go back if saving fails.
-    const previous = allergens.value;
+    // Show the change right away, and go back to the saved value if saving fails.
     allergens.value = next;
 
-    if (!(await savePreferences({ allergens: next }))) {
-      allergens.value = previous;
+    if (await savePreferences({ allergens: next })) {
+      savedAllergens = next;
+    } else {
+      allergens.value = savedAllergens;
     }
   }
 
   async function saveDiet(next: Diet) {
     errorMessage.value = "";
 
-    const previous = diet.value;
     diet.value = next;
 
-    if (!(await savePreferences({ diet: next }))) {
-      diet.value = previous;
+    if (await savePreferences({ diet: next })) {
+      savedDiet = next;
+    } else {
+      diet.value = savedDiet;
     }
   }
 
