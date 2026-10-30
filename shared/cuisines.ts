@@ -10,6 +10,8 @@ export const CUISINES = [
 ] as const;
 //as const lockes the list.
 
+export type Cuisine = (typeof CUISINES)[number];
+
 // Special choice: we pick a random cuisine from the list above.
 export const SURPRISE = "Surprise me";
 
