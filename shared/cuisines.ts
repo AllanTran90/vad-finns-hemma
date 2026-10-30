@@ -14,6 +14,7 @@ export type Cuisine = (typeof CUISINES)[number];
 
 // Special choice: we pick a random cuisine from the list above.
 export const SURPRISE = "Surprise me";
+export type CuisineChoice = Cuisine | typeof SURPRISE;
 
 export function pickRandomCuisine() {
   // The index is always valid, but TypeScript cannot know that, so we add a fallback.

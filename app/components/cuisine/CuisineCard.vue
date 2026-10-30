@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { MessageKey } from "#shared/i18n";
+import type { CuisineChoice } from "#shared/cuisines";
 
 const { t } = useLang();
 
 defineProps<{
-  name: string;
+  name: CuisineChoice;
   selected: boolean;
 }>();
 
 const emit = defineEmits<{
-  select: [name: string];
+  select: [name: CuisineChoice];
 }>();
 </script>
 

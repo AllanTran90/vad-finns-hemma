@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { CUISINES, SURPRISE, pickRandomCuisine } from "#shared/cuisines";
+import {
+  CUISINES,
+  SURPRISE,
+  pickRandomCuisine,
+  type CuisineChoice,
+} from "#shared/cuisines";
 import { MAX_INGREDIENT_LENGTH } from "#shared/limits";
 
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { t } = useLang();
 const ingredientName = ref("");
-const selectedCuisine = ref("");
+const selectedCuisine = ref<CuisineChoice | "">("");
 const logoutError = ref("");
 
 const {
@@ -43,6 +48,9 @@ const canGetRecipe = computed(
 );
 
 async function handleGetRecipe() {
+  if (!selectedCuisine.value) {
+    return;
+  }
   // "Surprise me" is not a real cuisine, so we pick one of the real ones.
   const cuisine =
     selectedCuisine.value === SURPRISE

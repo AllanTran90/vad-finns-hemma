@@ -1,6 +1,7 @@
 import type { Allergen } from "#shared/allergens";
 import type { Diet } from "#shared/diets";
 import type { Recipe } from "#shared/schemas/recipe";
+import type { Cuisine } from "#shared/cuisines";
 
 export function useRecipe() {
   const { lang, t } = useLang();
@@ -9,7 +10,7 @@ export function useRecipe() {
   const errorMessage = ref("");
 
   async function getRecipe(
-    cuisine: string,
+    cuisine: Cuisine,
     ingredients: string[],
     avoid: Allergen[],
     diet: Diet,
