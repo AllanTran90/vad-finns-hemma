@@ -13,7 +13,12 @@ async function resizeToBase64(file: File) {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  canvas.getContext("2d")?.drawImage(bitmap, 0, 0, width, height);
+  const context = canvas.getContext("2d");
+  if (!context) {
+    // Without this we would send a black image to Claude and use up a call for nothing.
+    throw new Error("Could not draw the photo");
+  }
+  context.drawImage(bitmap, 0, 0, width, height);
   bitmap.close();
 
   return canvas.toDataURL("image/jpeg", 0.8).split(",")[1];
