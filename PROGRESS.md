@@ -149,9 +149,11 @@ Smaller things, when there is time:
       day, one IP can make at most about 900 calls per hour. Haiku is cheap, so
       the cost stays small. Kept at 30, since many people share the school's IP.
       Write it as a known limitation in the report.
-- [ ] Emails are limited to 2 per hour for the whole project. A third signup
-      within an hour gets "too many attempts" (auth.rateLimit). Decide: turn off
-      "Confirm email", or tell testers in the README to use "Continue as guest".
+- [x] Emails are limited to 2 per hour for the whole project. A third signup
+      within an hour gets "too many attempts" (auth.rateLimit). Decided (30 Oct):
+      "Confirm email" is turned off in Supabase, so signup sends no email and the
+      limit does not matter. The code still handles both modes, and the README
+      tells people who set up their own Supabase to turn it off while testing.
 - [ ] Known limitation: a call that fails at Claude still counts towards the
       daily limit (the quota is checked before the call)
 
