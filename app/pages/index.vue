@@ -66,17 +66,26 @@ async function handleGetRecipe() {
 }
 
 // The save button on the recipe card: remove the recipe if it is saved, otherwise save it.
+// While a save or remove is running, more taps are ignored. Otherwise a double tap
+// would save the recipe twice, because the list is only updated when the first save is done.
+const savingFavorite = ref(false);
+
 async function toggleFavorite() {
-  if (!recipe.value) {
+  if (!recipe.value || savingFavorite.value) {
     return;
   }
 
-  const saved = findFavorite(recipe.value);
+  savingFavorite.value = true;
+  try {
+    const saved = findFavorite(recipe.value);
 
-  if (saved) {
-    await deleteFavorite(saved.id);
-  } else {
-    await saveFavorite(recipe.value);
+    if (saved) {
+      await deleteFavorite(saved.id);
+    } else {
+      await saveFavorite(recipe.value);
+    }
+  } finally {
+    savingFavorite.value = false;
   }
 }
 
