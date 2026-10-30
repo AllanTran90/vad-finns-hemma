@@ -18,7 +18,13 @@ export async function askClaude<T extends z.ZodType>(
   failMessage: string,
 ): Promise<z.infer<T>> {
   const config = useRuntimeConfig(event);
-  const client = new Anthropic({ apiKey: config.anthropicApiKey });
+  const client = new Anthropic({
+    apiKey: config.anthropicApiKey,
+    // Without a timeout the SDK waits up to 10 minutes (and retries), longer than a
+    // Vercel function lives. A timeout is handled below as "the AI is busy" (503).
+    timeout: 60_000,
+    maxRetries: 1,
+  });
 
   let message;
   try {
