@@ -205,3 +205,24 @@ select
     where cardinality(allergens) > 30
        or octet_length(array_to_string(allergens, ',')) > 500) as bad_preferences;
 ```
+
+### 3. Server routes (done, nothing to fix)
+
+Read server/api/suggest.post.ts, server/api/analyze-image.post.ts and the four
+helpers in server/utils.
+
+- There are only two routes, and both are `.post.ts`, so other methods are not
+  served.
+- Both do the same steps in the same order: `requireUser` (401), the Zod check of
+  the request (400), `requireQuota` (429), then Claude. The quota comes after the
+  Zod check, so a broken request does not use up a call.
+- Fixed values for cuisine, allergies, diet and language (enums). The photo is
+  limited to 2 million characters and three image types.
+- Error texts are fixed strings. The raw error from Claude or Supabase is only
+  written to the server log with `console.log`, never sent to the browser. The
+  prompt and the photo are not logged.
+- `requireUser` treats a broken or expired token as "not logged in" (401).
+- The login lives in a cookie. The Supabase module sets it `SameSite=Lax` and
+  `Secure`, so another website cannot make the browser send it with a POST.
+- `max_tokens` is 4000 and the timeout is 60 seconds, so one call cannot get
+  very expensive or hang.
