@@ -98,64 +98,16 @@ Planned order: allergies, favorites, guest account, error handling.
         (server/utils/requireUser.ts, tested: logged out gives 401)
   - [x] Daily limit per user (see code review below)
 
-### Code review (24 Oct), fix before hand-in
+### Code review
 
-Priority order. The server trusts too much of what the browser sends.
+All reviews (24, 29 and 30 Oct) are in [CODE-REVIEW.md](CODE-REVIEW.md): what was
+found, what was fixed, and what was left on purpose and why.
 
-- [x] 1. Zod schema for the request in /api/suggest
-      (shared/schemas/suggestRequest.ts): cuisine from CUISINES, 1-50
-      ingredients of max 60 characters, avoid/diet/lang from our lists. Return 400
-      on invalid input. Then remove the manual avoid/diet filters.
-- [x] 2. Vitest + tests for the request schema (and the recipe schema)
-- [x] 3. Max size for the image in /api/analyze-image
-- [x] 4. Show pantry errors under the form (not at the logout button), and
-      give logout its own error ref
-- [x] 5. Check "Confirm email" in Supabase: if on, signup must show
-      "Check your email" instead of navigating to /
-- [x] 6. Daily limit per user (usage table + increment_usage function in
-      supabase/schema.sql, server/utils/requireQuota.ts, 30 calls per day).
-      SQL must be run in Supabase before it works!
+Still open from the reviews:
 
-Smaller things, when there is time:
-
-- [x] addIngredient (form) should skip duplicates like addIngredients does
-- [x] Remove or explain unused pantry columns (category, quantity, unit,
-      expires_at)
-- [x] recipeSchema: .min(1) on strings and lists, .int().positive() on
-      cook_time_minutes
-- [x] Redirect a logged-in user from /login to /
-- [x] .env.example with variable names only
-- [x] Run Prettier (indentation in usePantry.ts, CuisineCard.vue, auth.ts)
-      (installed as devDependency, settings in .prettierrc)
-- [ ] findFavorite compares by name: two recipes with the same name count
-      as one favorite (fine for now)
-- [x] Idea: use Claude tool use with a JSON schema instead of JSON.parse
-      (done 29 Oct with structured outputs, see below)
-- [ ] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL
-      needs a Vercel login)
-
-### Code review (29 Oct, new model)
-
-- [x] Pantry limits shared with the server (shared/limits.ts): max 50
-      ingredients of max 40 characters (lowered from 60). Before, a bigger pantry gave a 400 and
-      only "could not get a recipe".
-- [x] server/utils/askClaude.ts: one shared Claude call for both routes (DRY),
-      with structured outputs (the API answers in the Zod schema's shape, no
-      JSON.parse), stop_reason check, and 503 "AI is busy" when Claude is down
-- [x] Stricter types: Allergen[] and Diet instead of string
-- [x] A guest who logs in to a real account is warned first
-- [x] Checked Auth > Rate Limits in Supabase (29 Oct): anonymous sign-ins are
-      limited to 30 per hour per IP address. With 30 Claude calls per guest and
-      day, one IP can make at most about 900 calls per hour. Haiku is cheap, so
-      the cost stays small. Kept at 30, since many people share the school's IP.
-      Write it as a known limitation in the report.
-- [x] Emails are limited to 2 per hour for the whole project. A third signup
-      within an hour gets "too many attempts" (auth.rateLimit). Decided (30 Oct):
-      "Confirm email" is turned off in Supabase, so signup sends no email and the
-      limit does not matter. The code still handles both modes, and the README
-      tells people who set up their own Supabase to turn it off while testing.
-- [ ] Known limitation: a call that fails at Claude still counts towards the
-      daily limit (the quota is checked before the call)
+- [ ] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL needs a
+      Vercel login)
+- [ ] Security review (see CODE-REVIEW.md)
 
 ### Sprint 5, week 46
 
