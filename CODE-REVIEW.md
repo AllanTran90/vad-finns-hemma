@@ -129,5 +129,79 @@ Known limitations to write in the report:
 
 ## Security review (30 Oct)
 
-To do. Order: secrets, database (RLS), server routes, browser side (XSS),
-guest accounts and limits.
+Done one area at a time, most dangerous first: 1 secrets, 2 database (RLS),
+3 server routes, 4 browser side (XSS), 5 guest accounts and limits.
+
+### 1. Secrets (done)
+
+Checked with read-only commands. No key value was ever printed.
+
+- `.env` is ignored (`.gitignore` line 22), is not tracked, and was never added
+  in any commit. Only `.env.example` (names only) is tracked.
+- No real Claude key in the git history. `sk-ant-` only appears in README.md as
+  text ("it starts with sk-ant-") and a placeholder.
+- No `sb_secret_` key and no JWT-looking string in any commit. `service_role`
+  only appears in warnings (README, CLAUDE.md, .env.example), never in code.
+- The Claude key is `runtimeConfig.anthropicApiKey` (private, server only), read
+  in one place: server/utils/askClaude.ts. It is not under `public`.
+- The Supabase key in `.env` is a publishable key, which is made to be seen in
+  the browser. What protects the data is RLS (area 2), not hiding that key.
+- Not checked from here: that the same variables are set in Vercel. Check by
+  hand in the Vercel settings.
+
+### 2. Database and RLS (done, one finding fixed)
+
+Tested for real, not just read: supabase/schema.sql was run in a local Postgres
+(PGlite) with the roles anon and authenticated and three fake users, and 36
+attacks and normal uses were tried (the script is not kept in the repo).
+
+Held from the start:
+
+- Every table has RLS. Every policy is `to authenticated` and checks
+  `auth.uid() = user_id`, with `with check` on insert and update too.
+- User B cannot read, insert, update or delete A's rows, and A cannot give a row
+  to B by changing `user_id`. A logged-out visitor (anon) can do nothing.
+- The `usage` table has RLS and no policies, so nobody can read or write it from
+  the browser. `increment_usage` can only count up, only for `auth.uid()`, is
+  closed for anon, and a user who calls it with a huge limit only raises their
+  own count. A user cannot reset the daily limit.
+
+Found: the limits (40 characters, 50 ingredients) were only checked in the app,
+but the browser talks to Supabase directly with the public key. A 100 000
+character name and 500 rows in one insert were accepted. Anyone who signs in as a
+guest could fill the free database (500 MB), and the project would become read
+only for everybody. A nuisance, not a data leak.
+
+Fixed (30 Oct, tested with the same script):
+
+- `check` rules on the columns (pantry name 1-40 characters, favorites: name,
+  ingredients, instructions, cuisine and allergens have a size limit, preferences:
+  at most 30 allergens and 500 characters).
+- A trigger, `limit_rows_per_user`, that refuses the 51st pantry row and the 101st
+  favorite per user. It also stops one insert of 500 rows, because a row trigger
+  counts the rows added earlier in the same insert.
+- New projects get it from supabase/schema.sql (and the copy in README.md, which
+  a test keeps identical). The existing Supabase project is updated with
+  supabase/migrations/2026-10-30-limits.sql.
+
+Left on purpose: allergen names are not checked against the list in SQL (it
+would copy shared/allergens.ts into SQL). The size limit is enough to protect the
+database, and a wrong allergen name only hurts the user who saved it.
+
+Check query to run in the Supabase SQL Editor BEFORE the migration (it only
+reads, and it should show 0, 0, 0):
+
+```sql
+select
+  (select count(*) from public.pantry
+    where char_length(name) not between 1 and 40) as bad_pantry_names,
+  (select count(*) from public.favorites
+    where char_length(name) not between 1 and 200
+       or octet_length(ingredients::text) > 20000
+       or octet_length(instructions::text) > 20000
+       or char_length(cuisine) > 50
+       or octet_length(allergens::text) > 2000) as bad_favorites,
+  (select count(*) from public.preferences
+    where cardinality(allergens) > 30
+       or octet_length(array_to_string(allergens, ',')) > 500) as bad_preferences;
+```
