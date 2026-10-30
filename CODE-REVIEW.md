@@ -226,3 +226,30 @@ helpers in server/utils.
   `Secure`, so another website cannot make the browser send it with a POST.
 - `max_tokens` is 4000 and the timeout is 60 seconds, so one call cannot get
   very expensive or hang.
+### 4. Browser side (done, one finding fixed)
+
+Searched app/ and shared/ for ways to run or show text as code.
+
+- No `v-html`, `innerHTML`, `eval` or `document.write`. Recipe names, steps,
+  ingredient names and scan results are shown with `{{ }}`, which Vue escapes, so
+  text from Claude or from a user cannot become code.
+- Links and redirects: `navigateTo` is only called with fixed paths ("/" and
+  "/login"). Nothing reads `route.query`, so there is no open redirect.
+- The app only sets two cookies, `lang` and `theme`, with no secret in them. The
+  language cookie is checked (`=== "sv" ? "sv" : "en"`). The theme cookie is
+  put in `data-theme` as it is, which Vue escapes, so a changed value only gives
+  the default colours.
+- The Supabase login cookie cannot be HttpOnly, since the browser client has to
+  read it. That is one more reason that no XSS is allowed.
+
+Found: no security headers, so another website could show the app in a hidden
+frame and trick a user into clicking (clickjacking).
+
+Fixed (30 Oct): `routeRules` in nuxt.config.ts sets `X-Frame-Options: DENY`,
+`X-Content-Type-Options: nosniff` and `Referrer-Policy:
+strict-origin-when-cross-origin` on every answer. Checked with `curl -I` on the
+dev server.
+
+Left on purpose: no Content-Security-Policy. Nuxt writes small inline scripts, so
+a strict policy needs nonces and can break the app. The risk is low, since no
+text is ever shown as HTML.

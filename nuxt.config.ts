@@ -11,5 +11,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     anthropicApiKey: "",
   },
+  // Security headers on every page and API answer.
+  // DENY: no other site can show our app in a frame (stops clickjacking).
+  // nosniff: the browser must trust the content type we send.
+  // Referrer-Policy: only our own site sees the full address when a user leaves.
+  routeRules: {
+    "/**": {
+      headers: {
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+      },
+    },
+  },
 });
-
