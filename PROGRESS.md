@@ -142,3 +142,4 @@ Still open from the reviews:
 - [ ] Translate ingredient names when the language is switched
       (now they stay as the user wrote them)
 - [ ] Run /code-review and /security-review before hand-in
+- [ ] Recover lost password for account.
