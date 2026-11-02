@@ -12,14 +12,12 @@ använda appen, och sist servern bakom. Bocka av med `[x]` när en fil sitter.
 
 - [x] 5. `app/components/ui/AuthForm.vue` – formuläret, delas av login och signup
 
-## Logga in
-
-- [ ] 6. `app/pages/signup.vue`
+- [x] 6. `app/pages/signup.vue` – tvilling till login, "kolla din mejl"-besked
 
 ## Alltid synligt
 
-- [ ] 7. `app/composables/useLang.ts`
-- [ ] 8. `shared/i18n.ts`
+- [x] 7. `app/composables/useLang.ts` – ger `lang`, `t` och `setLang`
+- [x] 8. `shared/i18n.ts` – ordboken (menypärmen på två språk) + `translate`
 - [ ] 9. `app/components/ui/LangToggle.vue`
 - [ ] 10. `app/components/ui/ThemeToggle.vue`
 
@@ -95,3 +93,8 @@ använda appen, och sist servern bakom. Bocka av med `[x]` när en fil sitter.
   `hungry ? "pasta" : "nothing"` ger bara svaret, aldrig `true`.
 - **`@submit.prevent`:** stoppar att sidan laddas om när formuläret skickas.
   Formuläret gör också att Enter fungerar (om rutorna är ifyllda, `required`).
+- **Composable:** en `use...`-funktion med bara logik, ingen HTML. En station i
+  köket som alla komponenter hämtar från (DRY).
+- **cookie vs `useState`:** cookien minns till nästa besök (stamgästkortet),
+  `useState` delar språket mellan alla komponenter just nu (bordsskylten).
+- **Dagsgräns:** 30 AI-anrop per användare och dag (`requireQuota.ts`).
