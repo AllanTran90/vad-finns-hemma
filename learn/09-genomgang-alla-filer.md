@@ -18,8 +18,8 @@ använda appen, och sist servern bakom. Bocka av med `[x]` när en fil sitter.
 
 - [x] 7. `app/composables/useLang.ts` – ger `lang`, `t` och `setLang`
 - [x] 8. `shared/i18n.ts` – ordboken (menypärmen på två språk) + `translate`
-- [ ] 9. `app/components/ui/LangToggle.vue`
-- [ ] 10. `app/components/ui/ThemeToggle.vue`
+- [x] 9. `app/components/ui/LangToggle.vue` – språkknappen, anropar `setLang`
+- [x] 10. `app/components/ui/ThemeToggle.vue` – ljus/mörk, ditt val eller telefonens
 
 ## Startsidan och ingredienser
 
@@ -98,3 +98,11 @@ använda appen, och sist servern bakom. Bocka av med `[x]` när en fil sitter.
 - **cookie vs `useState`:** cookien minns till nästa besök (stamgästkortet),
   `useState` delar språket mellan alla komponenter just nu (bordsskylten).
 - **Dagsgräns:** 30 AI-anrop per användare och dag (`requireQuota.ts`).
+- **`.value` i template:** behövs inte. Vue öppnar lådan själv i `<template>`,
+  men i `<script>` skriver man `.value`.
+- **En låda, många som tittar:** när `lang` ändras uppdateras allt som läser
+  den (knappen, `<html lang>`, alla `t(...)`). Ingen behöver säga till var och en.
+- **`onMounted`:** kör kod när sidan har kommit fram till webbläsaren. Behövs
+  för det bara webbläsaren vet, t.ex. om telefonen är i mörkt läge.
+- **`computed`:** en låda som räknar ut sig själv utifrån andra lådor
+  (`isDark` tittar på cookien och telefonen). Man fyller den aldrig själv.
