@@ -57,6 +57,61 @@ grossisten = Claude, kylrummet = Supabase, menyn = shared/.
  └───────────────────────────────────────────────────────────────┘
 ```
 
+## Användarens väg genom appen
+
+```
+ 🚪 ÖPPNAR APPEN (vad-finns-hemma.vercel.app)
+        │
+        ▼
+ middleware/auth.ts: inloggad?
+   │ NEJ                               │ JA
+   ▼                                   │
+ /login (login.vue + AuthForm)         │
+   ├─ Logga in  ── Supabase Auth ──────┤
+   ├─ Skapa konto → /signup ───────────┤
+   └─ Fortsätt som gäst (anonym) ──────┤
+                                       ▼
+ 🏠 STARTSIDAN (index.vue)
+   onMounted: hämta skafferi, val, favoriter ◄── Supabase (RLS 🔒)
+   [gäst?] → GuestBanner: "skapa konto" (updateUser, samma id)
+        │
+        ▼
+ ① INGREDIENSER 🥚
+   ├─ ✍️ skriv själv ─► usePantry.addIngredient ─► Supabase
+   └─ 📸 foto ─► ScanPhoto ─► useImageScan (krymper)
+                   ─► /api/analyze-image ─► 🖥️ ─► 🤖 Claude
+                   ◄─ ["tomat","ägg"] ◄─ Zod ✅
+                   ✏️ DU RÄTTAR listan ─► addIngredients ─► Supabase
+        │
+        ▼
+ ② VAL 🍜
+   ├─ Kök (CuisineCard), eller "Överraska mig" 🎲
+   ├─ Kost (DietPicker)      ─┐
+   └─ Allergier (AllergyPicker)┴─► usePreferences.upsert ─► Supabase
+        │
+        ▼
+ ③ HÄMTA RECEPT 🍲  (knappen är aktiv först när kök + ingredienser finns)
+   useRecipe ─► /api/suggest ─► 🖥️ server:
+                 401 inloggad? → 400 Zod → 429 kvot? → askClaude 🤖
+              ◄─ recept ◄─ Zod ✅  (503/502 om AI:n strular)
+        │
+        ▼
+ ④ RECEPTKORTET (RecipeCard)
+   ├─ ⚠️ conflicts: innehåller något du undviker? → varning
+   └─ 👨‍🍳 kockmössan ─► useFavorites.saveFavorite ─► Supabase
+        │
+        ▼
+ ⑤ FAVORITER 📒 (FavoritesList → Foldout → RecipeCard)
+   └─ tryck kockmössan igen ─► deleteFavorite
+
+ Alltid synligt: 🌐 språk (LangToggle)  🌙 tema (ThemeToggle)  🚪 Logga ut
+                 (gäst → "är du säker? datan försvinner")
+```
+
+Kort: in genom dörren (login) → visa vad du har i kylen (①) → säg vad du vill
+äta (②) → köket lagar (③) → servitören kollar allergierna (④) → spara i
+pärmen (⑤).
+
 ## De två vägarna till data
 
 1. **Via servern** (`$fetch /api/...`): allt som behöver Claude, eftersom
