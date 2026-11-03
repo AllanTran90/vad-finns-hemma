@@ -23,49 +23,49 @@ använda appen, och sist servern bakom. Bocka av med `[x]` när en fil sitter.
 
 ## Startsidan och ingredienser
 
-- [ ] 11. `app/pages/index.vue`
-- [ ] 12. `app/components/guest/GuestBanner.vue`
-- [ ] 13. `app/composables/usePantry.ts`
-- [ ] 14. `app/components/pantry/PantryList.vue`
+- [x] 11. `app/pages/index.vue`
+- [x] 12. `app/components/guest/GuestBanner.vue`
+- [x] 13. `app/composables/usePantry.ts`
+- [x] 14. `app/components/pantry/PantryList.vue`
 
 ## Foto av ingredienser
 
-- [ ] 15. `app/composables/useImageScan.ts`
-- [ ] 16. `app/components/scan/ScanPhoto.vue`
-- [ ] 17. `server/api/analyze-image.post.ts`
+- [x] 15. `app/composables/useImageScan.ts`
+- [x] 16. `app/components/scan/ScanPhoto.vue`
+- [x] 17. `server/api/analyze-image.post.ts`
 
 ## Val och recept
 
-- [ ] 18. `shared/cuisines.ts`, `shared/diets.ts`, `shared/allergens.ts`
-- [ ] 19. `app/composables/usePreferences.ts`
-- [ ] 20. `app/components/ui/PillGroup.vue`, `app/components/ui/Foldout.vue`
-- [ ] 21. `app/components/cuisine/CuisineCard.vue`, `diet/DietPicker.vue`, `allergy/AllergyPicker.vue`
-- [ ] 22. `app/composables/useRecipe.ts`
-- [ ] 23. `server/api/suggest.post.ts`
-- [ ] 24. `app/components/recipe/RecipeCard.vue`
+- [x] 18. `shared/cuisines.ts`, `shared/diets.ts`, `shared/allergens.ts`
+- [x] 19. `app/composables/usePreferences.ts`
+- [x] 20. `app/components/ui/PillGroup.vue`, `app/components/ui/Foldout.vue`
+- [x] 21. `app/components/cuisine/CuisineCard.vue`, `diet/DietPicker.vue`, `allergy/AllergyPicker.vue`
+- [x] 22. `app/composables/useRecipe.ts`
+- [x] 23. `server/api/suggest.post.ts`
+- [x] 24. `app/components/recipe/RecipeCard.vue`
 
 ## Favoriter
 
-- [ ] 25. `app/composables/useFavorites.ts`
-- [ ] 26. `app/components/favorites/FavoritesList.vue`
+- [x] 25. `app/composables/useFavorites.ts`
+- [x] 26. `app/components/favorites/FavoritesList.vue`
 
 ## Servern bakom
 
-- [ ] 27. `server/utils/requireUser.ts`
-- [ ] 28. `server/utils/requireQuota.ts`
-- [ ] 29. `server/utils/askClaude.ts`
-- [ ] 30. `app/utils/apiErrorKey.ts`
+- [x] 27. `server/utils/requireUser.ts`
+- [x] 28. `server/utils/requireQuota.ts`
+- [x] 29. `server/utils/askClaude.ts`
+- [x] 30. `app/utils/apiErrorKey.ts`
 
 ## Zod och regler
 
-- [ ] 31. `shared/schemas/` (4 filer)
-- [ ] 32. `shared/limits.ts`
+- [x] 31. `shared/schemas/` (4 filer)
+- [x] 32. `shared/limits.ts`
 
 ## Databas, tester och inställningar
 
-- [ ] 33. `supabase/schema.sql` + `supabase/migrations/`
-- [ ] 34. `tests/` (5 filer)
-- [ ] 35. `nuxt.config.ts`, `package.json`, `.env.example`
+- [x] 33. `supabase/schema.sql` + `supabase/migrations/`
+- [x] 34. `tests/` (5 filer)
+- [x] 35. `nuxt.config.ts`, `package.json`, `.env.example`
 
 ## Saker jag lärt mig hittills
 
