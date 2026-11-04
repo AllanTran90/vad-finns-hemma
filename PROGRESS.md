@@ -137,8 +137,6 @@ Still open from the reviews:
 - [ ] Photo scan sometimes lists food that is not in the photo. Try a stricter
       prompt ("if unsure, leave it out") in server/api/analyze-image.post.ts first,
       then Sonnet for the image analysis only (about 2 cents per scan).
-- [ ] Own camera view with getUserMedia (switch front/back camera). Not needed
-      for the MVP, the phone's own camera app already works.
 - [ ] Translate ingredient names when the language is switched
       (now they stay as the user wrote them)
 - [ ] Run /code-review and /security-review before hand-in
