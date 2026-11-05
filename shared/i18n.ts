@@ -171,6 +171,9 @@ const en = {
   "theme.toLight": "Switch to light mode",
   "theme.toDark": "Switch to dark mode",
   "lang.switchTo": "Switch to Swedish",
+  "nav.label": "Main menu",
+  "nav.ingredients": "Ingredients",
+  "nav.saved": "Saved",
 };
 
 export type MessageKey = keyof typeof en;
@@ -336,6 +339,9 @@ const sv: Record<MessageKey, string> = {
   "theme.toLight": "Byt till ljust läge",
   "theme.toDark": "Byt till mörkt läge",
   "lang.switchTo": "Byt till engelska",
+  "nav.label": "Huvudmeny",
+  "nav.ingredients": "Ingredienser",
+  "nav.saved": "Sparade",
 };
 
 const messages: Record<Lang, Record<MessageKey, string>> = { en, sv };

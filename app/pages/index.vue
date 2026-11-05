@@ -230,15 +230,6 @@ definePageMeta({
           @toggle="toggleFavorite"
         />
         <p v-if="favoritesError" role="alert">{{ favoritesError }}</p>
-
-        <section class="section">
-          <h2>{{ t("favorites.title") }}</h2>
-          <FavoritesList
-            :favorites="favorites"
-            :avoid="allergens"
-            @delete="deleteFavorite"
-          />
-        </section>
       </div>
     </div>
 
@@ -289,8 +280,8 @@ definePageMeta({
 }
 
 /* One column on phones and tablets. On a wide screen the page gets two columns:
-   what you have (pantry and photo) on the left, what you want (cuisine, diet,
-   recipe and favorites) on the right. */
+   what you have (pantry and photo) on the left, what you want (cuisine, diet
+   and recipe) on the right. */
 .layout,
 .column {
   display: flex;

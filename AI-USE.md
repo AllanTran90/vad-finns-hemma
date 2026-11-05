@@ -188,3 +188,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: Added a separate page for saved recipes at `/saved`. It requires login and fetches the saved recipes and the allergens when it opens. The saved recipes stay on the start page until the bottom menu exists, so they can always be reached.
 - How: Claude wrote app/pages/saved.vue, reusing `FavoritesList`, `useFavorites` and `usePreferences`. Claude ran the typecheck and the tests (25 passing), explained the page afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Agreed to the step and tested the page locally.
+
+## 2026-11-05 (bottom menu)
+- Tool: Claude Code (Opus 5.5)
+- What: Added a bottom menu with links to the ingredients and the saved recipes. It is hidden when logged out and on the login and signup pages. The saved recipes moved from the start page to `/saved`.
+- How: Claude wrote app/components/ui/BottomNav.vue, added it to app.vue, gave `.page` more space at the bottom in main.css, added the texts in both languages in i18n.ts and removed the saved recipes from index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser. When I asked about duplicate recipes, Claude read the code and listed possible causes, then used my screenshots to conclude that the two recipes were different AI answers with almost the same name.
+- What I did: Tested the menu locally in mobile view, including that the recipe stays when changing page. Noticed two similar saved recipes, asked why it was possible and sent screenshots. We left it as it is, since a database rule would not stop different recipes with similar names.

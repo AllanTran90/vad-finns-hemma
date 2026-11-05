@@ -112,7 +112,8 @@ h2 {
   width: 100%;
   max-width: 30rem;
   margin: 0 auto;
-  padding: 4rem 1.25rem 2.5rem;
+  /* The large bottom padding keeps the content clear of the bottom menu. */
+  padding: 4rem 1.25rem 6rem;
 }
 
 @media (min-width: 40rem) {
