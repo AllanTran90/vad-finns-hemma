@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
+import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import type { H3Event } from "h3";
 import type { z } from "zod";
 
@@ -28,13 +28,20 @@ export async function askClaude<T extends z.ZodType>(
 
   let message;
   try {
-    message = await client.messages.parse({
-      model: "claude-haiku-5-5",
+    // The beta path is needed for `fallbacks`: if Sonnet's safety check wrongly
+    // declines a request, the API tries again on another model in the same call.
+    message = await client.beta.messages.parse({
+      model: "claude-sonnet-5-5",
+      betas: ["server-side-fallback-2026-07-01"],
+      fallbacks: "default",
       // The model may "think" before it answers, and the thinking also uses tokens.
       // With diet and allergy rules the answer can get cut off if this is too low.
       max_tokens: 4000,
       messages: [{ role: "user", content }],
-      output_config: { format: zodOutputFormat(schema) },
+      // This model does not accept `temperature` (the API answers 400). Effort is the
+      // setting we have: how much the model thinks, so also how long and how much it
+      // costs. Tested: medium took 7 s, high 11 s and twice the tokens.
+      output_config: { effort: "medium", format: betaZodOutputFormat(schema) },
     });
   } catch (error) {
     // Claude is overloaded (529), rate limited (429), down (5xx) or unreachable.

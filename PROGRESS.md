@@ -118,6 +118,35 @@ Still open from the reviews:
 - [x] README
 - [x] License (MIT)
 
+### Feedback from supervision 4 Nov (Hans and Betsy)
+
+AI:
+
+- [x] Ask for the recipe in the chosen language (English or Swedish) in the
+      recipe request (was already in place, tested again 5 Nov)
+- [x] Switch to Sonnet (claude-sonnet-5-5, in server/utils/askClaude.ts)
+- [x] Set the AI temperature: not possible, Sonnet 5.5 answers 400 on
+      `temperature` (tested 5 Nov). Set `effort: "medium"` instead.
+
+Small fixes:
+
+- [ ] Remove buttons at least 44 px
+- [ ] "Remove all" button for the pantry
+- [ ] Only the clicked button shows loading when fetching recipes, not both
+- [ ] Feedback when the pantry is empty
+
+Pages:
+
+- [ ] Split the app into 3 pages
+- [ ] Bottom menu with icons
+- [ ] Guest banner can be dismissed, and creating an account stays reachable
+      in the background
+
+Before hand-in:
+
+- [ ] Claude tests the whole app end to end (10-100 tests), report what works
+- [ ] Presentation: 1-2 slides on the background and the problem
+
 ### Could have (only if there is time)
 
 - [x] Camera button for the photo scan (capture="environment", tested on
