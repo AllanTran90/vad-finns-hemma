@@ -8,7 +8,11 @@ export function usePantry() {
   const { t } = useLang();
   const errorMessage = ref("");
   const user = useSupabaseUser();
-  const ingredients = ref<{ id: string; name: string }[]>([]);
+  // useState gives every page the same list, unlike ref, which makes a new one each call.
+  const ingredients = useState<{ id: string; name: string }[]>(
+    "pantry-ingredients",
+    () => [],
+  );
 
   async function loadIngredients() {
     const { data, error } = await supabase

@@ -118,6 +118,9 @@ async function signOut() {
     return;
   }
 
+  // The list is shared state and survives the page change, so empty it here.
+  // Otherwise the next user on this device could see it.
+  ingredients.value = [];
   await navigateTo("/login");
 }
 
