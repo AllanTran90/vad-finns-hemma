@@ -130,7 +130,8 @@ AI:
 
 Small fixes:
 
-- [ ] Remove buttons at least 44 px
+- [x] Remove buttons at least 44 px, and wider for the thumb (88 x 44 px,
+      `.btn-remove` in main.css)
 - [ ] "Remove all" button for the pantry
 - [ ] Only the clicked button shows loading when fetching recipes, not both
 - [ ] Feedback when the pantry is empty

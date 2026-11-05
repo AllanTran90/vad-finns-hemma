@@ -13,7 +13,7 @@ const emit = defineEmits<{
     <li v-for="ingredient in ingredients" :key="ingredient.id">
       <span>{{ ingredient.name }}</span>
       <button
-        class="btn-link"
+        class="btn-link btn-remove"
         type="button"
         @click="emit('delete', ingredient.id)"
       >
@@ -38,8 +38,8 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Less padding on top and at the right: the delete button brings its own. */
-  padding: 0 0.5rem 0 1rem;
+  gap: 0.75rem;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
 }
 
 li + li {

@@ -147,7 +147,11 @@ function confirm() {
             :maxlength="MAX_INGREDIENT_LENGTH"
             :aria-label="t('scan.ingredientN', { n: index + 1 })"
           />
-          <button class="btn-link" type="button" @click="removeItem(index)">
+          <button
+            class="btn-link btn-remove"
+            type="button"
+            @click="removeItem(index)"
+          >
             {{ t("scan.remove") }}
           </button>
         </li>

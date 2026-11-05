@@ -181,6 +181,18 @@ input::placeholder {
   cursor: pointer;
 }
 
+/* Remove button in lists, used together with .btn-link. Wide enough for a thumb,
+   with a border that shows how big it is. `flex: none` stops a long ingredient
+   name from squeezing it, and `nowrap` keeps the text on one line. */
+.btn-remove {
+  flex: none;
+  justify-content: center;
+  min-width: 5.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
 input:focus-visible,
 .btn:focus-visible,
 .btn-link:focus-visible {
