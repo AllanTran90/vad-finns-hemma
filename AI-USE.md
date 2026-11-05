@@ -194,3 +194,15 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: Added a bottom menu with links to the ingredients and the saved recipes. It is hidden when logged out and on the login and signup pages. The saved recipes moved from the start page to `/saved`.
 - How: Claude wrote app/components/ui/BottomNav.vue, added it to app.vue, gave `.page` more space at the bottom in main.css, added the texts in both languages in i18n.ts and removed the saved recipes from index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser. When I asked about duplicate recipes, Claude read the code and listed possible causes, then used my screenshots to conclude that the two recipes were different AI answers with almost the same name.
 - What I did: Tested the menu locally in mobile view, including that the recipe stays when changing page. Noticed two similar saved recipes, asked why it was possible and sent screenshots. We left it as it is, since a database rule would not stop different recipes with similar names.
+
+## 2026-11-05 (recipe page)
+- Tool: Claude Code (Opus 5.5)
+- What: The app now has three pages. The cuisine, diet and allergy choices, the recipe button and the recipe moved from the start page to `/recipes`. The start page keeps the pantry, the photo scan and the logout. The chosen cuisine now survives a page change.
+- How: Claude wrote app/pages/recipes.vue by moving code from index.vue, added `selectedCuisine` to useRecipe.ts, moved `.section` and `.layout` to main.css, added the link to BottomNav.vue and the text to i18n.ts. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser. A CSS error in saved.vue appeared in the dev server after the style block was removed. Claude read the file and suggested restarting the server, and explained the likely cause.
+- What I did: Agreed to the step, reported the error from the dev server, restarted the server, which solved it, and tested the pages locally.
+
+## 2026-11-05 (scan list stays)
+- Tool: Claude Code (Opus 5.5)
+- What: An unconfirmed list from a photo scan now survives a page change, also during a running scan. It is emptied when it is confirmed or discarded and at logout.
+- How: Claude warned that the list would probably disappear on a page change, moved the list to `useState` in useImageScan.ts, added `resetScan`, and updated ScanPhoto.vue and index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Tested locally that the list disappeared on a page change before the fix, and that it is gone after logging out with the fix.

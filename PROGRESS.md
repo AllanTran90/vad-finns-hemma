@@ -139,8 +139,8 @@ Small fixes:
 
 Pages:
 
-- [ ] Split the app into 3 pages
-- [ ] Bottom menu with icons
+- [x] Split the app into 3 pages
+- [x] Bottom menu with icons
 - [ ] Guest banner can be dismissed, and creating an account stays reachable
       in the background
 

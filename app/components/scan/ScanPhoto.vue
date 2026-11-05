@@ -12,15 +12,19 @@ const emit = defineEmits<{
   confirm: [names: string[]];
 }>();
 
-const { detected, loading, errorMessage, scanPhoto } = useImageScan();
+const {
+  detected,
+  loading,
+  errorMessage,
+  items,
+  knownItems,
+  scanned,
+  activeSource,
+  scanPhoto,
+  resetScan,
+} = useImageScan();
 
-// The list the user edits: only the NEW ingredients. It is a copy of what the AI
-// found, so the user's corrections never touch the AI's original answer.
-const items = ref<string[]>([]);
-// What the photo showed that is already in the pantry. Read only.
-const knownItems = ref<string[]>([]);
 const newItem = ref("");
-const scanned = ref(false);
 
 // Two ways to get a photo. "capture" opens the back camera directly on a phone;
 // without it the phone shows its normal photo picker. On a computer, both just
@@ -29,8 +33,6 @@ const sources = [
   { label: "scan.camera", capture: "environment" },
   { label: "scan.gallery", capture: undefined },
 ] as const;
-// The button that started the scan, so only that one says "Reading".
-const activeSource = ref("");
 
 const existingNames = computed(
   () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
@@ -88,10 +90,8 @@ function removeItem(index: number) {
 }
 
 function reset() {
-  items.value = [];
-  knownItems.value = [];
+  resetScan();
   newItem.value = "";
-  scanned.value = false;
 }
 
 function confirm() {

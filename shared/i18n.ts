@@ -173,6 +173,7 @@ const en = {
   "lang.switchTo": "Switch to Swedish",
   "nav.label": "Main menu",
   "nav.ingredients": "Ingredients",
+  "nav.recipes": "Recipes",
   "nav.saved": "Saved",
 };
 
@@ -341,6 +342,7 @@ const sv: Record<MessageKey, string> = {
   "lang.switchTo": "Byt till engelska",
   "nav.label": "Huvudmeny",
   "nav.ingredients": "Ingredienser",
+  "nav.recipes": "Recept",
   "nav.saved": "Sparade",
 };
 

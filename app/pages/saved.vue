@@ -35,11 +35,3 @@ definePageMeta({
     </section>
   </main>
 </template>
-
-<style scoped>
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-</style>

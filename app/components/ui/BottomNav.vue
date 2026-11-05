@@ -5,6 +5,7 @@ const route = useRoute();
 
 const links = [
   { to: "/", label: "nav.ingredients", icon: "lucide:carrot" },
+  { to: "/recipes", label: "nav.recipes", icon: "lucide:chef-hat" },
   { to: "/saved", label: "nav.saved", icon: "lucide:bookmark" },
 ] as const;
 

@@ -26,9 +26,27 @@ async function resizeToBase64(file: File) {
 
 export function useImageScan() {
   const { lang, t } = useLang();
-  const detected = ref<string[]>([]);
-  const loading = ref(false);
-  const errorMessage = ref("");
+  // useState keeps the scan when the user changes page, even during a running
+  // request. A scan costs an AI call, so an unconfirmed list should not be lost.
+  const detected = useState<string[]>("scan-detected", () => []);
+  const loading = useState("scan-loading", () => false);
+  const errorMessage = useState("scan-error", () => "");
+  // The list the user edits: only the NEW ingredients. It is a copy of what the AI
+  // found, so the user's corrections never touch the AI's original answer.
+  const items = useState<string[]>("scan-items", () => []);
+  // What the photo showed that is already in the pantry. Read only.
+  const knownItems = useState<string[]>("scan-known-items", () => []);
+  const scanned = useState("scan-scanned", () => false);
+  // The button that started the scan, so only that one says "Reading".
+  const activeSource = useState("scan-active-source", () => "");
+
+  function resetScan() {
+    detected.value = [];
+    errorMessage.value = "";
+    items.value = [];
+    knownItems.value = [];
+    scanned.value = false;
+  }
 
   async function scanPhoto(file: File) {
     errorMessage.value = "";
@@ -50,5 +68,15 @@ export function useImageScan() {
     }
   }
 
-  return { detected, loading, errorMessage, scanPhoto };
+  return {
+    detected,
+    loading,
+    errorMessage,
+    items,
+    knownItems,
+    scanned,
+    activeSource,
+    scanPhoto,
+    resetScan,
+  };
 }

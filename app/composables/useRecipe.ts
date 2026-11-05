@@ -1,12 +1,16 @@
 import type { Allergen } from "#shared/allergens";
 import type { Diet } from "#shared/diets";
 import type { Recipe } from "#shared/schemas/recipe";
-import type { Cuisine } from "#shared/cuisines";
+import type { Cuisine, CuisineChoice } from "#shared/cuisines";
 
 export function useRecipe() {
   const { lang, t } = useLang();
   // useState keeps these when the user changes page, even during a running request.
   const recipe = useState<Recipe | null>("recipe", () => null);
+  const selectedCuisine = useState<CuisineChoice | "">(
+    "recipe-cuisine",
+    () => "",
+  );
   const loading = useState("recipe-loading", () => false);
   const errorMessage = useState("recipe-error", () => "");
 
@@ -33,5 +37,5 @@ export function useRecipe() {
     }
   }
 
-  return { recipe, loading, errorMessage, getRecipe };
+  return { recipe, selectedCuisine, loading, errorMessage, getRecipe };
 }

@@ -136,6 +136,30 @@ h2 {
   }
 }
 
+/* A heading with its content, used on all pages. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* One column on phones and tablets, two columns on a wide screen. */
+.layout,
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 2rem;
+  }
+}
+
 input {
   width: 100%;
   padding: 0.875rem 1rem;
