@@ -19,6 +19,7 @@ const {
   errorMessage: pantryError,
   loadIngredients,
   deleteIngredient,
+  deleteIngredients,
   addIngredient,
   addIngredients,
 } = usePantry();
@@ -152,7 +153,11 @@ definePageMeta({
             <button class="btn" type="submit">{{ t("pantry.add") }}</button>
           </form>
           <p v-if="pantryError" role="alert">{{ pantryError }}</p>
-          <PantryList :ingredients="ingredients" @delete="deleteIngredient" />
+          <PantryList
+            :ingredients="ingredients"
+            @delete="deleteIngredient"
+            @delete-many="deleteIngredients"
+          />
         </section>
 
         <section class="section">

@@ -132,7 +132,8 @@ Small fixes:
 
 - [x] Remove buttons at least 44 px, and wider for the thumb (88 x 44 px,
       `.btn-remove` in main.css)
-- [ ] "Remove all" button for the pantry
+- [x] "Remove all" button for the pantry
+- [x] Select several ingredients and remove them together
 - [ ] Only the clicked button shows loading when fetching recipes, not both
 - [ ] Feedback when the pantry is empty
 

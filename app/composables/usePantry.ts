@@ -135,17 +135,26 @@ export function usePantry() {
     }
   }
 
-  async function deleteIngredient(id: string) {
+  // Removes many ingredients in one request: one, the selected ones or all of them.
+  async function deleteIngredients(ids: string[]) {
     errorMessage.value = "";
 
-    const { error } = await supabase.from("pantry").delete().eq("id", id);
+    if (ids.length === 0) {
+      return;
+    }
+
+    const { error } = await supabase.from("pantry").delete().in("id", ids);
 
     if (error) {
-      console.log("Delete ingredient error:", error);
+      console.log("Delete ingredients error:", error);
       errorMessage.value = t("pantry.errorDelete");
       return;
     }
     await loadIngredients();
+  }
+
+  function deleteIngredient(id: string) {
+    return deleteIngredients([id]);
   }
 
   return {
@@ -155,5 +164,6 @@ export function usePantry() {
     addIngredient,
     addIngredients,
     deleteIngredient,
+    deleteIngredients,
   };
 }
