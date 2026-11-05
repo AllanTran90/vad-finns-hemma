@@ -182,3 +182,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: Third step towards three pages. The list of saved recipes now survives a page change, so the recipe page and the saved page can use the same list. The error message stays local to each page.
 - How: Claude changed `ref` to `useState` for the list in useFavorites.ts and emptied it at logout in index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Agreed to the step and tested it locally in the browser.
+
+## 2026-11-05 (saved page)
+- Tool: Claude Code (Opus 5.5)
+- What: Added a separate page for saved recipes at `/saved`. It requires login and fetches the saved recipes and the allergens when it opens. The saved recipes stay on the start page until the bottom menu exists, so they can always be reached.
+- How: Claude wrote app/pages/saved.vue, reusing `FavoritesList`, `useFavorites` and `usePreferences`. Claude ran the typecheck and the tests (25 passing), explained the page afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Agreed to the step and tested the page locally.
