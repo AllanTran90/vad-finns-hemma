@@ -158,3 +158,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: Only the clicked scan button (camera or gallery) now shows "Reading" during a photo scan. Both buttons are still disabled during the scan, so two photos cannot be sent at the same time.
 - How: Claude found that the bug was in the photo scan, not in the recipe fetch as PROGRESS.md said, because the two buttons share one `loading`. Claude added `activeSource` in ScanPhoto.vue and passed the button's label to `onFileChange`. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Chose to do this point next and tested the fix locally in the browser.
+
+## 2026-11-05 (recipe button hint)
+- Tool: Claude Code (Opus 5.5)
+- What: A short text under the recipe button now says why it is disabled: add ingredients first, or choose a cuisine first. The ingredient text also tells the user to confirm the list after a photo scan.
+- How: Claude suggested the hint, wrote `recipeHint` and the text under the button in index.vue and the new texts in both languages in i18n.ts. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Explained what Betsy ran into: she scanned a photo but did not confirm the list, so she did not understand why she could not get a recipe. That changed the text. Tested all the steps locally in the browser: empty pantry, scan without confirming, confirmed list and chosen cuisine.
