@@ -5,9 +5,10 @@ import type { Cuisine } from "#shared/cuisines";
 
 export function useRecipe() {
   const { lang, t } = useLang();
-  const recipe = ref<Recipe | null>(null);
-  const loading = ref(false);
-  const errorMessage = ref("");
+  // useState keeps these when the user changes page, even during a running request.
+  const recipe = useState<Recipe | null>("recipe", () => null);
+  const loading = useState("recipe-loading", () => false);
+  const errorMessage = useState("recipe-error", () => "");
 
   async function getRecipe(
     cuisine: Cuisine,

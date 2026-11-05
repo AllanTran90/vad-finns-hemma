@@ -170,3 +170,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: First step towards splitting the app into three pages. The ingredient list now survives a page change, so the coming pages can use the same list. The app looks and works as before.
 - How: Claude suggested the three pages and this first step, changed `ref` to `useState` in usePantry.ts, and emptied the list at logout in index.vue, because the list now stays in the browser's memory after logging out. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser. Claude also offered the alternative of keeping `ref` and fetching the list on every page, and recommended `useState`.
 - What I did: Questioned the change: why it is needed when RLS exists, and whether it was a step backwards. Asked for a simpler explanation until I understood the difference between the database and the list in the browser (a shopping note). Tested locally that everything works as before.
+
+## 2026-11-05 (shared recipe)
+- Tool: Claude Code (Opus 5.5)
+- What: Second step towards three pages. The recipe, its loading state and its error message now survive a page change. Unsaved recipes are still lost on reload, on logout and when getting a new recipe. The app has only one page so far, so the page change itself cannot be tested yet.
+- How: Claude changed `ref` to `useState` for all three in useRecipe.ts and emptied the recipe and the error at logout in index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Agreed to the step. Asked if an unsaved recipe disappears, and pointed out that the app has no other page yet, which led Claude to explain the order of the steps. Tested locally that the recipe shows and is gone after logging out and in again.
