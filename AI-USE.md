@@ -176,3 +176,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: Second step towards three pages. The recipe, its loading state and its error message now survive a page change. Unsaved recipes are still lost on reload, on logout and when getting a new recipe. The app has only one page so far, so the page change itself cannot be tested yet.
 - How: Claude changed `ref` to `useState` for all three in useRecipe.ts and emptied the recipe and the error at logout in index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Agreed to the step. Asked if an unsaved recipe disappears, and pointed out that the app has no other page yet, which led Claude to explain the order of the steps. Tested locally that the recipe shows and is gone after logging out and in again.
+
+## 2026-11-05 (shared favorites)
+- Tool: Claude Code (Opus 5.5)
+- What: Third step towards three pages. The list of saved recipes now survives a page change, so the recipe page and the saved page can use the same list. The error message stays local to each page.
+- How: Claude changed `ref` to `useState` for the list in useFavorites.ts and emptied it at logout in index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Agreed to the step and tested it locally in the browser.

@@ -123,6 +123,7 @@ async function signOut() {
   ingredients.value = [];
   recipe.value = null;
   recipeError.value = "";
+  favorites.value = [];
   await navigateTo("/login");
 }
 

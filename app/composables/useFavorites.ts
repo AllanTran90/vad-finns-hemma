@@ -11,7 +11,8 @@ export function useFavorites() {
   const { t } = useLang();
   const user = useSupabaseUser();
   const errorMessage = ref("");
-  const favorites = ref<Favorite[]>([]);
+  // useState gives every page the same list, unlike ref, which makes a new one each call.
+  const favorites = useState<Favorite[]>("favorites", () => []);
 
   async function loadFavorites() {
     const { data, error } = await supabase
