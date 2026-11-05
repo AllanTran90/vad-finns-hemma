@@ -152,3 +152,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The pantry list can now remove several ingredients at once: select some and remove them, or remove all of them after a second tap that confirms it. Both ways use one request to the database.
 - How: Claude wrote `deleteIngredients` in usePantry.ts (with `.in("id", ids)`, and `deleteIngredient` now calls it), the three modes, the checkboxes and the new buttons in PantryList.vue, the new texts in both languages in i18n.ts and the connection in index.vue. Claude added the select point to PROGRESS.md, ran the typecheck and the tests (25 passing), explained the code afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Asked for the remove all and select buttons. Agreed to Claude's plan. Asked if `.in` is like a `forEach` in SQL. Tested the feature locally with `npm run dev` and ticked off the points in PROGRESS.md. Answered the check question about where the two ways become the same: I pointed to `backToNormal`, which was partly right, and Claude explained that the shared path starts at `emit("deleteMany", ...)`.
+
+## 2026-11-05 (scan buttons)
+- Tool: Claude Code (Opus 5.5)
+- What: Only the clicked scan button (camera or gallery) now shows "Reading" during a photo scan. Both buttons are still disabled during the scan, so two photos cannot be sent at the same time.
+- How: Claude found that the bug was in the photo scan, not in the recipe fetch as PROGRESS.md said, because the two buttons share one `loading`. Claude added `activeSource` in ScanPhoto.vue and passed the button's label to `onFileChange`. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Chose to do this point next and tested the fix locally in the browser.

@@ -134,7 +134,7 @@ Small fixes:
       `.btn-remove` in main.css)
 - [x] "Remove all" button for the pantry
 - [x] Select several ingredients and remove them together
-- [ ] Only the clicked button shows loading when fetching recipes, not both
+- [x] Only the clicked button shows loading when fetching recipes, not both
 - [ ] Feedback when the pantry is empty
 
 Pages:

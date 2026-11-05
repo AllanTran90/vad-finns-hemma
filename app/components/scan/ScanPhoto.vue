@@ -29,6 +29,8 @@ const sources = [
   { label: "scan.camera", capture: "environment" },
   { label: "scan.gallery", capture: undefined },
 ] as const;
+// The button that started the scan, so only that one says "Reading".
+const activeSource = ref("");
 
 const existingNames = computed(
   () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
@@ -38,7 +40,7 @@ function isKnown(name: string) {
   return existingNames.value.has(name.trim().toLowerCase());
 }
 
-async function onFileChange(event: Event) {
+async function onFileChange(event: Event, sourceLabel: string) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
 
@@ -46,6 +48,7 @@ async function onFileChange(event: Event) {
     return;
   }
 
+  activeSource.value = sourceLabel;
   await scanPhoto(file);
 
   // Clear the input so picking the same photo again still fires "change".
@@ -114,14 +117,18 @@ function confirm() {
         class="btn upload"
         :class="{ disabled: loading }"
       >
-        {{ loading ? t("scan.reading") : t(source.label) }}
+        {{
+          loading && activeSource === source.label
+            ? t("scan.reading")
+            : t(source.label)
+        }}
         <input
           class="file-input"
           type="file"
           accept="image/*"
           :capture="source.capture"
           :disabled="loading"
-          @change="onFileChange"
+          @change="onFileChange($event, source.label)"
         />
       </label>
     </div>
