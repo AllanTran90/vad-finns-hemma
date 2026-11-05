@@ -135,7 +135,7 @@ Small fixes:
 - [x] "Remove all" button for the pantry
 - [x] Select several ingredients and remove them together
 - [x] Only the clicked button shows loading when fetching recipes, not both
-- [ ] Feedback when the pantry is empty
+- [x] Feedback when the pantry is empty
 
 Pages:
 

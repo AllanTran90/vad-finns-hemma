@@ -79,6 +79,9 @@ const en = {
   // Recipe
   "recipe.get": "Get recipe",
   "recipe.getting": "Getting recipe...",
+  "recipe.needIngredients":
+    "Add ingredients first. Scanned a photo? Confirm the list with the Add button.",
+  "recipe.needCuisine": "Choose a cuisine first.",
   "recipe.error": "Could not get a recipe. Please try again.",
 
   // Favorites
@@ -245,6 +248,9 @@ const sv: Record<MessageKey, string> = {
 
   "recipe.get": "Få recept",
   "recipe.getting": "Hämtar recept...",
+  "recipe.needIngredients":
+    "Lägg till ingredienser först. Har du fotat? Godkänn listan med knappen Lägg till.",
+  "recipe.needCuisine": "Välj ett kök först.",
   "recipe.error": "Kunde inte hämta ett recept. Försök igen.",
 
   // Favorites

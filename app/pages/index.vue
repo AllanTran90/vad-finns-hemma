@@ -48,6 +48,17 @@ const canGetRecipe = computed(
   () => selectedCuisine.value && ingredients.value.length > 0 && !loading.value,
 );
 
+// Tells the user why the recipe button is disabled.
+const recipeHint = computed(() => {
+  if (ingredients.value.length === 0) {
+    return t("recipe.needIngredients");
+  }
+  if (!selectedCuisine.value) {
+    return t("recipe.needCuisine");
+  }
+  return "";
+});
+
 async function handleGetRecipe() {
   if (!selectedCuisine.value) {
     return;
@@ -203,6 +214,7 @@ definePageMeta({
         >
           {{ loading ? t("recipe.getting") : t("recipe.get") }}
         </button>
+        <p v-if="recipeHint" class="muted">{{ recipeHint }}</p>
         <p v-if="recipeError" role="alert">{{ recipeError }}</p>
         <RecipeCard
           v-if="recipe"
