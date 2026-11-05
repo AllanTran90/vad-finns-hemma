@@ -164,3 +164,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: A short text under the recipe button now says why it is disabled: add ingredients first, or choose a cuisine first. The ingredient text also tells the user to confirm the list after a photo scan.
 - How: Claude suggested the hint, wrote `recipeHint` and the text under the button in index.vue and the new texts in both languages in i18n.ts. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Explained what Betsy ran into: she scanned a photo but did not confirm the list, so she did not understand why she could not get a recipe. That changed the text. Tested all the steps locally in the browser: empty pantry, scan without confirming, confirmed list and chosen cuisine.
+
+## 2026-11-05 (shared pantry list)
+- Tool: Claude Code (Opus 5.5)
+- What: First step towards splitting the app into three pages. The ingredient list now survives a page change, so the coming pages can use the same list. The app looks and works as before.
+- How: Claude suggested the three pages and this first step, changed `ref` to `useState` in usePantry.ts, and emptied the list at logout in index.vue, because the list now stays in the browser's memory after logging out. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser. Claude also offered the alternative of keeping `ref` and fetching the list on every page, and recommended `useState`.
+- What I did: Questioned the change: why it is needed when RLS exists, and whether it was a step backwards. Asked for a simpler explanation until I understood the difference between the database and the list in the browser (a shopping note). Tested locally that everything works as before.
