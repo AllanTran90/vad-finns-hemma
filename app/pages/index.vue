@@ -17,10 +17,7 @@ const {
   addIngredients,
 } = usePantry();
 
-// Only needed here to empty the shared state at logout.
-const { recipe, selectedCuisine, errorMessage: recipeError } = useRecipe();
-const { favorites } = useFavorites();
-const { resetScan } = useImageScan();
+const { clearUserData } = useClearUserData();
 
 async function signOut() {
   logoutError.value = "";
@@ -39,14 +36,7 @@ async function signOut() {
     return;
   }
 
-  // Shared state survives the page change, so empty it here.
-  // Otherwise the next user on this device could see it.
-  ingredients.value = [];
-  recipe.value = null;
-  selectedCuisine.value = "";
-  recipeError.value = "";
-  favorites.value = [];
-  resetScan();
+  clearUserData();
   await navigateTo("/login");
 }
 

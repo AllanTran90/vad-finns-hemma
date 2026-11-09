@@ -9,7 +9,7 @@ Reviews:
 - 24 Oct: first review (the server trusted too much of what the browser sent)
 - 29 Oct: second review with the new model
 - 30 Oct: /code-review on app, server and shared, one finding at a time
-- Security review: not done yet, see the end of this file
+- Security review: 30 Oct (areas 1-4) and 9 Nov (area 5 and the changes since), see the end of this file
 
 ## Code review (24 Oct), fix before hand-in
 
@@ -253,3 +253,38 @@ dev server.
 Left on purpose: no Content-Security-Policy. Nuxt writes small inline scripts, so
 a strict policy needs nonces and can break the app. The risk is low, since no
 text is ever shown as HTML.
+
+### 5. Guest accounts and limits (9 Nov, two findings fixed)
+
+Read server/api, server/utils, app/composables, app/middleware and the login
+page. Also checked what changed since 30 Oct (Sonnet, three pages, `useState`,
+the guest banner cookie): no new holes. `useState` is per request on the
+server, so one user's data cannot show up for another user.
+
+Found: the daily limit is per user, but anyone can create a new guest account
+again and again, and each one got 30 Claude calls per day. A stranger could
+run up the Claude bill.
+
+Fixed (9 Nov): guests get 10 calls per day, accounts still 30
+(`GUEST_DAILY_LIMIT` in server/utils/requireQuota.ts). The routes pass
+`user.is_anonymous` from the login token, which Supabase signs, so the browser
+cannot pretend to be a real account. Supabase also limits new guest sign-ins
+to 30 per hour per IP address (Authentication, Rate Limits).
+
+Left on purpose: the Supabase limit stays at 30, not lower. It counts per IP
+address, and everyone on the same wifi (for example at Yrgo during the
+presentation) shares one address. The per-guest limit in the code is the real
+protection.
+
+To do by hand: set a monthly spend limit in the Anthropic Console as the last
+safety net.
+
+Fixed (9 Nov):
+
+- [x] A guest who logs in to another account via /login keeps the guest's
+      recipe and scan list on screen, since only the logout in
+      app/pages/index.vue empties the shared state. Same device and same person,
+      so no data leaks between people. Fix: move the emptying to one shared
+      function and call it at login too (DRY).
+      Done: app/composables/useClearUserData.ts, called at logout in
+      app/pages/index.vue and after a successful login in app/pages/login.vue.

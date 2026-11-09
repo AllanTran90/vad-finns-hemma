@@ -107,7 +107,7 @@ Still open from the reviews:
 
 - [ ] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL needs a
       Vercel login)
-- [ ] Security review (see CODE-REVIEW.md)
+- [x] Security review (see CODE-REVIEW.md)
 
 ### Sprint 5, week 46
 

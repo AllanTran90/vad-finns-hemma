@@ -2,6 +2,7 @@
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { t } = useLang();
+const { clearUserData } = useClearUserData();
 const errorMessage = ref("");
 
 async function signIn(email: string, password: string) {
@@ -24,6 +25,8 @@ async function signIn(email: string, password: string) {
     return;
   }
 
+  // A guest's recipe and scan list must not show up in the new account.
+  clearUserData();
   await navigateTo("/");
 }
 
