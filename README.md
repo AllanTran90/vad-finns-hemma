@@ -471,7 +471,7 @@ tests/          Vitest tests
 - Everything the browser sends is checked with Zod before the prompt is built
   (cuisine, allergies and diet must come from our own lists, and the number and
   length of ingredients and the photo size are limited)
-- Each user has a daily limit of Claude calls (stored in the database)
+- Each user has a daily limit of Claude calls (30, guests 10, stored in the database)
 - The AI answer is checked with Zod before it is shown or saved
 - Row level security on every table
 

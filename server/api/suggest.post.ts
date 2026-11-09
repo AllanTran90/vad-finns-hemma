@@ -18,7 +18,7 @@ const DIET_RULES: Record<Diet, string> = {
 };
 
 export default defineEventHandler(async (event) => {
-  await requireUser(event);
+  const user = await requireUser(event);
 
   // Cuisine, allergies, diet and language only accept values from our own lists.
   // The ingredient names are free text (limited in number and length), so the prompt
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   }
   const body = parsed.data;
 
-  await requireQuota(event);
+  await requireQuota(event, user.is_anonymous === true);
 
   const language = body.lang === "sv" ? "Swedish" : "English";
 

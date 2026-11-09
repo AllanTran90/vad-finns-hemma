@@ -2,7 +2,7 @@ import { detectedIngredientsSchema } from "#shared/schemas/detectedIngredients";
 import { analyzeRequestSchema } from "#shared/schemas/analyzeRequest";
 
 export default defineEventHandler(async (event) => {
-  await requireUser(event);
+  const user = await requireUser(event);
 
   // Checks the image type and size (and the language) before Claude is called.
   const parsed = analyzeRequestSchema.safeParse(await readBody(event));
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   }
   const body = parsed.data;
 
-  await requireQuota(event);
+  await requireQuota(event, user.is_anonymous === true);
 
   const isSwedish = body.lang === "sv";
   const language = isSwedish ? "Swedish" : "English";
