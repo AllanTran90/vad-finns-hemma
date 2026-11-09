@@ -23,11 +23,7 @@ export default defineEventHandler(async (event) => {
   // Cuisine, allergies, diet and language only accept values from our own lists.
   // The ingredient names are free text (limited in number and length), so the prompt
   // below marks them as a list of food, not as instructions. Invalid input gives a 400.
-  const parsed = suggestRequestSchema.safeParse(await readBody(event));
-  if (!parsed.success) {
-    throw createError({ statusCode: 400, statusMessage: "Invalid request." });
-  }
-  const body = parsed.data;
+  const body = await readValidBody(event, suggestRequestSchema);
 
   await requireQuota(event, user.is_anonymous === true);
 

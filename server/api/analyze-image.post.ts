@@ -5,15 +5,11 @@ export default defineEventHandler(async (event) => {
   const user = await requireUser(event);
 
   // Checks the image type and size (and the language) before Claude is called.
-  const parsed = analyzeRequestSchema.safeParse(await readBody(event));
-  if (!parsed.success) {
-    throw createError({
-      statusCode: 400,
-      statusMessage:
-        "Please send a JPEG, PNG or WebP image (max about 1.5 MB).",
-    });
-  }
-  const body = parsed.data;
+  const body = await readValidBody(
+    event,
+    analyzeRequestSchema,
+    "Please send a JPEG, PNG or WebP image (max about 1.5 MB).",
+  );
 
   await requireQuota(event, user.is_anonymous === true);
 

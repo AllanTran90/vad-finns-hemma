@@ -7,11 +7,7 @@ import { translatedIngredientsSchema } from "#shared/schemas/translatedIngredien
 export default defineEventHandler(async (event) => {
   const user = await requireUser(event);
 
-  const parsed = translateRequestSchema.safeParse(await readBody(event));
-  if (!parsed.success) {
-    throw createError({ statusCode: 400, statusMessage: "Invalid request." });
-  }
-  const body = parsed.data;
+  const body = await readValidBody(event, translateRequestSchema);
 
   await requireQuota(event, user.is_anonymous === true);
 
