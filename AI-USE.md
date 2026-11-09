@@ -230,3 +230,21 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: Fixed the second finding from the security review. A guest who logged in to another account via /login kept the guest's recipe and scan list on screen. Now the shared state is emptied both at logout and after a successful login. The security review is done.
 - How: Claude explained the finding with a restaurant comparison, and the difference between creating an account from the banner (the data stays, on purpose) and logging in to another account (the data should be gone). Claude moved the emptying from index.vue to a new composable, app/composables/useClearUserData.ts, and called it in app/pages/index.vue and app/pages/login.vue. Claude updated CODE-REVIEW.md and PROGRESS.md, ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Asked twice what the finding meant, until I understood that it was about logging in to another account and not about creating one. Asked Claude to fix it and tested locally that the recipe page is empty after logging in from a guest account.
+
+## 2026-11-09 (presentation slides)
+- Tool: Claude Code (Opus 5.5) with the Figma connector
+- What: An 8 slide presentation in Figma Slides ("Vad finns hemma – Presentation") in English, for 15-20 minutes: title, problem, solution, live demo, how it works, security and quality, AI in my work, next steps and thanks. Every slide has speaker notes.
+- How: Claude suggested the content and the order based on the course text about the presentation, created the file in my Figma, built the slides in the app's colours from main.css, and checked them with screenshots. On my request Claude rebuilt slide 5 as the full flow from fridge to recipe with the database, moved the Supabase name to the front and added arrows up and down. Claude did not make up a number for the food waste.
+- What I did: Chose English and the plan, gave feedback on slide 5 with a screenshot, rehearsed the presentation (8 minutes without the demo, 14 min 21 s with it) and will add my own lesson to the speaker notes myself. I chose not to add a food waste number, since it varies so much between families.
+
+## 2026-11-09 (practice questions)
+- Tool: Claude Code (Opus 5.5)
+- What: Practised answering questions for the presentation: why not just ChatGPT, what if the AI answers nonsense, how do we know I understand the code, can others see my data, what was hardest, and what it costs.
+- How: Claude played the audience (examiners, classmates, DD25), asked one question at a time and gave short feedback and a suggested answer after each one.
+- What I did: Answered all six questions in my own words, for example the conductor comparison for my AI use and the user test panel idea from DD's configurator test.
+
+## 2026-11-09 (own confirm dialog)
+- Tool: Claude Code (Opus 5.5)
+- What: A guest who logs out or logs in to another account now gets the app's own dialog instead of the browser's confirm(), in the app's style and with the buttons in the app's language.
+- How: Claude wrote app/composables/useConfirm.ts (a confirm() that returns a Promise) and app/components/ui/ConfirmDialog.vue (built on the HTML `<dialog>` element, with Cancel focused first and Esc as Cancel), added it to app/app.vue, replaced window.confirm in app/pages/index.vue and app/pages/login.vue, and added the button texts in both languages in shared/i18n.ts. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Asked if the item in PROGRESS.md was done, asked Claude to build it, and tested the dialog locally (Cancel, Continue, Esc, both languages, dark mode).

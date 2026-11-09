@@ -3,4 +3,5 @@
   <UiLangToggle />
   <NuxtPage />
   <UiBottomNav />
+  <UiConfirmDialog />
 </template>

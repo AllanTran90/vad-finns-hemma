@@ -2,6 +2,7 @@
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { t } = useLang();
+const { confirm } = useConfirm();
 const { clearUserData } = useClearUserData();
 const errorMessage = ref("");
 
@@ -10,7 +11,7 @@ async function signIn(email: string, password: string) {
 
   // Logging in replaces the guest session, and the guest's data cannot be
   // reached again. Same warning as when a guest logs out (see index.vue).
-  if (user.value?.is_anonymous && !window.confirm(t("guest.loginConfirm"))) {
+  if (user.value?.is_anonymous && !(await confirm(t("guest.loginConfirm")))) {
     return;
   }
 

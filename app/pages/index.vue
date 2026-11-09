@@ -4,6 +4,7 @@ import { MAX_INGREDIENT_LENGTH } from "#shared/limits";
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { t } = useLang();
+const { confirm } = useConfirm();
 const ingredientName = ref("");
 const logoutError = ref("");
 
@@ -24,7 +25,7 @@ async function signOut() {
 
   // A guest has no email or password to log in with again, so logging out
   // means the data is lost. Ask first.
-  if (user.value?.is_anonymous && !window.confirm(t("guest.logoutConfirm"))) {
+  if (user.value?.is_anonymous && !(await confirm(t("guest.logoutConfirm")))) {
     return;
   }
 

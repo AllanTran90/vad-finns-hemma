@@ -162,6 +162,10 @@ const en = {
   "guest.short": "Guest account",
   "guest.hide": "Hide",
 
+  // Confirm dialog
+  "confirm.cancel": "Cancel",
+  "confirm.ok": "Continue",
+
   // Errors that can happen in any call to our server
   "error.offline":
     "No internet connection. Check your connection and try again.",
@@ -333,6 +337,10 @@ const sv: Record<MessageKey, string> = {
     "Kolla din e-post och klicka på länken för att slutföra kontot.",
   "guest.short": "Gästkonto",
   "guest.hide": "Dölj",
+
+  // Confirm dialog
+  "confirm.cancel": "Avbryt",
+  "confirm.ok": "Fortsätt",
 
   // Errors that can happen in any call to our server
   "error.offline":

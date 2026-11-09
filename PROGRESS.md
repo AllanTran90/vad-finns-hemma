@@ -146,8 +146,8 @@ Pages:
 
 Before hand-in:
 
-- [ ] Claude tests the whole app end to end (10-100 tests), report what works
-- [ ] Presentation: 1-2 slides on the background and the problem
+- [x] Claude tests the whole app end to end (10-100 tests), report what works
+- [x] Presentation: 1-2 slides on the background and the problem
 
 ### Could have (only if there is time)
 
@@ -163,7 +163,7 @@ Before hand-in:
       and show them in their own "You need to buy" list. Needs a new field in
       shared/schemas/recipe.ts and a new part in RecipeCard.vue. (Now the prompt
       only allows the listed ingredients plus basic staples.)
-- [ ] Own confirm dialog for guest logout, in the app's style. The browser's
+- [x] Own confirm dialog for guest logout, in the app's style. The browser's
       confirm() shows "Cancel" and "OK" in the browser's language, not the app's.
 - [ ] Photo scan sometimes lists food that is not in the photo. Try a stricter
       prompt ("if unsure, leave it out") in server/api/analyze-image.post.ts first,
