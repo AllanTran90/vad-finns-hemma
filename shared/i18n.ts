@@ -22,6 +22,7 @@ const en = {
   "pantry.errorDuplicate": "That ingredient is already in your pantry.",
   "pantry.errorAddMany": "Could not save the ingredients. Please try again.",
   "pantry.errorDelete": "Could not delete. Please try again.",
+  "pantry.errorTranslate": "Could not translate the list. Please try again.",
   "pantry.errorTooLong": "Please keep ingredient names under {max} characters.",
   "pantry.errorFull":
     "Your pantry is full ({max} ingredients). Delete some first.",
@@ -205,6 +206,7 @@ const sv: Record<MessageKey, string> = {
   "pantry.errorDuplicate": "Den ingrediensen finns redan i ditt skafferi.",
   "pantry.errorAddMany": "Kunde inte spara ingredienserna. Försök igen.",
   "pantry.errorDelete": "Kunde inte ta bort. Försök igen.",
+  "pantry.errorTranslate": "Kunde inte översätta listan. Försök igen.",
   "pantry.errorTooLong": "Ingrediensens namn får vara högst {max} tecken.",
   "pantry.errorFull":
     "Skafferiet är fullt ({max} ingredienser). Ta bort några först.",
