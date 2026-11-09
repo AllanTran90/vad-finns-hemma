@@ -16,6 +16,8 @@ const {
   deleteIngredients,
   addIngredient,
   addIngredients,
+  translating,
+  translateIngredients,
 } = usePantry();
 
 const { clearUserData } = useClearUserData();
@@ -86,6 +88,19 @@ definePageMeta({
           @delete="deleteIngredient"
           @delete-many="deleteIngredients"
         />
+        <!-- The label is in the app's language, so it says which language the
+             names will be translated to. One AI call, so it counts towards the
+             daily limit, and only runs when the user asks for it. -->
+        <button
+          v-if="ingredients.length > 0"
+          class="btn-link translate"
+          type="button"
+          :disabled="translating"
+          @click="translateIngredients"
+        >
+          <Icon name="lucide:languages" size="1.25rem" />
+          {{ translating ? t("pantry.translating") : t("pantry.translate") }}
+        </button>
       </section>
 
       <section class="section">
@@ -123,6 +138,16 @@ definePageMeta({
 .add-form input {
   flex: 1;
   min-width: 0;
+}
+
+.translate {
+  gap: 0.375rem;
+  align-self: flex-start;
+}
+
+.translate:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 .logout {

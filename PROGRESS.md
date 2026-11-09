@@ -170,7 +170,10 @@ Before hand-in:
       then Sonnet for the image analysis only (about 2 cents per scan).
       Done 9 Nov: stricter prompt with the reason and four rules. Sonnet was
       already used, since both routes share askClaude.ts. Tested: no wrong items.
-- [ ] Translate ingredient names when the language is switched
+- [x] Translate ingredient names when the language is switched
       (now they stay as the user wrote them)
+      Done 9 Nov as a button ("Translate the list to ..."), not automatic, so a
+      language switch never uses an AI call by itself. /api/translate-ingredients,
+      Zod schemas with tests, translateIngredients in usePantry.ts.
 - [ ] Run /code-review and /security-review before hand-in
 - [ ] Recover lost password for account.
