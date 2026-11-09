@@ -248,3 +248,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: A guest who logs out or logs in to another account now gets the app's own dialog instead of the browser's confirm(), in the app's style and with the buttons in the app's language.
 - How: Claude wrote app/composables/useConfirm.ts (a confirm() that returns a Promise) and app/components/ui/ConfirmDialog.vue (built on the HTML `<dialog>` element, with Cancel focused first and Esc as Cancel), added it to app/app.vue, replaced window.confirm in app/pages/index.vue and app/pages/login.vue, and added the button texts in both languages in shared/i18n.ts. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Asked if the item in PROGRESS.md was done, asked Claude to build it, and tested the dialog locally (Cancel, Continue, Esc, both languages, dark mode).
+
+## 2026-11-09 (stricter photo scan)
+- Tool: Claude Code (Opus 5.5)
+- What: The photo scan sometimes listed food that was not in the photo. The prompt is now stricter, and my test gave no wrong items.
+- How: Claude read the prompt in server/api/analyze-image.post.ts and saw that it already said "only include food you can clearly see", and that the scan already used Sonnet (both routes share askClaude.ts). Claude added the reason (a missing item is easy to add, a wrong one ends up in a recipe, so leave it out when unsure) and four concrete rules: nothing hidden, nothing that only "goes with" what is seen, only packages that can be identified, and no plates or containers. Claude ran the typecheck and the tests (25 passing), explained the change afterwards, updated PROGRESS.md and wrote this log entry.
+- What I did: Picked this item from the Could have list and tested the scan with photos, which gave no wrong items.

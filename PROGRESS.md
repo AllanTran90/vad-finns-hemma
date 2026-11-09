@@ -165,9 +165,11 @@ Before hand-in:
       only allows the listed ingredients plus basic staples.)
 - [x] Own confirm dialog for guest logout, in the app's style. The browser's
       confirm() shows "Cancel" and "OK" in the browser's language, not the app's.
-- [ ] Photo scan sometimes lists food that is not in the photo. Try a stricter
+- [x] Photo scan sometimes lists food that is not in the photo. Try a stricter
       prompt ("if unsure, leave it out") in server/api/analyze-image.post.ts first,
       then Sonnet for the image analysis only (about 2 cents per scan).
+      Done 9 Nov: stricter prompt with the reason and four rules. Sonnet was
+      already used, since both routes share askClaude.ts. Tested: no wrong items.
 - [ ] Translate ingredient names when the language is switched
       (now they stay as the user wrote them)
 - [ ] Run /code-review and /security-review before hand-in
