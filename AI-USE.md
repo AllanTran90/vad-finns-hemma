@@ -212,3 +212,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The guest banner can now be hidden with an ✕ button. It then folds into one line with "Create account", which opens the full banner again, so creating an account is always reachable. The choice is saved in a cookie, so it survives a reload without the banner flashing.
 - How: Claude suggested the solution and wrote the change in app/components/guest/GuestBanner.vue (`useCookie`, the folded line and the 44 px close button) and added two texts in both languages in shared/i18n.ts. Claude ran the typecheck, explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Picked this task from the list of what is left before hand-in, asked Claude to do it, and tested it locally, including that the banner can be opened again.
+
+## 2026-11-09 (end-to-end test)
+- Tool: Claude Code (Opus 5.5)
+- What: Tested the whole app before hand-in. Result: 35 of 35 checks work, no problems found. The checklist and the result are in TESTING.md.
+- How: Claude ran the automated part (Vitest 25 of 25, typecheck, production build, and checked that both API routes answer 401 when logged out on the live site). Claude wrote the checklist with 35 manual checks in TESTING.md, and confirmed in the code that check 26 is no longer relevant since `/recipes` has only one recipe button. Claude did not test in the browser, since no browser tool was connected. Claude offered Playwright (a browser controlled by code) and explained what it costs.
+- What I did: Chose manual testing, tested all 35 checks on the live site in mobile view, noted that check 26 no longer fit after the split into pages and asked about check 15.
