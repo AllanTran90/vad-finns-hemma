@@ -9,6 +9,8 @@ Reviews:
 - 24 Oct: first review (the server trusted too much of what the browser sent)
 - 29 Oct: second review with the new model
 - 30 Oct: /code-review on app, server and shared, one finding at a time
+- 9 Nov: review of the day's changes (guest banner, guest limit, confirm dialog,
+  photo scan prompt, pantry translation), see the end of this file
 - Security review: 30 Oct (areas 1-4) and 9 Nov (area 5 and the changes since), see the end of this file
 
 ## Code review (24 Oct), fix before hand-in
@@ -288,3 +290,20 @@ Fixed (9 Nov):
       function and call it at login too (DRY).
       Done: app/composables/useClearUserData.ts, called at logout in
       app/pages/index.vue and after a successful login in app/pages/login.vue.
+
+## Code review (9 Nov)
+
+Read every change since commit b51cb8f (16 files, about 500 lines). The new
+route /api/translate-ingredients has the same guards in the same order as the
+other two (login, Zod, daily limit, Claude), and also checks that Claude answers
+with as many names as were sent. Two findings, both fixed:
+
+- [x] 1. A half-done translation showed the wrong list. If some name updates
+      were saved and one failed, translateIngredients stopped before reloading
+      the list, so the screen showed old names that were already changed in the
+      database. Fixed: the list is always reloaded in `finally`
+      (app/composables/usePantry.ts).
+- [x] 2. The next guest on the same device inherited the folded guest banner,
+      since the cookie stayed after logout, and could miss the warning that the
+      data is lost. Fixed: the cookie lives in
+      app/composables/useGuestBannerHidden.ts and clearUserData resets it.

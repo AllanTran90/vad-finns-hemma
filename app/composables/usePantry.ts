@@ -225,6 +225,7 @@ export function usePantry() {
         );
         const error = results.find((result) => result.error)?.error;
         if (error) {
+          // Some rows may already be saved, so we still reload the list (finally).
           console.log("Save translation error:", error);
           errorMessage.value = t("pantry.errorTranslate");
           return;
@@ -240,12 +241,13 @@ export function usePantry() {
           console.log("Delete duplicates error:", error);
         }
       }
-
-      await loadIngredients();
     } catch (error) {
       console.log("Translate ingredients error:", error);
       errorMessage.value = t(apiErrorKey(error, "pantry.errorTranslate"));
     } finally {
+      // Always show what the database really has, also after a half-done save.
+      // loadIngredients only sets its own error if the reload itself fails.
+      await loadIngredients();
       translating.value = false;
     }
   }

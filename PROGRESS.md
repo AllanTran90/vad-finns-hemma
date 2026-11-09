@@ -175,5 +175,6 @@ Before hand-in:
       Done 9 Nov as a button ("Translate the list to ..."), not automatic, so a
       language switch never uses an AI call by itself. /api/translate-ingredients,
       Zod schemas with tests, translateIngredients in usePantry.ts.
-- [ ] Run /code-review and /security-review before hand-in
+- [x] Run /code-review and /security-review before hand-in (9 Nov, see
+      CODE-REVIEW.md)
 - [ ] Recover lost password for account.

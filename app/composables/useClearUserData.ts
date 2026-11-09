@@ -9,6 +9,10 @@ export function useClearUserData() {
   const { resetScan } = useImageScan();
 
   function clearUserData() {
+    // Read the cookie here, not when the page loads. A copy made at page load
+    // can be out of date (the guest folded the banner after that), and then
+    // setting false looks like "no change" and nothing is written.
+    useGuestBannerHidden().value = false;
     ingredients.value = [];
     recipe.value = null;
     selectedCuisine.value = "";

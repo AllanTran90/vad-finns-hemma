@@ -2,14 +2,9 @@
 const supabase = useSupabaseClient();
 const { t } = useLang();
 
-// A cookie (like the theme) so the server already knows the choice and the
-// big banner does not flash on reload. Closing only folds it into one line,
-// so creating an account is always one tap away.
-const hidden = useCookie<boolean>("guest-banner-hidden", {
-  default: () => false,
-  maxAge: 60 * 60 * 24 * 365,
-  sameSite: "lax",
-});
+// Closing only folds the banner into one line, so creating an account is
+// always one tap away. The choice is kept in a cookie (see the composable).
+const hidden = useGuestBannerHidden();
 
 const email = ref("");
 const password = ref("");
