@@ -141,7 +141,7 @@ Pages:
 
 - [x] Split the app into 3 pages
 - [x] Bottom menu with icons
-- [ ] Guest banner can be dismissed, and creating an account stays reachable
+- [x] Guest banner can be dismissed, and creating an account stays reachable
       in the background
 
 Before hand-in:

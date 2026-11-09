@@ -206,3 +206,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: An unconfirmed list from a photo scan now survives a page change, also during a running scan. It is emptied when it is confirmed or discarded and at logout.
 - How: Claude warned that the list would probably disappear on a page change, moved the list to `useState` in useImageScan.ts, added `resetScan`, and updated ScanPhoto.vue and index.vue. Claude ran the typecheck and the tests (25 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
 - What I did: Tested locally that the list disappeared on a page change before the fix, and that it is gone after logging out with the fix.
+
+## 2026-11-09 (guest banner can be hidden)
+- Tool: Claude Code (Opus 5.5)
+- What: The guest banner can now be hidden with an ✕ button. It then folds into one line with "Create account", which opens the full banner again, so creating an account is always reachable. The choice is saved in a cookie, so it survives a reload without the banner flashing.
+- How: Claude suggested the solution and wrote the change in app/components/guest/GuestBanner.vue (`useCookie`, the folded line and the 44 px close button) and added two texts in both languages in shared/i18n.ts. Claude ran the typecheck, explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Picked this task from the list of what is left before hand-in, asked Claude to do it, and tested it locally, including that the banner can be opened again.
