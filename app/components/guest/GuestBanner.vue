@@ -2,6 +2,15 @@
 const supabase = useSupabaseClient();
 const { t } = useLang();
 
+// A cookie (like the theme) so the server already knows the choice and the
+// big banner does not flash on reload. Closing only folds it into one line,
+// so creating an account is always one tap away.
+const hidden = useCookie<boolean>("guest-banner-hidden", {
+  default: () => false,
+  maxAge: 60 * 60 * 24 * 365,
+  sameSite: "lax",
+});
+
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
@@ -38,8 +47,24 @@ async function createAccount() {
 </script>
 
 <template>
-  <section class="guest">
-    <h2>{{ t("guest.title") }}</h2>
+  <div v-if="hidden" class="guest-bar">
+    <span>{{ t("guest.short") }}</span>
+    <button class="link-btn" type="button" @click="hidden = false">
+      {{ t("auth.createAccount") }}
+    </button>
+  </div>
+  <section v-else class="guest">
+    <div class="guest-head">
+      <h2>{{ t("guest.title") }}</h2>
+      <button
+        class="close-btn"
+        type="button"
+        :aria-label="t('guest.hide')"
+        @click="hidden = true"
+      >
+        <Icon name="lucide:x" size="1.25rem" />
+      </button>
+    </div>
     <p class="muted">{{ t("guest.text") }}</p>
     <form @submit.prevent="createAccount">
       <input
@@ -83,6 +108,50 @@ async function createAccount() {
 .guest h2,
 .guest p {
   margin: 0;
+}
+
+.guest-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* 44 x 44 px so it is easy to hit with a thumb. */
+.close-btn {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -0.5rem -0.5rem 0 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.guest-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  background: var(--color-primary-soft);
+}
+
+.link-btn {
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .login-link a {

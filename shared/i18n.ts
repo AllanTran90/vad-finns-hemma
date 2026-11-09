@@ -159,6 +159,8 @@ const en = {
     "You are a guest. If you log in to another account, your guest ingredients and saved recipes are lost. Continue?",
   "guest.checkEmail":
     "Check your email and click the link to finish creating your account.",
+  "guest.short": "Guest account",
+  "guest.hide": "Hide",
 
   // Errors that can happen in any call to our server
   "error.offline":
@@ -329,6 +331,8 @@ const sv: Record<MessageKey, string> = {
     "Du är gäst. Loggar du in på ett annat konto försvinner gästens ingredienser och sparade recept. Fortsätta?",
   "guest.checkEmail":
     "Kolla din e-post och klicka på länken för att slutföra kontot.",
+  "guest.short": "Gästkonto",
+  "guest.hide": "Dölj",
 
   // Errors that can happen in any call to our server
   "error.offline":
