@@ -9,7 +9,7 @@ export function usePantry() {
   const { t, lang } = useLang();
   const errorMessage = ref("");
   const translating = ref(false);
-  const user = useSupabaseUser();
+  const { getUserIdOrError } = useUserId();
   // useState gives every page the same list, unlike ref, which makes a new one each call.
   const ingredients = useState<{ id: string; name: string }[]>(
     "pantry-ingredients",
@@ -62,10 +62,8 @@ export function usePantry() {
       return;
     }
 
-    // The database needs to know who owns the row. No user means the login is gone.
-    const userId = user.value?.sub;
+    const userId = getUserIdOrError(errorMessage);
     if (!userId) {
-      errorMessage.value = t("error.sessionExpired");
       return;
     }
 
@@ -90,9 +88,8 @@ export function usePantry() {
   async function addIngredients(names: string[]) {
     errorMessage.value = "";
 
-    const userId = user.value?.sub;
+    const userId = getUserIdOrError(errorMessage);
     if (!userId) {
-      errorMessage.value = t("error.sessionExpired");
       return;
     }
 
@@ -174,8 +171,7 @@ export function usePantry() {
     }
 
     // No user means the login is gone, so we do not even ask Claude.
-    if (!user.value?.sub) {
-      errorMessage.value = t("error.sessionExpired");
+    if (!getUserIdOrError(errorMessage)) {
       return;
     }
 

@@ -4,7 +4,7 @@ import type { Diet } from "#shared/diets";
 
 export function usePreferences() {
   const supabase = useSupabaseClient<Database>();
-  const user = useSupabaseUser();
+  const { getUserIdOrError } = useUserId();
   const { t } = useLang();
   const allergens = ref<Allergen[]>([]);
   const diet = ref<Diet>("none");
@@ -43,9 +43,8 @@ export function usePreferences() {
     allergens?: Allergen[];
     diet?: Diet;
   }) {
-    const userId = user.value?.sub;
+    const userId = getUserIdOrError(errorMessage);
     if (!userId) {
-      errorMessage.value = t("error.sessionExpired");
       return false;
     }
 

@@ -9,7 +9,7 @@ export type Favorite = z.infer<typeof favoriteSchema>;
 export function useFavorites() {
   const supabase = useSupabaseClient<Database>();
   const { t } = useLang();
-  const user = useSupabaseUser();
+  const { getUserIdOrError } = useUserId();
   const errorMessage = ref("");
   // useState gives every page the same list, unlike ref, which makes a new one each call.
   const favorites = useState<Favorite[]>("favorites", () => []);
@@ -54,9 +54,8 @@ export function useFavorites() {
       return;
     }
 
-    const userId = user.value?.sub;
+    const userId = getUserIdOrError(errorMessage);
     if (!userId) {
-      errorMessage.value = t("error.sessionExpired");
       return;
     }
 
