@@ -153,16 +153,10 @@ Before hand-in:
 
 - [x] Camera button for the photo scan (capture="environment", tested on
       Samsung A55, plus a gallery button)
-- [ ] Choose which courses to get: starter, main course, dessert (multi-select).
-      The recipe schema in shared/schemas/recipe.ts must then handle a list of
-      dishes, not just one.
-- [ ] Choose menu style: restaurant (fine dining) or regular home cooking.
-      Only a change in the prompt sent to /api/suggest, so do it after the
-      course choice.
-- [ ] Shopping list: let the AI use a few ingredients the user does not have,
-      and show them in their own "You need to buy" list. Needs a new field in
-      shared/schemas/recipe.ts and a new part in RecipeCard.vue. (Now the prompt
-      only allows the listed ingredients plus basic staples.)
+- [x] Choose menu style: restaurant (bistro) or regular home cooking.
+      Done 10 Nov before the course choice, as a Home cooking / Bistro picker:
+      shared/styles.ts, `style` in the Zod schema with tests, STYLE_RULES in
+      /api/suggest and StylePicker.vue.
 - [x] Own confirm dialog for guest logout, in the app's style. The browser's
       confirm() shows "Cancel" and "OK" in the browser's language, not the app's.
 - [x] Photo scan sometimes lists food that is not in the photo. Try a stricter
@@ -178,3 +172,12 @@ Before hand-in:
 - [x] Run /code-review and /security-review before hand-in (9 Nov, see
       CODE-REVIEW.md)
 - [ ] Recover lost password for account.
+- [ ] Shopping list: let the AI use a few ingredients the user does not have,
+      and show them in their own "You need to buy" list. Needs a new field in
+      shared/schemas/recipe.ts and a new part in RecipeCard.vue. (Now the prompt
+      only allows the listed ingredients plus basic staples.)
+- [ ] Choose which courses to get: starter, main course, dessert (multi-select).
+      The recipe schema in shared/schemas/recipe.ts must then handle a list of
+      dishes, not just one.
+- [ ] Payment (for example Stripe) to cover the AI costs. Every AI call costs
+      money, so with more users the daily limit could be topped up by paying.
