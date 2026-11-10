@@ -4,6 +4,7 @@ import { CUISINES } from "../cuisines";
 import { DIETS } from "../diets";
 import { LANGS } from "../i18n";
 import { MAX_INGREDIENTS, MAX_INGREDIENT_LENGTH } from "../limits";
+import { STYLES } from "../styles";
 
 // What the browser is allowed to send to /api/suggest.
 // The limits on ingredients stop someone from sending thousands of words,
@@ -16,6 +17,7 @@ export const suggestRequestSchema = z.object({
     .max(MAX_INGREDIENTS),
   avoid: z.array(z.enum(ALLERGENS)).default([]),
   diet: z.enum(DIETS).default("none"),
+  style: z.enum(STYLES).default("home"),
   lang: z.enum(LANGS).default("en"),
 });
 

@@ -13,6 +13,7 @@ describe("suggestRequestSchema", () => {
       ...valid,
       avoid: [],
       diet: "none",
+      style: "home",
       lang: "en",
     });
   });
@@ -75,7 +76,7 @@ describe("suggestRequestSchema", () => {
     expect(atLimit.success).toBe(true);
   });
 
-  it("rejects an allergen, diet or language that is not in our lists", () => {
+  it("rejects an allergen, diet, style or language that is not in our lists", () => {
     expect(
       suggestRequestSchema.safeParse({ ...valid, avoid: ["unicorn"] }).success,
     ).toBe(false);
@@ -83,15 +84,19 @@ describe("suggestRequestSchema", () => {
       suggestRequestSchema.safeParse({ ...valid, diet: "carnivore" }).success,
     ).toBe(false);
     expect(
+      suggestRequestSchema.safeParse({ ...valid, style: "fine_dining" }).success,
+    ).toBe(false);
+    expect(
       suggestRequestSchema.safeParse({ ...valid, lang: "fr" }).success,
     ).toBe(false);
   });
 
-  it("accepts known allergens, diet and language", () => {
+  it("accepts known allergens, diet, style and language", () => {
     const result = suggestRequestSchema.safeParse({
       ...valid,
       avoid: ["gluten", "milk"],
       diet: "vegan",
+      style: "bistro",
       lang: "sv",
     });
 
