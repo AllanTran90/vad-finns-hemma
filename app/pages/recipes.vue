@@ -3,11 +3,7 @@ import { CUISINES, SURPRISE, pickRandomCuisine } from "#shared/cuisines";
 
 const { t } = useLang();
 
-const {
-  ingredients,
-  errorMessage: pantryError,
-  loadIngredients,
-} = usePantry();
+const { ingredients, errorMessage: pantryError, loadIngredients } = usePantry();
 
 const {
   allergens,
@@ -21,6 +17,7 @@ const {
 const {
   recipe,
   selectedCuisine,
+  selectedStyle,
   loading,
   errorMessage: recipeError,
   getRecipe,
@@ -64,6 +61,7 @@ async function handleGetRecipe() {
     ingredients.value.map((ingredient) => ingredient.name),
     allergens.value,
     diet.value,
+    selectedStyle.value,
   );
 }
 
@@ -123,6 +121,13 @@ definePageMeta({
               @select="selectedCuisine = $event"
             />
           </div>
+        </section>
+
+        <section class="section">
+          <StylePicker
+            :selected="selectedStyle"
+            @change="selectedStyle = $event"
+          />
         </section>
 
         <section class="section">

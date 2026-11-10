@@ -1,5 +1,6 @@
 import type { Allergen } from "#shared/allergens";
 import type { Diet } from "#shared/diets";
+import type { Style } from "#shared/styles";
 import type { Recipe } from "#shared/schemas/recipe";
 import type { Cuisine, CuisineChoice } from "#shared/cuisines";
 
@@ -11,6 +12,7 @@ export function useRecipe() {
     "recipe-cuisine",
     () => "",
   );
+  const selectedStyle = useState<Style>("recipe-style", () => "home");
   const loading = useState("recipe-loading", () => false);
   const errorMessage = useState("recipe-error", () => "");
 
@@ -19,6 +21,7 @@ export function useRecipe() {
     ingredients: string[],
     avoid: Allergen[],
     diet: Diet,
+    style: Style,
   ) {
     errorMessage.value = "";
     recipe.value = null;
@@ -27,7 +30,7 @@ export function useRecipe() {
     try {
       recipe.value = await $fetch<Recipe>("/api/suggest", {
         method: "POST",
-        body: { cuisine, ingredients, avoid, diet, lang: lang.value },
+        body: { cuisine, ingredients, avoid, diet, style, lang: lang.value },
       });
     } catch (error) {
       console.log("Get recipe error:", error);
@@ -37,5 +40,12 @@ export function useRecipe() {
     }
   }
 
-  return { recipe, selectedCuisine, loading, errorMessage, getRecipe };
+  return {
+    recipe,
+    selectedCuisine,
+    selectedStyle,
+    loading,
+    errorMessage,
+    getRecipe,
+  };
 }

@@ -37,6 +37,11 @@ const en = {
   "prefs.errorLoad": "Could not load your preferences. Please try again.",
   "prefs.errorSave": "Could not save your preferences. Please try again.",
 
+  // Styles (the keys match the values in shared/styles.ts)
+  "style.title": "Style",
+  "style.home": "Home cooking",
+  "style.bistro": "Bistro",
+
   // Diets (the keys match the values in shared/diets.ts)
   "diet.title": "Diet",
   "diet.none": "No restrictions",
@@ -221,6 +226,10 @@ const sv: Record<MessageKey, string> = {
   "prefs.hint": "Recepten undviker det du väljer.",
   "prefs.errorLoad": "Kunde inte hämta dina val. Försök igen.",
   "prefs.errorSave": "Kunde inte spara dina val. Försök igen.",
+
+  "style.title": "Stil",
+  "style.home": "Hemmamat",
+  "style.bistro": "Bistro",
 
   "diet.title": "Kost",
   "diet.none": "Inga begränsningar",
