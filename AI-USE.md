@@ -272,3 +272,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The first step of a new Could have: the user can choose between home cooking and bistro food. This step only lets the request to /api/suggest carry the choice, the server and the button come next.
 - How: Claude listed the Could haves from smallest to biggest and suggested this one, explained which files it touches and that no migration is needed, since the choice is not saved. Claude wrote shared/styles.ts (the list `home`, `bistro`, built like shared/diets.ts), added `style` with the default `home` to shared/schemas/suggestRequest.ts, and updated tests/suggestRequest.test.ts (default value, `bistro` accepted, `fine_dining` rejected). Claude ran the typecheck and the tests (34 passing), explained the change afterwards and wrote this log entry.
 - What I did: Picked this Could have and changed it from fine dining to restaurant food, and then to bistro food, since it is closer to what people can cook at home. Asked how complicated it is, which files it touches and if it means a new button.
+
+## 2026-11-10 (bistro style, step 2: the prompt)
+- Tool: Claude Code (Opus 5.5)
+- What: The server now tells the AI what bistro food means. Home cooking gives the same recipe as before.
+- How: Claude added `STYLE_RULES` to server/api/suggest.post.ts, built like `DIET_RULES`: `home` has no rule, `bistro` asks for a classic, hearty dish with a simple sauce or garnish, plated nicely, that can still be cooked in a normal home kitchen. The rule is added to the prompt under the diet rule. The rule about only using my own ingredients is unchanged. Claude ran the typecheck and the tests (34 passing), explained the change afterwards and wrote this log entry. Claude did not test it in the browser.
+- What I did: Asked Claude to build the step and read the new rule.
