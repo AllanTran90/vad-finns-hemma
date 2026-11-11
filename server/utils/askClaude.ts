@@ -28,19 +28,23 @@ export async function askClaude<T extends z.ZodType>(
 
   let message;
   try {
-    // The beta path is needed for `fallbacks`: if Sonnet's safety check wrongly
+    // The beta path is needed for `fallbacks`: if Opus's safety check wrongly
     // declines a request, the API tries again on another model in the same call.
     message = await client.beta.messages.parse({
-      model: "claude-sonnet-5-5",
+      model: "claude-opus-5-5",
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
       // The model may "think" before it answers, and the thinking also uses tokens.
       // With diet and allergy rules the answer can get cut off if this is too low.
-      max_tokens: 4000,
+      // Raised from 4000 to 8000 for Opus, since its bistro recipes are longer.
+      // It is only a ceiling: we pay for the tokens used, not for the limit.
+      max_tokens: 8000,
       messages: [{ role: "user", content }],
       // This model does not accept `temperature` (the API answers 400). Effort is the
       // setting we have: how much the model thinks, so also how long and how much it
-      // costs. Tested: medium took 7 s, high 11 s and twice the tokens.
+      // costs. Tested on Sonnet: medium took 7 s, high 11 s and twice the tokens.
+      // Opus (chosen 11 Nov) gives clearer bistro dishes, but took 14-24 s and
+      // costs twice as much per token.
       output_config: { effort: "medium", format: betaZodOutputFormat(schema) },
     });
   } catch (error) {

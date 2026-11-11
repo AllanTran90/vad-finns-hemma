@@ -127,6 +127,9 @@ AI:
 - [x] Switch to Sonnet (claude-sonnet-5-5, in server/utils/askClaude.ts)
 - [x] Set the AI temperature: not possible, Sonnet 5.5 answers 400 on
       `temperature` (tested 5 Nov). Set `effort: "medium"` instead.
+- [x] Switch to Opus (claude-opus-5-5) on Hans's advice, 11 Nov. Tested with the
+      same ingredients: home 14 s and bistro 24 s (Sonnet 7 s and 11 s), with a
+      much clearer bistro dish. Costs twice as much per token.
 
 Small fixes:
 
