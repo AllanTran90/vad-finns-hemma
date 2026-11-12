@@ -97,7 +97,13 @@ function confirm() {
     <div v-if="knownItems.length">
       <h4>{{ t("scan.knownTitle", { count: knownItems.length }) }}</h4>
       <ul class="known-list">
-        <li v-for="(name, index) in knownItems" :key="index">{{ name }}</li>
+        <li
+          v-for="(name, index) in knownItems"
+          :key="index"
+          class="chip chip-tag"
+        >
+          {{ name }}
+        </li>
       </ul>
     </div>
 
@@ -151,14 +157,6 @@ function confirm() {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.known-list li {
-  padding: 0.25rem 0.625rem;
-  border-radius: 999px;
-  background: var(--color-tag-bg);
-  color: var(--color-tag-text);
-  font-size: 0.8125rem;
 }
 
 .rows li,

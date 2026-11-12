@@ -51,9 +51,9 @@ const conflictNames = computed(() =>
       </div>
 
       <div class="chips">
-        <span class="chip chip-cuisine">{{ recipe.cuisine }}</span>
-        <span class="chip chip-time">{{ recipe.cook_time_minutes }} min</span>
-        <span v-if="recipe.kid_friendly" class="chip chip-kids">
+        <span class="chip chip-primary">{{ recipe.cuisine }}</span>
+        <span class="chip chip-muted">{{ recipe.cook_time_minutes }} min</span>
+        <span v-if="recipe.kid_friendly" class="chip chip-tag">
           {{ t("recipe.kidFriendly") }}
         </span>
       </div>
@@ -64,7 +64,7 @@ const conflictNames = computed(() =>
           <span
             v-for="allergen in recipe.allergens"
             :key="allergen"
-            class="chip chip-allergen"
+            class="chip chip-warn"
           >
             {{ t(`allergen.${allergen}`) }}
           </span>
@@ -162,33 +162,6 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.chip {
-  padding: 0.25rem 0.625rem;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-.chip-cuisine {
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-}
-
-.chip-time {
-  background: var(--color-bg);
-  color: var(--color-muted);
-}
-
-.chip-kids {
-  background: var(--color-tag-bg);
-  color: var(--color-tag-text);
-}
-
-.chip-allergen {
-  background: var(--color-warn-bg);
-  color: var(--color-warn-text);
 }
 
 ul,

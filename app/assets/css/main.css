@@ -232,3 +232,32 @@ input:focus-visible,
   background: var(--color-warn-bg);
   color: var(--color-warn-text);
 }
+
+/* Small rounded labels ("pills"), for example the cuisine and cooking time on a
+   recipe. Add one color class: .chip-primary, .chip-muted, .chip-tag or .chip-warn. */
+.chip {
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.chip-primary {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.chip-muted {
+  background: var(--color-bg);
+  color: var(--color-muted);
+}
+
+.chip-tag {
+  background: var(--color-tag-bg);
+  color: var(--color-tag-text);
+}
+
+.chip-warn {
+  background: var(--color-warn-bg);
+  color: var(--color-warn-text);
+}
