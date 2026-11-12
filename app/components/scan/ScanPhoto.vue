@@ -26,14 +26,6 @@ const {
 
 const newItem = ref("");
 
-// Two ways to get a photo. "capture" opens the back camera directly on a phone;
-// without it the phone shows its normal photo picker. On a computer, both just
-// open a file dialog.
-const sources = [
-  { label: "scan.camera", capture: "environment" },
-  { label: "scan.gallery", capture: undefined },
-] as const;
-
 const existingNames = computed(
   () => new Set(props.existing.map((name) => name.trim().toLowerCase())),
 );
@@ -42,19 +34,9 @@ function isKnown(name: string) {
   return existingNames.value.has(name.trim().toLowerCase());
 }
 
-async function onFileChange(event: Event, sourceLabel: string) {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-
-  if (!file) {
-    return;
-  }
-
+async function onPick(file: File, sourceLabel: string) {
   activeSource.value = sourceLabel;
   await scanPhoto(file);
-
-  // Clear the input so picking the same photo again still fires "change".
-  input.value = "";
 
   if (errorMessage.value) {
     return;
@@ -104,34 +86,11 @@ function confirm() {
 
 <template>
   <div class="scan">
-    <ul class="tips muted">
-      <li>{{ t("scan.tip1") }}</li>
-      <li>{{ t("scan.tip2") }}</li>
-      <li>{{ t("scan.tip3") }}</li>
-    </ul>
-
-    <div class="sources">
-      <label
-        v-for="source in sources"
-        :key="source.label"
-        class="btn upload"
-        :class="{ disabled: loading }"
-      >
-        {{
-          loading && activeSource === source.label
-            ? t("scan.reading")
-            : t(source.label)
-        }}
-        <input
-          class="file-input"
-          type="file"
-          accept="image/*"
-          :capture="source.capture"
-          :disabled="loading"
-          @change="onFileChange($event, source.label)"
-        />
-      </label>
-    </div>
+    <ScanSources
+      :loading="loading"
+      :active-source="activeSource"
+      @pick="onPick"
+    />
 
     <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
 
@@ -205,42 +164,6 @@ function confirm() {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-}
-
-.tips {
-  margin: 0;
-  padding-left: 1.25rem;
-  font-size: 0.875rem;
-}
-
-.sources {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* The real file input is hidden; the label acts as the button. */
-.upload {
-  position: relative;
-  text-align: center;
-}
-
-.upload.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.upload:focus-within {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.file-input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  opacity: 0;
-  cursor: pointer;
 }
 
 .review {
