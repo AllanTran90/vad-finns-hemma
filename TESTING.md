@@ -117,8 +117,8 @@ marked this as 4 failures, but that was a mistake in the test, not in the app.
 
 Works: 4/4 runs and 28/28 security checks. No problems found. Notes:
 
-- The test created 6 guest accounts in Supabase. Their rows were deleted, the
-  accounts can be removed under Authentication → Users.
-- The preferences table has no delete rule, so the test accounts' preferences
-  stay until the accounts are removed (on delete cascade). The app never needs
-  to delete them.
+- The test created 6 guest accounts in Supabase. Their rows were deleted, and
+  I removed the accounts under Authentication → Users afterwards, which also
+  removed their preferences and usage rows (on delete cascade).
+- The preferences table has no delete rule, which is why the test could not
+  delete the preferences itself. The app never needs to delete them.
