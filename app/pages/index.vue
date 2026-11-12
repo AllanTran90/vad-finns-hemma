@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MAX_INGREDIENTS, MAX_INGREDIENT_LENGTH } from "#shared/limits";
+import { MAX_INGREDIENTS } from "#shared/limits";
 
 const user = useSupabaseUser();
 const { t } = useLang();
@@ -57,16 +57,7 @@ definePageMeta({
             }}
           </span>
         </h2>
-        <form class="add-form" @submit.prevent="handleAdd">
-          <input
-            v-model="ingredientName"
-            type="text"
-            :placeholder="t('pantry.placeholder')"
-            :maxlength="MAX_INGREDIENT_LENGTH"
-            required
-          />
-          <button class="btn" type="submit">{{ t("pantry.add") }}</button>
-        </form>
+        <PantryAddForm v-model="ingredientName" @add="handleAdd" />
         <p v-if="pantryError" role="alert">{{ pantryError }}</p>
         <PantryList
           :ingredients="ingredients"
@@ -122,16 +113,6 @@ definePageMeta({
 
 .header p {
   margin: 0;
-}
-
-.add-form {
-  display: flex;
-  gap: 0.625rem;
-}
-
-.add-form input {
-  flex: 1;
-  min-width: 0;
 }
 
 .translate {

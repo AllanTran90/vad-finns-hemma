@@ -426,3 +426,9 @@
 - What: The log out button, with the question to guests and its error message, moved from app/pages/index.vue to a new component, app/components/ui/LogoutButton.vue (48 lines). No change for the user. index.vue went from 180 to 146 lines.
 - How: Claude read index.vue and pointed out three parts that do not belong together: log out, the add form and the translate button. Claude suggested starting with log out, since it does not use the pantry at all. LogoutButton.vue has no props and no emits and gets what it needs from composables (useSupabaseClient, useConfirm, useClearUserData). It has no wrapping `<div>`, so the page still centers the button. index.vue no longer needs `supabase`, `confirm` or `clearUserData`. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
 - What I did: Tested logging out as a normal user and as a guest in the browser.
+
+## 2026-11-12 (split index.vue, step 2: PantryAddForm)
+- Tool: Claude Code (Opus 5.5)
+- What: The form for adding one ingredient by hand moved from app/pages/index.vue to a new component, app/components/pantry/PantryAddForm.vue (39 lines). No change for the user. index.vue is now 127 lines (180 this morning).
+- How: Claude wrote PantryAddForm.vue with the input, the Add button and their CSS. It shares the text with the page through `v-model` (`defineModel`) and sends `add` when the form is sent. `handleAdd` stays in index.vue, because only the page knows if the save went well (`pantryError`), and the input should only be emptied then. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
+- What I did: Chose to do this second step. Tested adding an ingredient, a duplicate and Enter in the browser.
