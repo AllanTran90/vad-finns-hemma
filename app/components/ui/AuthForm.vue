@@ -22,13 +22,7 @@ function onSubmit() {
 
 <template>
   <main class="auth">
-    <div class="brand">
-      <span class="brand-icon">
-        <Icon name="lucide:chef-hat" size="2rem" />
-      </span>
-      <p class="brand-name">Vad finns hemma?</p>
-      <p class="muted">{{ t("auth.tagline") }}</p>
-    </div>
+    <UiAuthBrand />
 
     <div class="card">
       <h1>{{ title }}</h1>
@@ -69,35 +63,6 @@ function onSubmit() {
   max-width: 26rem;
   margin: 0 auto;
   padding: 3rem 1.25rem 1.5rem;
-}
-
-.brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  text-align: center;
-}
-
-.brand-icon {
-  display: grid;
-  place-items: center;
-  width: 4rem;
-  height: 4rem;
-  margin-bottom: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-}
-
-.brand-name {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.brand .muted {
-  margin: 0;
 }
 
 .card {
