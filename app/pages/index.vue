@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MAX_INGREDIENT_LENGTH } from "#shared/limits";
+import { MAX_INGREDIENTS, MAX_INGREDIENT_LENGTH } from "#shared/limits";
 
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
@@ -71,7 +71,18 @@ definePageMeta({
 
     <div class="layout">
       <section class="section">
-        <h2>{{ t("pantry.title") }}</h2>
+        <!-- The count shows how much room is left before the pantry is full. -->
+        <h2 class="pantry-title">
+          {{ t("pantry.title") }}
+          <span class="count muted">
+            {{
+              t("pantry.count", {
+                count: ingredients.length,
+                max: MAX_INGREDIENTS,
+              })
+            }}
+          </span>
+        </h2>
         <form class="add-form" @submit.prevent="handleAdd">
           <input
             v-model="ingredientName"
@@ -120,6 +131,18 @@ definePageMeta({
 </template>
 
 <style scoped>
+.pantry-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.count {
+  font-size: 0.875rem;
+  font-weight: normal;
+}
+
 .header {
   display: flex;
   flex-direction: column;

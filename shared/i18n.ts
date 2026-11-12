@@ -7,6 +7,7 @@ const en = {
 
   // Pantry
   "pantry.title": "Your ingredients",
+  "pantry.count": "{count} of {max}",
   "pantry.placeholder": "Ingredient",
   "pantry.add": "Add",
   "pantry.delete": "Delete",
@@ -198,6 +199,7 @@ const sv: Record<MessageKey, string> = {
   "app.tagline": "Lägg till vad du har hemma och välj sedan ett kök.",
 
   "pantry.title": "Dina ingredienser",
+  "pantry.count": "{count} av {max}",
   "pantry.placeholder": "Ingrediens",
   "pantry.add": "Lägg till",
   "pantry.delete": "Ta bort",
