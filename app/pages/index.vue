@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { MAX_INGREDIENTS, MAX_INGREDIENT_LENGTH } from "#shared/limits";
 
-const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { t } = useLang();
-const { confirm } = useConfirm();
 const ingredientName = ref("");
-const logoutError = ref("");
 
 const {
   ingredients,
@@ -19,29 +16,6 @@ const {
   translating,
   translateIngredients,
 } = usePantry();
-
-const { clearUserData } = useClearUserData();
-
-async function signOut() {
-  logoutError.value = "";
-
-  // A guest has no email or password to log in with again, so logging out
-  // means the data is lost. Ask first.
-  if (user.value?.is_anonymous && !(await confirm(t("guest.logoutConfirm")))) {
-    return;
-  }
-
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    console.log("Logout error:", error);
-    logoutError.value = t("auth.logOutError");
-    return;
-  }
-
-  clearUserData();
-  await navigateTo("/login");
-}
 
 async function handleAdd() {
   await addIngredient(ingredientName.value);
@@ -123,10 +97,7 @@ definePageMeta({
       </section>
     </div>
 
-    <button class="btn-link logout" type="button" @click="signOut">
-      {{ t("auth.logOut") }}
-    </button>
-    <p v-if="logoutError" role="alert">{{ logoutError }}</p>
+    <UiLogoutButton />
   </main>
 </template>
 
@@ -171,10 +142,5 @@ definePageMeta({
 .translate:disabled {
   opacity: 0.6;
   cursor: wait;
-}
-
-.logout {
-  align-self: center;
-  color: var(--color-muted);
 }
 </style>

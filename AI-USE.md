@@ -420,3 +420,9 @@
 - What: The older entries in this file (13 Oct to 5 Nov) had several topics under one heading per day, which made them hard to read. Now every entry has its own heading with a topic, like the newer ones.
 - How: Claude saved a backup, split the days with several parts ("What (later ...)") into their own sections, moved the sentences to the right section without changing the facts, fixed spelling mistakes, and kept 22 Oct and 29 Oct as one section each, since their sentences could not be split without guessing. Claude compared the words in the old and the new file to check that nothing was lost (only the fixed spelling mistakes differed) and wrote this log entry.
 - What I did: Had the idea and read through the result.
+
+## 2026-11-12 (split index.vue, step 1: LogoutButton)
+- Tool: Claude Code (Opus 5.5)
+- What: The log out button, with the question to guests and its error message, moved from app/pages/index.vue to a new component, app/components/ui/LogoutButton.vue (48 lines). No change for the user. index.vue went from 180 to 146 lines.
+- How: Claude read index.vue and pointed out three parts that do not belong together: log out, the add form and the translate button. Claude suggested starting with log out, since it does not use the pantry at all. LogoutButton.vue has no props and no emits and gets what it needs from composables (useSupabaseClient, useConfirm, useClearUserData). It has no wrapping `<div>`, so the page still centers the button. index.vue no longer needs `supabase`, `confirm` or `clearUserData`. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
+- What I did: Tested logging out as a normal user and as a guest in the browser.
