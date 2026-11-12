@@ -1,147 +1,192 @@
 # AI use
-## 2026-10-13
+
+## 2026-10-13 (Supabase connection)
 - Tool: Claude (claude.ai chat)
-- What: Supabase connection
+- What: Supabase connection.
 - How: Asked how to connect Supabase.
-- What I did: I read docs, setup database connection, set up the project.
+- What I did: I read the docs, set up the database connection and set up the project.
 
-## 2026-10-14
+## 2026-10-14 (middleware, login error and logout)
 - Tool: Claude (claude.ai chat and Claude Code)
-- What: Asked for code suggestions for middleware, error message in login, logout button and how Vue works, database table
-- How: Claude explained that Vue has script block outside the template, not inside. Showed me it's @click instead of event listener. Gave me code suggestions.
-- What I did: I wrote the code for middleware, error message and logout button. Understood that without await the code will keep on going before the sesson is cleaned Tested on localhost if it works. I read the suggestions of the policies(rules). Typed it in in sql editor. 
+- What: Asked for code suggestions for the middleware, an error message in login, a logout button and the database table, and how Vue works.
+- How: Claude explained that Vue has the script block outside the template, not inside, and showed me that it's @click instead of an event listener. Gave me code suggestions.
+- What I did: I wrote the code for the middleware, the error message and the logout button. Understood that without await the code keeps going before the session is cleaned. Tested on localhost that it works. I read the suggestions for the policies (rules) and typed them in in the SQL editor.
 
-## 2026-10-15
-- Tool: Claude code
+## 2026-10-15 (AuthForm: DRY login and signup)
+- Tool: Claude Code
 - What: The login and signup forms started to look the same. I wanted to keep the code DRY.
 - How: Claude explained props and emit in Vue and reviewed my files. It pointed out mistakes, but I wrote the code.
-- What I did: Created a new file called AuthForm for login form.
+- What I did: Created a new file called AuthForm for the login form.
 
-## 2026-10-16
-- Tool: Claude code
-- What: Wrote the delete function and button myself. Wrote the first version of usePantry. Tested add, list and delete on localhost.
+## 2026-10-16 (delete and the first usePantry)
+- Tool: Claude Code
+- What: Wrote the delete function and button myself. Wrote the first version of usePantry.
 - How: Claude explained what a composable is and pointed out what was missing in my code. Claude also found that the insert failed because useSupabaseUser() returns `sub`, not `id`. When I got stuck on the composable I asked Claude to edit the files, and it changed usePantry.ts and the top of index.vue.
-- What I did: Tested add, list and delete on localhost. Asked Clu(my name for claude code) if he coulde help me with the editing and solve the problem. 
+- What I did: Tested add, list and delete on localhost. Asked Clu (my name for Claude Code) if he could help me with the editing and solve the problem.
 
-## 2026-10-19
-- Tool: Claude code
+## 2026-10-19 (one pantry per account)
+- Tool: Claude Code
 - What: Will user A and user B have the same ingredients after the input?
-How will the user choose cuisine?
-- How: Asked my friend Clu how it works with different accounts, do they share ingredients?
-Asked Clu how the user choose a cuisine and how to create it.
-- What I did: Tested using both chrome and firefox to create two different accounts. Made an input, milk and butter, reload the other accout to check if the ingredients list was still empty or did it put in new ingredients.
-Made a file(cuisines.ts) in shared, that will be read by both frontend and backend. Also made CuisineCard.vue.
+- How: Asked my friend Clu how it works with different accounts: do they share ingredients?
+- What I did: Tested in both Chrome and Firefox with two different accounts. Added milk and butter, then reloaded the other account to check if its ingredient list was still empty or if it got the new ingredients.
 
-## 2026-10-20
-- Tool: Claude code
-- What: Prepared for the supervision meeting (flow chart and explanation of the app). Built the server route that calls the Claude API.  
+## 2026-10-19 (choosing a cuisine)
+- Tool: Claude Code
+- What: How will the user choose a cuisine?
+- How: Asked Clu how the user chooses a cuisine and how to create it.
+- What I did: Made a file (cuisines.ts) in shared, that is read by both the frontend and the backend. Also made CuisineCard.vue.
+
+## 2026-10-20 (supervision prep and the Claude API route)
+- Tool: Claude Code
+- What: Prepared for the supervision meeting (flow chart and explanation of the app). Built the server route that calls the Claude API.
 - How: Claude drew the flow chart and explained server routes, runtimeConfig, template strings and tokens. It pointed out my mistakes (empty apiKey, quotes instead of backticks, max_tokens too low) but I wrote the code.
 - What I did: Wrote suggest.post.ts, installed the SDK, added the key to .env and Vercel, tested with curl. Changed the prompt to use ${body.cuisine} and tested units and language.
 
-## 2026-10-21
-- Tool: Claude code (and the Figma connector in Claude Code)
-- What: Finished validation of Claude's answer in suggest.post.ts. Read the text from the response, turn it into data, check it with the Zod schema and handle errors. 
-After my meeting with Hans and Betsy I change my working agreement with Clu, he'll generate more code now and I'll do the code review.
-Finished Sprint 2 (get recipe button, result view), made a UI design in Figma and started the styling. Added a "Surprise me" cuisine.
-- How: Claude explained .find(), JSON.parse, safeParse, createError and try/catch step by step. It pointed out my mistakes (the .find line was placed before `message` existed, readBlock does not exist, the allergen sentence in the prompt had no list, the import path in shared/) but I wrote the code. When I got to try/catch asked Claude for help.
-Told Clu that he'll be able to edit the files more freely from now on. 
-Under our new working agreement Claude wrote the code directly in my files and explained each change afterwards. Claude wrote useRecipe.ts (calls /api/suggest), RecipeCard.vue (result view) and the Get recipe button in index.vue. Claude generated three mobile screens in Figma (login, home, recipe). I chose the style myself: first "warm and cozy", then I asked for "fresh and green". Claude turned the Figma colors into CSS variables (main.css) with a dark mode, and restyled the start page, the pantry list and the cuisine cards with them. The "Surprise me" idea was mine, Claude wrote the code (a SURPRISE constant, a card, and a different sentence in the prompt).
+## 2026-10-21 (validating Claude's answer with Zod)
+- Tool: Claude Code
+- What: Finished the validation of Claude's answer in suggest.post.ts: read the text from the response, turn it into data, check it with the Zod schema and handle errors.
+- How: Claude explained .find(), JSON.parse, safeParse, createError and try/catch step by step. It pointed out my mistakes (the .find line was placed before `message` existed, readBlock does not exist, the allergen sentence in the prompt had no list, the import path in shared/) but I wrote the code. When I got to try/catch I asked Claude for help.
 - What I did: Used .find() to get the text block (skipping the "thinking" block). Used JSON.parse to turn the text into an object. Checked it with recipeSchema.safeParse and threw a 502 with createError if the recipe is invalid. Tested with curl and saw both success and failure (changed the schema on purpose to see the Zod error). Added the allergen list (ALLERGENS.join) and a "no code fences" sentence to the prompt after Claude once answered with ```json and JSON.parse crashed. Added try/catch around JSON.parse.
-Told Clu to help me finish sprint 2, but make sure that he'll explain the code for me so I understand.
-Read and tested every change in the browser (the button is disabled until I pick a cuisine, the recipe shows up, the error handling works). Chose the design direction and gave feedback on it. Tested dark mode. Decided what the features should do (Surprise me should let Claude pick any cuisine in the world). Updated PROGRESS.md (Sprint 2 is done).
 
-## 2026-10-22
+## 2026-10-21 (new working agreement)
 - Tool: Claude Code
-- What: Photo recognition of ingredients        (Sprint 3 start). Styled the login/signup pages. Wrote learning notes.
-- How: Claude wrote the Zod schema (detectedIngredients.ts), the server route
-  analyze-image.post.ts (sends the photo to the Claude API and validates the answer),
-  and the useImageScan composable (resizes the image in the browser before upload).
-  Claude also restyled AuthForm.vue (password toggle, switch-link slot) and wrote the
-  notes in learn/ explaining each new file. Claude explained each change afterwards.
-- What I did: Asked Claude to style the app and the login/signup pages, and told it
-  how I wanted them to look. Claude made the changes in AuthForm.vue, login.vue and
-  signup.vue, and I gave feedback until I was happy.
+- What: After my meeting with Hans and Betsy I changed my working agreement with Clu: he generates more code now and I do the code review.
+- How: Told Clu that he is able to edit the files more freely from now on.
+- What I did: Told Clu to help me finish Sprint 2, but to make sure that he explains the code to me so I understand.
 
-## 2026-10-23
+## 2026-10-21 (Sprint 2 done, Figma design and "Surprise me")
+- Tool: Claude Code (and the Figma connector in Claude Code)
+- What: Finished Sprint 2 (get recipe button, result view), made a UI design in Figma and started the styling. Added a "Surprise me" cuisine.
+- How: Under our new working agreement Claude wrote the code directly in my files and explained each change afterwards. Claude wrote useRecipe.ts (calls /api/suggest), RecipeCard.vue (result view) and the Get recipe button in index.vue. Claude generated three mobile screens in Figma (login, home, recipe). I chose the style myself: first "warm and cozy", then I asked for "fresh and green". Claude turned the Figma colors into CSS variables (main.css) with a dark mode, and restyled the start page, the pantry list and the cuisine cards with them. The "Surprise me" idea was mine, Claude wrote the code (a SURPRISE constant, a card, and a different sentence in the prompt).
+- What I did: Read and tested every change in the browser (the button is disabled until I pick a cuisine, the recipe shows up, the error handling works). Chose the design direction and gave feedback on it. Tested dark mode. Decided what the features should do (Surprise me should let Claude pick any cuisine in the world). Updated PROGRESS.md (Sprint 2 is done).
+
+## 2026-10-22 (photo recognition, login styling and learning notes)
 - Tool: Claude Code
-- What: Finished Sprint 3 (photo scan with a correction list, saved pantry, tips for the photo). Added a dark mode toggle, a Swedish/English toggle for the whole app and the AI answers, two new cuisines (Korean, Italian) and made "Surprise me" pick a random cuisine. Started Sprint 4: allergies and diet are now saved in the database and sent to the recipe prompt. Planned the rest of Sprint 4 (favorites, guest account, error handling) and updated PROGRESS.md. Later the same day: protected /api/suggest and /api/analyze-image so only logged-in users (guests included) can use the Claude key.
-- How: Claude fixed TypeScript errors in usePantry and the server routes and wrote addIngredients in usePantry.ts (saves many ingredients at once and skips duplicates), ScanPhoto.vue (tips, file input, correction list), ThemeToggle.vue, LangToggle.vue, useLang.ts and shared/i18n.ts (the dictionary), and changed the prompts so the AI answers in the chosen language. For allergies and diet Claude wrote the SQL for the preferences table, usePreferences.ts, PillGroup.vue, Foldout.vue, DietPicker.vue, AllergyPicker.vue and the diet rules in suggest.post.ts. The recipe card now warns if the recipe contains an allergen I picked. Claude also wrote learning notes 05-08 in learn/, explained each change and suggested the commit messages. When I got a 502 error Claude explained what it meant, asked me for the log, and raised max_tokens in suggest.post.ts from 2000 to 4000 (the AI's thinking uses tokens too, so long answers were cut off). For the API protection Claude wrote server/utils/requireUser.ts (asks Supabase who is calling and throws 401 if nobody is logged in), added `await requireUser(event)` as the first line in both server routes, checked the allergy code and ticked off Sprint 4 in PROGRESS.md. Claude explained what H3Event is, why the check needs `await` and why it goes first, and what curl is.
-- What I did: Decided what to build and in which order: finish Sprint 3, the language toggle (the whole app and the AI answers, a simple own solution without a package) and that allergies and diet must be saved in the database so they follow the user. Tested the photo scan on my own fridge photos. When I scanned the same photo twice it looked like nothing happened, so I asked Claude to show which ingredients are already in the pantry, and then to split them into a "new" list and an "already in your pantry" list. Noticed that the dark mode button was missing. Came up with "Surprise me should pick a random cuisine" and added Korean and Italian. Asked for more diet options (pescatarian, lacto-ovo, ovo) and corrected Claude about what a lacto-ovo vegetarian eats. Decided that diet and allergies should be two separate boxes with the same look. Ran the SQL in Supabase myself and tested with two accounts that RLS works (each user only sees their own preferences). Found the 502 error, took screenshots and showed them to Claude. Tested everything in the browser, made the commits and pushed. Decided that a guest account is wanted so people can try the app, with an offer to create an account to keep their data (to be built later in Sprint 4). Asked Claude what was left of the thesis and chose to start with the API protection, since anyone could use my Claude key. Asked what H3Event is. Ran the curl test myself without logging in and got 401 "Please log in to use this."
+- What: Photo recognition of ingredients (Sprint 3 start). Styled the login and signup pages. Wrote learning notes.
+- How: Claude wrote the Zod schema (detectedIngredients.ts), the server route analyze-image.post.ts (sends the photo to the Claude API and validates the answer), and the useImageScan composable (resizes the image in the browser before upload). Claude also restyled AuthForm.vue (password toggle, switch-link slot) and wrote the notes in learn/ explaining each new file. Claude explained each change afterwards.
+- What I did: Asked Claude to style the app and the login and signup pages, and told it how I wanted them to look. Claude made the changes in AuthForm.vue, login.vue and signup.vue, and I gave feedback until I was happy.
 
-## 2026-10-24
+## 2026-10-23 (Sprint 3 done: photo scan with a correction list)
+- Tool: Claude Code
+- What: Finished Sprint 3: photo scan with a correction list, saved pantry and tips for the photo.
+- How: Claude fixed TypeScript errors in usePantry and the server routes, and wrote addIngredients in usePantry.ts (saves many ingredients at once and skips duplicates) and ScanPhoto.vue (tips, file input, correction list).
+- What I did: Decided what to build today and in which order: finish Sprint 3, the language toggle and that allergies and diet must be saved in the database. Tested the photo scan on my own fridge photos. When I scanned the same photo twice it looked like nothing happened, so I asked Claude to show which ingredients are already in the pantry, and then to split them into a "new" list and an "already in your pantry" list.
+
+## 2026-10-23 (dark mode and language toggles, more cuisines)
+- Tool: Claude Code
+- What: Added a dark mode toggle and a Swedish/English toggle for the whole app and the AI answers. Added two new cuisines (Korean, Italian) and made "Surprise me" pick a random cuisine.
+- How: Claude wrote ThemeToggle.vue, LangToggle.vue, useLang.ts and shared/i18n.ts (the dictionary), and changed the prompts so the AI answers in the chosen language.
+- What I did: Decided that the language toggle should cover the whole app and the AI answers, with a simple own solution without a package. Noticed that the dark mode button was missing. Came up with "Surprise me should pick a random cuisine" and added Korean and Italian.
+
+## 2026-10-23 (Sprint 4 start: allergies and diet)
+- Tool: Claude Code
+- What: Started Sprint 4: allergies and diet are now saved in the database and sent to the recipe prompt. Planned the rest of Sprint 4 (favorites, guest account, error handling) and updated PROGRESS.md.
+- How: Claude wrote the SQL for the preferences table, usePreferences.ts, PillGroup.vue, Foldout.vue, DietPicker.vue, AllergyPicker.vue and the diet rules in suggest.post.ts. The recipe card now warns if the recipe contains an allergen I picked. Claude also wrote learning notes 05-08 in learn/, explained each change and suggested the commit messages.
+- What I did: Decided that allergies and diet must be saved in the database so they follow the user. Asked for more diet options (pescatarian, lacto-ovo, ovo) and corrected Claude about what a lacto-ovo vegetarian eats. Decided that diet and allergies should be two separate boxes with the same look. Ran the SQL in Supabase myself and tested with two accounts that RLS works (each user only sees their own preferences). Tested everything in the browser, made the commits and pushed. Decided that a guest account is wanted so people can try the app, with an offer to create an account to keep their data (to be built later in Sprint 4).
+
+## 2026-10-23 (502 error: max_tokens)
+- Tool: Claude Code
+- What: Getting a recipe sometimes gave a 502 error.
+- How: Claude explained what the error meant, asked me for the log, and raised max_tokens in suggest.post.ts from 2000 to 4000 (the AI's thinking uses tokens too, so long answers were cut off).
+- What I did: Found the 502 error, took screenshots and showed them to Claude.
+
+## 2026-10-23 (protecting the API routes)
+- Tool: Claude Code
+- What: Later the same day: protected /api/suggest and /api/analyze-image, so only logged-in users (guests included) can use the Claude key.
+- How: Claude wrote server/utils/requireUser.ts (asks Supabase who is calling and throws 401 if nobody is logged in), added `await requireUser(event)` as the first line in both server routes, checked the allergy code and ticked off Sprint 4 in PROGRESS.md. Claude explained what H3Event is, why the check needs `await` and why it goes first, and what curl is.
+- What I did: Asked Claude what was left of the thesis and chose to start with the API protection, since anyone could use my Claude key. Asked what H3Event is. Ran the curl test myself without logging in and got 401 "Please log in to use this."
+
+## 2026-10-24 (favorites and a code review)
 - Tool: Claude Code
 - What: Finished the favorites feature (heart button and a list of saved recipes). Had a second opinion on my code (a code review) and planned the fixes. Started on the fixes: a Zod schema for the request to /api/suggest.
 - How: Claude found why the favorites list was not visible (FavoritesList.vue was never used in index.vue) and wired it in. Claude updated PROGRESS.md with the review points in priority order and wrote shared/schemas/suggestRequest.ts (checks cuisine, ingredients, allergies, diet and language before the prompt is built). Claude explained each change afterwards.
 - What I did: Tested favorites in the browser and noticed that I could save a recipe but not see the list. Brought the code review and decided the order of the fixes. Made the commits myself.
-- What (later 24 Oct): Fixed all six points from the code review. The server now checks what the browser sends (Zod schemas for /api/suggest and /api/analyze-image, including a size limit for the photo), pantry errors show under the form, signup handles "Confirm email", there is a daily limit per user, and the first automatic tests are in place (Vitest).
-- How (later 24 Oct): I asked Claude to do all the points and report afterwards. Claude wrote analyzeRequest.ts, connected suggestRequest.ts in suggest.post.ts, wrote requireQuota.ts and the SQL (usage table and increment_usage), installed Vitest and wrote 17 tests, changed index.vue, signup.vue, AuthForm.vue, useRecipe.ts, useImageScan.ts and i18n.ts, and updated PROGRESS.md. Claude ran the tests and the build.
-- What I did (later 24 Oct): Decided to do every point at once.
-- What (evening 24 Oct): Finished the small fixes from the review and the rest of Sprint 4: duplicate check in the pantry form, stricter recipe schema, .env.example, a redirect from /login for logged-in users, a specific message when Supabase's email limit is hit, error messages for no internet / expired login / daily limit (one shared helper), and the guest account ("Continue as guest" on the login page and a banner to create a real account).
-- How (evening 24 Oct): I told Claude to do everything that was left. Claude wrote app/utils/apiErrorKey.ts, GuestBanner.vue, the guest-only middleware, .env.example and the changes in usePantry.ts, login.vue, signup.vue, AuthForm.vue, recipe.ts, i18n.ts and the tests (23 passing). A test found that navigator.onLine is undefined in Node, so Claude made the offline check strict.
-- What I did (evening 24 Oct): Tested the daily limit myself (set it to 1, saw the 429 message, checked the usage table in Supabase).
 
-## 2026-10-26
+## 2026-10-24 (the six code review fixes)
+- Tool: Claude Code
+- What: Fixed all six points from the code review. The server now checks what the browser sends (Zod schemas for /api/suggest and /api/analyze-image, including a size limit for the photo), pantry errors show under the form, signup handles "Confirm email", there is a daily limit per user, and the first automatic tests are in place (Vitest).
+- How: I asked Claude to do all the points and report afterwards. Claude wrote analyzeRequest.ts, connected suggestRequest.ts in suggest.post.ts, wrote requireQuota.ts and the SQL (usage table and increment_usage), installed Vitest and wrote 17 tests, changed index.vue, signup.vue, AuthForm.vue, useRecipe.ts, useImageScan.ts and i18n.ts, and updated PROGRESS.md. Claude ran the tests and the build.
+- What I did: Decided to do every point at once.
+
+## 2026-10-24 (small fixes, error messages and the guest account)
+- Tool: Claude Code
+- What: In the evening I finished the small fixes from the review and the rest of Sprint 4: duplicate check in the pantry form, stricter recipe schema, .env.example, a redirect from /login for logged-in users, a specific message when Supabase's email limit is hit, error messages for no internet / expired login / daily limit (one shared helper), and the guest account ("Continue as guest" on the login page and a banner to create a real account).
+- How: I told Claude to do everything that was left. Claude wrote app/utils/apiErrorKey.ts, GuestBanner.vue, the guest-only middleware, .env.example and the changes in usePantry.ts, login.vue, signup.vue, AuthForm.vue, recipe.ts, i18n.ts and the tests (23 passing). A test found that navigator.onLine is undefined in Node, so Claude made the offline check strict.
+- What I did: Tested the daily limit myself (set it to 1, saw the 429 message, checked the usage table in Supabase).
+
+## 2026-10-26 (guest accounts and a logout warning)
 - Tool: Claude Code
 - What: Went through the open points in PROGRESS.md from the top. Turned on anonymous sign-ins in Supabase for the guest account. Added a warning for guests that their ingredients and saved recipes are lost if they log out.
 - How: Claude checked the git state and told me which commits were left. It explained what anonymous sign-ins mean for RLS, the daily limit and the captcha recommendation in Supabase, and wrote a pros and cons list for a guest compared to a real account. Claude wrote the warning: a clearer text in the guest banner (shared/i18n.ts) and a confirm box in signOut in index.vue that only appears for guests (`user.is_anonymous`).
 - What I did: Turned on "Allow anonymous sign-ins" in Supabase myself. Asked what the difference is between a guest and a real account, and noticed that nothing told a guest that everything disappears when they log out. Chose to have both the clearer text and the confirm box. Made the commits and pushed.
-- What (later 26 Oct): Removed every `any` from the project, planned the days until the supervision, and wrote the README with a setup guide anyone can follow, even without programming knowledge. Made supabase/schema.sql one script that can be pasted into the SQL Editor.
-- How (later 26 Oct): Claude wrote shared/database.types.ts (the database types, by hand from schema.sql), changed requireQuota.ts, usePantry.ts, usePreferences.ts and useFavorites.ts to use them, and added a Zod check of the saved recipes in useFavorites.ts. It installed typescript 5 and vue-tsc so `npx nuxi typecheck` works. Claude wrote the README (setup guide, the SQL in a code block, a table of common errors), rewrote schema.sql as one script and tested it in a local Postgres (PGlite) with fake auth tables. It also wrote tests/readme.test.ts, which fails if the SQL in the README differs from schema.sql. Claude explained each change afterwards.
-- What I did (later 26 Oct): Remembered that my teacher said we should avoid `any` and decided that the project should not have any. Decided the plan: finish the Must list first, then the Could list, and go through everything on Friday 30 Oct, before the supervision on 4 Nov. Tested the app in the browser after the type changes. Said that the Supabase setup must be copy and paste, safe even for someone who does not know what programming is, and that the SQL should work with paste and Cmd+Enter. Asked for the `**` to be removed from the README and asked if VS Code is needed (it is not). Made the commits.
 
-## 2026-10-27
+## 2026-10-26 (no `any`, the README and one SQL script)
 - Tool: Claude Code
-- What: Went through PROGRESS.md and chose the order: finish all Must-> mobile polish-> Could. Started with the Must point about unused pantry columns and removed category, quantity, unit and expires_at from the database.
+- What: Removed every `any` from the project, planned the days until the supervision, and wrote the README with a setup guide anyone can follow, even without programming knowledge. Made supabase/schema.sql one script that can be pasted into the SQL Editor.
+- How: Claude wrote shared/database.types.ts (the database types, by hand from schema.sql), changed requireQuota.ts, usePantry.ts, usePreferences.ts and useFavorites.ts to use them, and added a Zod check of the saved recipes in useFavorites.ts. It installed typescript 5 and vue-tsc so `npx nuxi typecheck` works. Claude wrote the README (setup guide, the SQL in a code block, a table of common errors), rewrote schema.sql as one script and tested it in a local Postgres (PGlite) with fake auth tables. It also wrote tests/readme.test.ts, which fails if the SQL in the README differs from schema.sql. Claude explained each change afterwards.
+- What I did: Remembered that my teacher said we should avoid `any` and decided that the project should not have any. Decided the plan: finish the Must list first, then the Could list, and go through everything on Friday 30 Oct, before the supervision on 4 Nov. Tested the app in the browser after the type changes. Said that the Supabase setup must be copy and paste, safe even for someone who does not know what programming is, and that the SQL should work with paste and Cmd+Enter. Asked for the `**` to be removed from the README and asked if VS Code is needed (it is not). Made the commits.
+
+## 2026-10-27 (removing unused pantry columns)
+- Tool: Claude Code
+- What: Went through PROGRESS.md and chose the order: finish all Must, then mobile polish, then Could. Started with the Must point about unused pantry columns and removed category, quantity, unit and expires_at from the database.
 - How: Claude searched the code and found that the four columns were never used, only listed in schema.sql, the README and database.types.ts. Claude explained the options (remove or keep and explain), wrote the SQL `alter table ... drop column` and a read-only check query for me to run first. After that Claude edited schema.sql, README.md and shared/database.types.ts (one file at a time), and ran the tests (24 passing) and the typecheck.
 - What I did: Chose to remove the columns instead of keeping them. Asked if the SQL was safe, which led to running the check query first (all four counts were 0, so no data was lost). Ran the `drop column` SQL in Supabase myself and tested the pantry in the app. Decided the order of the work.
-- What (later 27 Oct): Formatted the whole project with Prettier, so the indentation and line breaks are the same everywhere.
-- How (later 27 Oct): Claude first ran `prettier --check` to show which files would change (21), without changing anything. Then Claude installed Prettier as a devDependency, wrote .prettierrc (semi: true, singleQuote: false, which is how my code already looked), ran `prettier --write` on app, server, shared and tests, and checked that the tests (24 passing) and the typecheck still work. Claude ticked off the point in PROGRESS.md and explained that Prettier only changes how the code looks, not what it does.
-- What I did (later 27 Oct): Asked what the difference was between my style and Prettier's, and noticed that my code already used double quotes and semicolons. Decided that the formatting gets its own commit.
 
-## 2026-10-28
+## 2026-10-27 (Prettier)
+- Tool: Claude Code
+- What: Formatted the whole project with Prettier, so the indentation and line breaks are the same everywhere.
+- How: Claude first ran `prettier --check` to show which files would change (21), without changing anything. Then Claude installed Prettier as a devDependency, wrote .prettierrc (semi: true, singleQuote: false, which is how my code already looked), ran `prettier --write` on app, server, shared and tests, and checked that the tests (24 passing) and the typecheck still work. Claude ticked off the point in PROGRESS.md and explained that Prettier only changes how the code looks, not what it does.
+- What I did: Asked what the difference was between my style and Prettier's, and noticed that my code already used double quotes and semicolons. Decided that the formatting gets its own commit.
+
+## 2026-10-28 (heart button renamed to save button, memory use)
 - Tool: Claude Code
 - What: Finished renaming the heart button on the recipe card to a save button (the icon is now a chef hat). Checked the computer's memory use.
 - How: Claude looked at my uncommitted changes and PROGRESS.md, and searched the project for leftover "heart" words. It found two texts in shared/i18n.ts (English and Swedish, the empty favorites list) that still said "heart", and changed them to "chef hat" / "kockmössan". Claude read my Activity Monitor screenshot and explained that the memory was fine (no swap, green pressure), which processes could be closed (Discord, Chrome tabs) and that the `nuxt dev` server is the node process. It explained why node's memory goes up and down (garbage collection) and why Activity Monitor and `ps` show different numbers.
 - What I did: Renamed the CSS class and comments from heart to save-button in RecipeCard.vue and index.vue. Looked at the memory use and asked why node went down. Read the diff, tested that the empty list shows the new text in both languages, and made the commit myself.
-- What (28 Oct): Fixed the recipe prompt so the AI only uses the ingredients I have (plus salt, pepper, water, oil and sugar). Finished the mobile polish by testing every flow at 360 px. Made the photo scan more exact by sending a bigger image (1568 px instead of 1280 px). 
-- How ( 28 Oct): Claude read suggest.post.ts and explained why the AI added 12 ingredients I did not have (the prompt never said to stay with my list), and rewrote that part of the prompt. For the scan Claude read analyze-image.post.ts and useImageScan.ts, explained three possible causes (small image, small model, loose prompt) and changed MAX_SIZE from 1280 to 1568 in useImageScan.ts, plus the matching comment in analyzeRequest.ts and the note learn/04-useImageScan.md. It ran the tests (24 passing), the typecheck and Prettier, checked that the API key is connected (names and length only, never the value), and gave a senior-developer review of the whole project (gaps: guest accounts can get around the daily limit, the two server routes repeat the same code, the daily limit counts failed calls). Claude explained each change afterwards, and what MAX_SIZE does line by line.
-- What I did ( 28 Oct): Tested signup, login, getting a recipe, saving, allergies, diet, the photo scan and the guest flow in the browser at 360 px (Samsung Galaxy A55). Noticed that the recipe needed ingredients I did not have, and chose a strict prompt (only my ingredients and basic staples) because you do not always live close to a shop, and put the shopping list idea in the Could have list. Noticed that the scan sometimes lists food that is not in the photo, and decided to try the cheapest fix first (a bigger image) before changing to Sonnet. Tested the bigger image on my fridge photo (it went well) and all 24 tests pass. Made the commits and pushed.
 
-## 2026-10-29
-- Tool: Claude Code (new model: Opus 5.5 and sonnet 5.5)
-- What: Asked the new model to go through the whole project and look for improvments and fix them.
-- How: Claude read every file, ran tests and typecheck and listed the improvements
-- What I did: Asked for a review with the new model and decide to fix every point.
-- What (details 29 Oct): The fixes from the review: the pantry limits are now shared between the forms and the server (shared/limits.ts), both server routes use one helper (server/utils/askClaude.ts) with structured outputs and a 503 "the AI is busy" message, stricter types (Allergen and Diet instead of string), a warning when a guest logs in to another account, and long words that wrap instead of going outside their box.
-- How (details 29 Oct): Claude found a real bug: the server only accepts 50 ingredients of max 60 characters, but the forms had no limits, so a bigger pantry only gave "could not get a recipe". Claude wrote shared/limits.ts, askClaude.ts, the changes in suggest.post.ts, analyze-image.post.ts, usePantry.ts, index.vue, ScanPhoto.vue, login.vue, apiErrorKey.ts, i18n.ts, main.css and one new test (25 passing). It tested the structured output against the real Claude API, explained each change afterwards and wrote the git commands. Later in the day (model Sonnet 5.5) Claude added a login link to the guest banner (GuestBanner.vue), counted example ingredient words (the longest were 22 characters) and read my Activity Monitor screenshot (Chrome and VS Code used most of the memory, swap was 0, so it was fine).
-- What I did (details 29 Oct): Tested in the browser: getting a recipe, the photo scan, the long ingredient name and the guest login. Found that a long ingredient went outside its box, which led to the CSS fix. Noticed that a guest could not log in to an existing account without logging out first, and Claude found why: the start page had no link to /login. Had the idea to lower the name limit from 60 to 40 characters, since a word that long is rare, and Claude changed it in one place. Tested the warning for guests and the photo scan after the changes.
+## 2026-10-28 (stricter recipe prompt, mobile polish and a sharper photo scan)
+- Tool: Claude Code
+- What: Fixed the recipe prompt so the AI only uses the ingredients I have (plus salt, pepper, water, oil and sugar). Finished the mobile polish by testing every flow at 360 px. Made the photo scan more exact by sending a bigger image (1568 px instead of 1280 px).
+- How: Claude read suggest.post.ts and explained why the AI added 12 ingredients I did not have (the prompt never said to stay with my list), and rewrote that part of the prompt. For the scan Claude read analyze-image.post.ts and useImageScan.ts, explained three possible causes (small image, small model, loose prompt) and changed MAX_SIZE from 1280 to 1568 in useImageScan.ts, plus the matching comment in analyzeRequest.ts and the note learn/04-useImageScan.md. It ran the tests (24 passing), the typecheck and Prettier, checked that the API key is connected (names and length only, never the value), and gave a senior-developer review of the whole project (gaps: guest accounts can get around the daily limit, the two server routes repeat the same code, the daily limit counts failed calls). Claude explained each change afterwards, and what MAX_SIZE does line by line.
+- What I did: Tested signup, login, getting a recipe, saving, allergies, diet, the photo scan and the guest flow in the browser at 360 px (Samsung Galaxy A55). Noticed that the recipe needed ingredients I did not have, and chose a strict prompt (only my ingredients and basic staples) because you do not always live close to a shop, and put the shopping list idea in the Could have list. Noticed that the scan sometimes lists food that is not in the photo, and decided to try the cheapest fix first (a bigger image) before changing to Sonnet. Tested the bigger image on my fridge photo (it went well) and all 24 tests pass. Made the commits and pushed.
 
-## 2026-10-30
+## 2026-10-29 (review with the new model and its fixes)
+- Tool: Claude Code (new models: Opus 5.5 and Sonnet 5.5)
+- What: Asked the new model to go through the whole project, look for improvements and fix them. The fixes: the pantry limits are now shared between the forms and the server (shared/limits.ts), both server routes use one helper (server/utils/askClaude.ts) with structured outputs and a 503 "the AI is busy" message, stricter types (Allergen and Diet instead of string), a warning when a guest logs in to another account, and long words that wrap instead of going outside their box.
+- How: Claude read every file, ran the tests and the typecheck and listed the improvements. Claude found a real bug: the server only accepts 50 ingredients of max 60 characters, but the forms had no limits, so a bigger pantry only gave "could not get a recipe". Claude wrote shared/limits.ts, askClaude.ts, the changes in suggest.post.ts, analyze-image.post.ts, usePantry.ts, index.vue, ScanPhoto.vue, login.vue, apiErrorKey.ts, i18n.ts, main.css and one new test (25 passing). It tested the structured output against the real Claude API, explained each change afterwards and wrote the git commands. Later in the day (model Sonnet 5.5) Claude added a login link to the guest banner (GuestBanner.vue), counted example ingredient words (the longest were 22 characters) and read my Activity Monitor screenshot (Chrome and VS Code used most of the memory, swap was 0, so it was fine).
+- What I did: Asked for a review with the new model and decided to fix every point. Tested in the browser: getting a recipe, the photo scan, the long ingredient name and the guest login. Found that a long ingredient went outside its box, which led to the CSS fix. Noticed that a guest could not log in to an existing account without logging out first, and Claude found why: the start page had no link to /login. Had the idea to lower the name limit from 60 to 40 characters, since a word that long is rare, and Claude changed it in one place. Tested the warning for guests and the photo scan after the changes.
+
+## 2026-10-30 (going through the /code-review findings)
 - Tool: Claude Code (Sonnet 5.5)
 - What: Went through the 10 findings of a /code-review one at a time and decided for each one: fix or leave. Fixed six, left four with a reason. Checked in Supabase that "Confirm email" is off.
 - How: Claude ran the review, read the code around each finding and told me when a finding was wrong or smaller than it sounded (for example that a max length in the AI answer schema would throw away a whole photo scan, and that a refund function for the daily limit would let a user reset their own limit). Claude guided me step by step on the Cuisine type (cuisines.ts, useRecipe.ts, CuisineCard.vue, index.vue) and the timeout in askClaude.ts, and explained the errors from the typecheck. Claude wrote the change in the prompt about hidden allergens (suggest.post.ts), the flag that ignores extra taps on the save button (index.vue), the saved values in usePreferences.ts, the canvas check in useImageScan.ts and the new section in PROGRESS.md. Later Claude moved all three code reviews (24, 29 and 30 Oct) from PROGRESS.md to a new file, CODE-REVIEW.md, with commands so the text was copied exactly, and checked that no line was lost. Claude explained each change afterwards.
-- What I did: Wrote the Cuisine and CuisineChoice types and changed the files that used them myself, and also the timeout and the comment and tags in the prompt. Ran the SQL check for old long ingredient names (0 rows). Tested the timeout with `timeout: 1`, the double tap on the save button and the failed save with Offline in DevTools. Noticed that a recipe listed mustard and celery as allergens when they were not in the ingredient list, which led to the allergen explanation in the prompt. Asked if an admin page could solve the refund of the daily limit, and about punkt 8 (allergies). Had the idea to put all the code reviews in their own file. Chose to fix 8 and 9 and to leave 2, 3, 7 and 10. Ran the checks (Prettier, typecheck, tests), made the commits and pushed.
-- What (later 30 Oct): Started the security review, one area at a time. Area 1 (secrets) was fine. Area 2 (database) showed that the limits (40 characters, 50 ingredients) were only checked in the app, so someone who talks to Supabase directly could fill the database. Fixed it with size rules and a row limit per user in the database. Then Claude quizzed me on the app (10 questions).
-- How (later 30 Oct): Claude ran read-only commands to check that .env and the keys are not in git, and wrote a test script (in a temporary folder outside the project, not kept) that tried 36 attacks and normal uses against supabase/schema.sql in a local Postgres. Claude wrote the `check` rules and the trigger limit_rows_per_user in supabase/schema.sql, copied the SQL to README.md (a test keeps them equal), wrote supabase/migrations/2026-10-30-limits.sql for my existing project, and wrote the results in CODE-REVIEW.md. Claude explained each step, and asked the quiz questions and gave feedback.
-- What I did (later 30 Oct): Chose option C (check rules and a trigger) out of three. Ran the check query in Supabase (0, 0, 0), ran the migration, and checked with a query that all 7 rules, 2 triggers and the function exist. Tested the app afterwards (add an ingredient, get a recipe, save it). Answered the 10 quiz questions (7 right, and I went through the 3 I missed). Told Claude to keep answers to about 5 lines, because long text does not stick. Made the commits.
+- What I did: Wrote the Cuisine and CuisineChoice types and changed the files that used them myself, and also the timeout and the comment and tags in the prompt. Ran the SQL check for old long ingredient names (0 rows). Tested the timeout with `timeout: 1`, the double tap on the save button and the failed save with Offline in DevTools. Noticed that a recipe listed mustard and celery as allergens when they were not in the ingredient list, which led to the allergen explanation in the prompt. Asked if an admin page could solve the refund of the daily limit, and about point 8 (allergies). Had the idea to put all the code reviews in their own file. Chose to fix 8 and 9 and to leave 2, 3, 7 and 10. Ran the checks (Prettier, typecheck, tests), made the commits and pushed.
 
-## 2026-11-02
+## 2026-10-30 (security review: limits in the database, and a quiz)
+- Tool: Claude Code (Sonnet 5.5)
+- What: Started the security review, one area at a time. Area 1 (secrets) was fine. Area 2 (database) showed that the limits (40 characters, 50 ingredients) were only checked in the app, so someone who talks to Supabase directly could fill the database. Fixed it with size rules and a row limit per user in the database. Then Claude quizzed me on the app (10 questions).
+- How: Claude ran read-only commands to check that .env and the keys are not in git, and wrote a test script (in a temporary folder outside the project, not kept) that tried 36 attacks and normal uses against supabase/schema.sql in a local Postgres. Claude wrote the `check` rules and the trigger limit_rows_per_user in supabase/schema.sql, copied the SQL to README.md (a test keeps them equal), wrote supabase/migrations/2026-10-30-limits.sql for my existing project, and wrote the results in CODE-REVIEW.md. Claude explained each step, and asked the quiz questions and gave feedback.
+- What I did: Chose option C (check rules and a trigger) out of three. Ran the check query in Supabase (0, 0, 0), ran the migration, and checked with a query that all 7 rules, 2 triggers and the function exist. Tested the app afterwards (add an ingredient, get a recipe, save it). Answered the 10 quiz questions (7 right, and I went through the 3 I missed). Told Claude to keep answers to about 5 lines, because long text does not stick. Made the commits.
+
+## 2026-11-02 (walkthrough of all files, 1–8, and the demo)
 - Tool: Claude Code (Sonnet 5.5, later Opus 5.5)
 - What: Started a walkthrough of every file in the project, one file at a time, so I can explain all the code. Finished 8 of 35: app.vue, guest-only.ts, auth.ts, login.vue, AuthForm.vue, signup.vue, useLang.ts and shared/i18n.ts. Prepared a one minute demo for the supervision on Wednesday 4 Nov.
 - How: Claude explained each file (what it does, where it gets data from and where it sends it) with kitchen comparisons, split the harder parts into small steps and asked check questions. Topics: how Nuxt names components from folders, middleware, `ref` and `.value`, `?.`, `!` and `&&`, destructuring (`const { error }`), `autocomplete`, props (`:`), emit (`@`), slots, `v-model`, the `? :` short if, `@submit.prevent`, composables, and cookie compared to `useState`. Claude wrote the study list learn/09-genomgang-alla-filer.md (the order of all files, ticked off as we go, and a list of what I have learned). Claude wrote a draft demo script, and checked in requireQuota.ts and schema.sql that the daily limit is 30 calls per user and day, not for the whole app.
 - What I did: Chose to go through all files and asked the questions when something was unclear (why app.vue has no code, why `components` is not in the name, what `.value` is, what the brackets in `{ error }` do, how many slots a component can have). Answered the check questions (`middleware: "auth"`, the `? :` pasta example, the 429 line in signup.vue, which one remembers the language). Tested that Enter logs in. Decided to use my test account with saved ingredients in the demo instead of adding everything live. Made the commits and pushed.
-- What (later 2 Nov): Continued the walkthrough with LangToggle.vue and ThemeToggle.vue (10 of 35 done).
-- How (later 2 Nov): Claude explained the two files with kitchen comparisons and drew a diagram of how one click on the language button changes the `lang` box and how everything that reads it updates. Topics: why `.value` is not needed in the template, `useHead`, `onMounted`, `computed`, and the three theme states (my choice, or the phone's setting when I have not chosen). When I did not follow, Claude explained the idea again without code, and then went through the `computed` line with a table of examples. Claude ticked off both files in learn/09-genomgang-alla-filer.md.
-- What I did (later 2 Nov): Asked for a drawing of the flow, said when I did not understand, and explained in my own words how line 5 in LangToggle.vue gets the language.
 
+## 2026-11-02 (walkthrough: LangToggle and ThemeToggle)
+- Tool: Claude Code (Sonnet 5.5, later Opus 5.5)
+- What: Later the same day I continued the walkthrough with LangToggle.vue and ThemeToggle.vue (10 of 35 done).
+- How: Claude explained the two files with kitchen comparisons and drew a diagram of how one click on the language button changes the `lang` box and how everything that reads it updates. Topics: why `.value` is not needed in the template, `useHead`, `onMounted`, `computed`, and the three theme states (my choice, or the phone's setting when I have not chosen). When I did not follow, Claude explained the idea again without code, and then went through the `computed` line with a table of examples. Claude ticked off both files in learn/09-genomgang-alla-filer.md.
+- What I did: Asked for a drawing of the flow, said when I did not understand, and explained in my own words how line 5 in LangToggle.vue gets the language.
 
-## 2026-11-03
+## 2026-11-03 (walkthrough of all files, 11–35, and supervision notes)
 - Tool: Claude Code (Opus 5.5)
 - What: Finished the walkthrough of all files (11 to 35): the start page, the guest banner, the pantry, the photo scan, cuisines, diets and allergens, preferences, PillGroup and Foldout, the pickers, the recipe, both server routes, the recipe card, favorites, requireUser, requireQuota, askClaude, apiErrorKey, the Zod schemas, limits.ts, the database, the tests and the config files. Prepared notes for the supervision with Hans and Betsy on 4 Nov.
 - How: Claude explained each file with kitchen comparisons and asked a check question after each one, and corrected me when my answer was only partly right (for example that `.map` makes a new list instead of renaming, that `conflicts` warns instead of removing, and which error goes with 502 and 503). Claude drew diagrams of the photo flow, of value compared to label for the allergens, of why the database checks the 50 ingredient limit too, and of the whole app. Topics: `v-for` and `:key`, `$event`, `!!`, `try/finally`, `updateUser`, RLS, `.some`, `Set`, `.filter`, `splice`, `as const`, `typeof ...[number]`, `maybeSingle`, `upsert`, optimistic updates, `useId`, `Record`, prompt injection, `withDefaults`, `z.infer`, `.extend`, `flatMap`, `rpc`, status codes (400, 401, 429, 500, 502, 503), generics, structured outputs and Vitest. Claude wrote learn/10-karta-hela-appen.md (a map of the whole app), the supervision notes (not committed), ticked off all files in learn/09-genomgang-alla-filer.md and ran the tests (25 passing).
 - What I did: Asked for the walkthrough to be done before 14.00, one file at a time. Answered the check questions in my own words (RLS stops me from seeing other users' ingredients, the prompt only allows my ingredients because the app is about not shopping, Zod is the app's door guard for data). Asked my own questions: draw the photo flow, which APIs we use and why the server routes exist, if the files could be shorter than 100 lines, if ScanPhoto.vue is DRY, why lactose is not a choice, what Foldout does and what error 500 means. Decided to leave the file length. Added the supervision notes to .gitignore myself.
 
-## 2026-11-05
+## 2026-11-05 (feedback: Sonnet model and wider remove buttons)
 - Tool: Claude Code (Opus 5.5)
 - What: Started on the feedback from the supervision on 4 Nov. The app now uses Sonnet 5.5 instead of Haiku, with `effort: "medium"`. The temperature could not be set, because Sonnet 5.5 answers 400 on `temperature`. The recipe language was already in place. The remove buttons are now wider (88 x 44 px) with a visible border.
 - How: Claude changed server/utils/askClaude.ts (model, effort and a fallback model for wrongly declined requests), tested against the real Claude API (temperature, speed and tokens at low, medium and high effort, and the recipe language), and ran the typecheck and the tests (25 passing). Claude measured the remove buttons in Chrome at 360 px on a copy of the CSS and markup, found that they were already 44 px high, and after my comment about the width wrote `.btn-remove` in main.css and used it in PantryList.vue and ScanPhoto.vue. Claude ticked off the points in PROGRESS.md, explained each change afterwards and wrote this log entry.
@@ -369,3 +414,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The logic for the save button on the recipe card (remove the recipe if it is saved, otherwise save it, and ignore more taps while it runs) moved from app/pages/recipes.vue to app/composables/useFavorites.ts. No change for the user. recipes.vue is now 128 lines (182 this morning).
 - How: Claude moved `toggleFavorite` and `savingFavorite` to useFavorites.ts, so everything about favorites is in one place. The function now gets the recipe as an argument, since useFavorites does not know the page's recipe, and the page calls it with `@toggle="toggleFavorite(recipe)"`. recipes.vue no longer needs `saveFavorite` and `deleteFavorite`. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
 - What I did: Tested saving and removing a recipe in the browser.
+
+## 2026-11-12 (AI log: one section per topic)
+- Tool: Claude Code (Opus 5.5)
+- What: The older entries in this file (13 Oct to 5 Nov) had several topics under one heading per day, which made them hard to read. Now every entry has its own heading with a topic, like the newer ones.
+- How: Claude saved a backup, split the days with several parts ("What (later ...)") into their own sections, moved the sentences to the right section without changing the facts, fixed spelling mistakes, and kept 22 Oct and 29 Oct as one section each, since their sentences could not be split without guessing. Claude compared the words in the old and the new file to check that nothing was lost (only the fixed spelling mistakes differed) and wrote this log entry.
+- What I did: Had the idea and read through the result.
