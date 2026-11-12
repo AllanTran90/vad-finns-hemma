@@ -14,7 +14,10 @@ This is my thesis project (examensarbete) at Yrgo, web development.
   account into a real one and keep the data)
 - Add ingredients by hand or by photo. The AI reads the photo and I can correct
   the list before it is saved
-- Pick a cuisine (or "Surprise me") and get a recipe
+- See how many ingredients you have and how many fit (for example "12 of 50"),
+  delete one, the selected ones or all of them
+- Translate the whole pantry to the app's language with one tap
+- Pick a cuisine (or "Surprise me"), home cooking or bistro, and get a recipe
 - Choose a diet and allergies. They are sent to the AI, and the recipe card
   warns if a recipe still contains an allergen
 - Save favorite recipes
@@ -27,10 +30,10 @@ This is my thesis project (examensarbete) at Yrgo, web development.
   and never reaches the browser
 - Supabase: database and auth (`@nuxtjs/supabase`), with row level security
   so every user only sees their own data
-- Claude API: recipes and photo recognition
+- Claude API: recipes, photo recognition and translating the pantry
 - Zod: validates what the browser sends and what the AI answers. Schemas are
   shared in `shared/schemas/`
-- Vitest: automatic tests for the Zod schemas
+- Vitest: automatic tests for the Zod schemas and helpers
 - Vercel: deploy
 
 ## Setup guide (from zero, no programming knowledge needed)
@@ -456,8 +459,10 @@ be added in Vercel, followed by a redeploy.
 
 ```
 app/            Frontend: pages, components, composables, middleware, utils
-server/api/     Routes that call the Claude API (suggest, analyze-image)
-server/utils/   requireUser (login check) and requireQuota (daily limit)
+server/api/     Routes that call the Claude API (suggest, analyze-image,
+                translate-ingredients)
+server/utils/   requireUser (login check), requireQuota (daily limit),
+                readValidBody (Zod check) and askClaude (the Claude call)
 shared/         Code used by both sides: lists, Zod schemas, texts (i18n),
                 database types
 supabase/       schema.sql, the database schema
@@ -467,18 +472,24 @@ tests/          Vitest tests
 ## How it is protected
 
 - The Claude API key is only used on the server
-- Both server routes require a logged-in user (guests included)
+- All three server routes require a logged-in user (guests included)
 - Everything the browser sends is checked with Zod before the prompt is built
   (cuisine, allergies and diet must come from our own lists, and the number and
   length of ingredients and the photo size are limited)
 - Each user has a daily limit of Claude calls (30, guests 10, stored in the database)
 - The AI answer is checked with Zod before it is shown or saved
 - Row level security on every table
+- The database has its own limits too (max 40 characters per ingredient, max 50
+  ingredients per user), so they hold even if someone skips the app and talks
+  to Supabase directly
 
 ## Documentation
 
 - [AI-USE.md](AI-USE.md): a log of how I used AI during the project
 - [PROGRESS.md](PROGRESS.md): the plan and the status
+- [TESTING.md](TESTING.md): the end-to-end checklist and the security test
+- [CODE-REVIEW.md](CODE-REVIEW.md): the code and security reviews, what was
+  fixed and what was left on purpose
 - [learn/](learn/): my notes explaining the code
 
 ## License

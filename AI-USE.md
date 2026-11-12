@@ -456,3 +456,9 @@
 - What: Updated the presentation with today's work. The design is the same.
 - How: Claude read all 9 slides and their speaker notes and listed what was out of date. On slide 6 (Tech stack) and slide 7 (Security & Quality) Claude changed 34 to 40 automated tests, and on slide 7 the RLS card now says "tested with 36 + 28 attack attempts" (with non-breaking spaces, so "36 + 28" stays on one line). Claude added to the speaker notes: the pantry counter "12 of 50" in the demo (slide 4), today's security test with two accounts and the prompt injection that gave pasta (slide 7), and the refactor of 8 long files into 14 small ones (slide 8). Claude checked slides 6 and 7 with screenshots and wrote this log entry.
 - What I did: Asked Claude to check if the presentation needed updates after today's work, gave the Figma link and chose to do all five changes.
+
+## 2026-11-12 (README update)
+- Tool: Claude Code (Opus 5.5)
+- What: The summary parts of the README were out of date. The setup guide and the SQL did not change.
+- How: Claude read the README and listed what had changed since it was written. Claude added the pantry counter, deleting several ingredients, translating the pantry and home or bistro to Features, translation to the Claude API line, all three server routes and all four server helpers to the project structure, "all three server routes" and the database's own limits to How it is protected, and links to TESTING.md and CODE-REVIEW.md. Claude ran the README test (it still matches supabase/schema.sql) and wrote this log entry.
+- What I did: Asked if the README needed an update and asked Claude to make all the changes.
