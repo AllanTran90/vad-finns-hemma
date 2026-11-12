@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CUISINES, SURPRISE, pickRandomCuisine } from "#shared/cuisines";
+import { SURPRISE, pickRandomCuisine } from "#shared/cuisines";
 
 const { t } = useLang();
 
@@ -106,21 +106,10 @@ definePageMeta({
       <div class="column">
         <section class="section">
           <h2>{{ t("cuisine.title") }}</h2>
-          <div class="cuisine-grid">
-            <CuisineCard
-              v-for="cuisine in CUISINES"
-              :key="cuisine"
-              :name="cuisine"
-              :selected="cuisine === selectedCuisine"
-              @select="selectedCuisine = $event"
-            />
-            <CuisineCard
-              class="surprise"
-              :name="SURPRISE"
-              :selected="selectedCuisine === SURPRISE"
-              @select="selectedCuisine = $event"
-            />
-          </div>
+          <CuisinePicker
+            :selected="selectedCuisine"
+            @change="selectedCuisine = $event"
+          />
         </section>
 
         <section class="section">
@@ -162,21 +151,3 @@ definePageMeta({
     </div>
   </main>
 </template>
-
-<style scoped>
-.cuisine-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-}
-
-@media (min-width: 40rem) {
-  .cuisine-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.surprise {
-  grid-column: 1 / -1;
-}
-</style>

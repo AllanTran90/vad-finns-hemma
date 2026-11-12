@@ -357,3 +357,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The logo at the top of the login and signup pages (the chef's hat, the app name and the tagline) moved to a new component, app/components/ui/AuthBrand.vue (46 lines). No change for the user. AuthForm.vue is now 100 lines (185 this morning).
 - How: Claude wrote AuthBrand.vue with the HTML and the CSS for the logo. It has no props and no emits. In AuthForm.vue Claude replaced the logo with `<UiAuthBrand />` and removed its CSS. Claude ran the typecheck, explained the change afterwards and wrote this log entry.
 - What I did: Asked for this step myself after the password input, so that AuthForm got shorter. Tested the login and signup pages in the browser.
+
+## 2026-11-12 (split recipes.vue, step 1: CuisinePicker)
+- Tool: Claude Code (Opus 5.5)
+- What: The grid of cuisines and "Surprise me" on the recipes page moved to a new component, app/components/cuisine/CuisinePicker.vue (51 lines). No change for the user. app/pages/recipes.vue went from 182 to 153 lines and no longer has its own CSS.
+- How: Claude read recipes.vue and suggested two steps: CuisinePicker, and moving `toggleFavorite` to useFavorites.ts. CuisinePicker is built like StylePicker: it gets the choice as `selected` and sends a new one up with `change`. Claude moved the grid CSS with it, removed the empty `<style>` block and the `CUISINES` import from recipes.vue, ran the typecheck, explained the change afterwards and wrote this log entry.
+- What I did: Tested in the browser and got a Vite error ("Unknown word SURPRISE"). Claude explained that the running dev server still asked for the removed `<style>` block, so it was not a bug in the code. I restarted the dev server and reloaded the page, and then it worked.
