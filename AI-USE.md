@@ -345,3 +345,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The ingredient list and the numbered steps of a recipe moved to a new component, app/components/recipe/RecipeSteps.vue (91 lines). No change for the user. RecipeCard.vue is now 153 lines (248 this morning).
 - How: Claude wrote RecipeSteps.vue, which gets `ingredients` and `instructions` as props and only shows them, and moved the CSS for the headings, the dots and the step numbers with it. RecipeSteps has two `<section>` elements without a wrapping `<div>`, so they stay in the card's flex layout with the same spacing as before. In RecipeCard.vue Claude replaced the two sections with `<RecipeSteps>`. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
 - What I did: Tested a new recipe and the saved recipes in the browser.
+
+## 2026-11-12 (split AuthForm.vue, step 1: PasswordInput)
+- Tool: Claude Code (Opus 5.5)
+- What: The password input with the eye button (show or hide the password) moved to a new component, app/components/ui/PasswordInput.vue (73 lines). No change for the user, on both the login and the signup page. AuthForm.vue went from 185 to 135 lines.
+- How: Claude read AuthForm.vue and suggested moving out the password input first, since it has its own logic (`showPassword`) and CSS. PasswordInput.vue uses `defineModel()`, so AuthForm can use it with `v-model="password"` like a normal input, and gets the `autocomplete` value as a prop. Claude also put the script in AuthForm.vue in a clearer order (props, emit, variables, function). Claude ran the typecheck, explained the change afterwards and wrote this log entry.
+- What I did: Asked why the logo should not be moved out too, which made us do that as the next step. Tested logging in, signing up and the eye button in the browser.

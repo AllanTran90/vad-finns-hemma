@@ -1,7 +1,4 @@
 <script setup lang="ts">
-function onSubmit() {
-  emit("submit", email.value, password.value);
-}
 defineProps<{
   title: string;
   passwordAutocomplete: string;
@@ -9,14 +6,18 @@ defineProps<{
   infoMessage?: string;
 }>();
 
+const emit = defineEmits<{
+  submit: [email: string, password: string];
+}>();
+
 const { t } = useLang();
 
 const email = ref("");
 const password = ref("");
-const showPassword = ref(false);
-const emit = defineEmits<{
-  submit: [email: string, password: string];
-}>();
+
+function onSubmit() {
+  emit("submit", email.value, password.value);
+}
 </script>
 
 <template>
@@ -39,25 +40,10 @@ const emit = defineEmits<{
           autocomplete="email"
           required
         />
-        <div class="password-field">
-          <input
-            v-model="password"
-            :type="showPassword ? 'text' : 'password'"
-            :placeholder="t('auth.password')"
-            :autocomplete="passwordAutocomplete"
-            required
-          />
-          <button
-            class="toggle"
-            type="button"
-            :aria-label="
-              showPassword ? t('auth.hidePassword') : t('auth.showPassword')
-            "
-            @click="showPassword = !showPassword"
-          >
-            <Icon :name="showPassword ? 'lucide:eye-off' : 'lucide:eye'" />
-          </button>
-        </div>
+        <UiPasswordInput
+          v-model="password"
+          :autocomplete="passwordAutocomplete"
+        />
 
         <button class="btn" type="submit">{{ title }}</button>
       </form>
@@ -145,41 +131,5 @@ form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-}
-
-.password-field {
-  position: relative;
-}
-
-.password-field input {
-  padding-right: 3rem;
-}
-
-/* The eye sits inside the input, vertically centered on the right edge. */
-.toggle {
-  position: absolute;
-  top: 50%;
-  right: 0.5rem;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--color-muted);
-  font-size: 1.25rem;
-  cursor: pointer;
-  transform: translateY(-50%);
-}
-
-.toggle:hover {
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-}
-
-.toggle:focus-visible {
-  outline: 2px solid var(--color-primary);
 }
 </style>
