@@ -27,8 +27,7 @@ const {
   errorMessage: favoritesError,
   loadFavorites,
   findFavorite,
-  saveFavorite,
-  deleteFavorite,
+  toggleFavorite,
 } = useFavorites();
 
 const canGetRecipe = computed(
@@ -63,30 +62,6 @@ async function handleGetRecipe() {
     diet.value,
     selectedStyle.value,
   );
-}
-
-// The save button on the recipe card: remove the recipe if it is saved, otherwise save it.
-// While a save or remove is running, more taps are ignored. Otherwise a double tap
-// would save the recipe twice, because the list is only updated when the first save is done.
-const savingFavorite = ref(false);
-
-async function toggleFavorite() {
-  if (!recipe.value || savingFavorite.value) {
-    return;
-  }
-
-  savingFavorite.value = true;
-  try {
-    const saved = findFavorite(recipe.value);
-
-    if (saved) {
-      await deleteFavorite(saved.id);
-    } else {
-      await saveFavorite(recipe.value);
-    }
-  } finally {
-    savingFavorite.value = false;
-  }
 }
 
 onMounted(() => {
@@ -144,7 +119,7 @@ definePageMeta({
           :recipe="recipe"
           :avoid="allergens"
           :saved="!!findFavorite(recipe)"
-          @toggle="toggleFavorite"
+          @toggle="toggleFavorite(recipe)"
         />
         <p v-if="favoritesError" role="alert">{{ favoritesError }}</p>
       </div>

@@ -363,3 +363,9 @@ Read and tested every change in the browser (the button is disabled until I pick
 - What: The grid of cuisines and "Surprise me" on the recipes page moved to a new component, app/components/cuisine/CuisinePicker.vue (51 lines). No change for the user. app/pages/recipes.vue went from 182 to 153 lines and no longer has its own CSS.
 - How: Claude read recipes.vue and suggested two steps: CuisinePicker, and moving `toggleFavorite` to useFavorites.ts. CuisinePicker is built like StylePicker: it gets the choice as `selected` and sends a new one up with `change`. Claude moved the grid CSS with it, removed the empty `<style>` block and the `CUISINES` import from recipes.vue, ran the typecheck, explained the change afterwards and wrote this log entry.
 - What I did: Tested in the browser and got a Vite error ("Unknown word SURPRISE"). Claude explained that the running dev server still asked for the removed `<style>` block, so it was not a bug in the code. I restarted the dev server and reloaded the page, and then it worked.
+
+## 2026-11-12 (split recipes.vue, step 2: toggleFavorite)
+- Tool: Claude Code (Opus 5.5)
+- What: The logic for the save button on the recipe card (remove the recipe if it is saved, otherwise save it, and ignore more taps while it runs) moved from app/pages/recipes.vue to app/composables/useFavorites.ts. No change for the user. recipes.vue is now 128 lines (182 this morning).
+- How: Claude moved `toggleFavorite` and `savingFavorite` to useFavorites.ts, so everything about favorites is in one place. The function now gets the recipe as an argument, since useFavorites does not know the page's recipe, and the page calls it with `@toggle="toggleFavorite(recipe)"`. recipes.vue no longer needs `saveFavorite` and `deleteFavorite`. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
+- What I did: Tested saving and removing a recipe in the browser.
