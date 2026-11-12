@@ -432,3 +432,9 @@
 - What: The form for adding one ingredient by hand moved from app/pages/index.vue to a new component, app/components/pantry/PantryAddForm.vue (39 lines). No change for the user. index.vue is now 127 lines (180 this morning).
 - How: Claude wrote PantryAddForm.vue with the input, the Add button and their CSS. It shares the text with the page through `v-model` (`defineModel`) and sends `add` when the form is sent. `handleAdd` stays in index.vue, because only the page knows if the save went well (`pantryError`), and the input should only be emptied then. Claude ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
 - What I did: Chose to do this second step. Tested adding an ingredient, a duplicate and Enter in the browser.
+
+## 2026-11-12 (split GuestBanner.vue: GuestUpgradeForm)
+- Tool: Claude Code (Opus 5.5)
+- What: The form in the guest banner that turns a guest into a real account moved to a new component, app/components/guest/GuestUpgradeForm.vue (68 lines). GuestBanner.vue went from 162 to 103 lines and now only decides if the banner is folded or open. One small visible change: the password input in the banner now has the eye button, since it uses UiPasswordInput.
+- How: Claude read GuestBanner.vue and suggested moving out the form, since it is the only part with real logic (`createAccount` with `updateUser`). Claude moved the form, the messages and their CSS to GuestUpgradeForm.vue without a wrapping `<div>`, so the spacing in the banner is the same, and replaced the plain password input with `<UiPasswordInput>`. Claude ran the typecheck, explained the change afterwards and wrote this log entry.
+- What I did: Chose to use UiPasswordInput in the banner too. Tested the guest banner in the browser: the eye button, folding and opening the banner.
