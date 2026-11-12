@@ -1,4 +1,5 @@
 import type { Database } from "#shared/database.types";
+import { checkIngredientName } from "#shared/ingredientName";
 import { MAX_INGREDIENTS, MAX_INGREDIENT_LENGTH } from "#shared/limits";
 
 type PantryInsert = Database["public"]["Tables"]["pantry"]["Insert"];
@@ -33,30 +34,14 @@ export function usePantry() {
 
     const cleanName = name.trim();
 
-    if (!cleanName) {
-      errorMessage.value = t("pantry.errorEmpty");
-      return;
-    }
-
-    const alreadyThere = ingredients.value.some(
-      (ingredient) => ingredient.name.toLowerCase() === cleanName.toLowerCase(),
+    // The rules (empty, duplicate, too long, full) live in shared/ingredientName.ts.
+    const problem = checkIngredientName(
+      cleanName,
+      ingredients.value.map((ingredient) => ingredient.name),
     );
 
-    if (alreadyThere) {
-      errorMessage.value = t("pantry.errorDuplicate");
-      return;
-    }
-
-    // Same limits as /api/suggest, so the recipe button never gets a 400.
-    if (cleanName.length > MAX_INGREDIENT_LENGTH) {
-      errorMessage.value = t("pantry.errorTooLong", {
-        max: MAX_INGREDIENT_LENGTH,
-      });
-      return;
-    }
-
-    if (ingredients.value.length >= MAX_INGREDIENTS) {
-      errorMessage.value = t("pantry.errorFull", { max: MAX_INGREDIENTS });
+    if (problem) {
+      errorMessage.value = t(problem.key, problem.params);
       return;
     }
 
