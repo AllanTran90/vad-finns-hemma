@@ -438,3 +438,9 @@
 - What: The form in the guest banner that turns a guest into a real account moved to a new component, app/components/guest/GuestUpgradeForm.vue (68 lines). GuestBanner.vue went from 162 to 103 lines and now only decides if the banner is folded or open. One small visible change: the password input in the banner now has the eye button, since it uses UiPasswordInput.
 - How: Claude read GuestBanner.vue and suggested moving out the form, since it is the only part with real logic (`createAccount` with `updateUser`). Claude moved the form, the messages and their CSS to GuestUpgradeForm.vue without a wrapping `<div>`, so the spacing in the banner is the same, and replaced the plain password input with `<UiPasswordInput>`. Claude ran the typecheck, explained the change afterwards and wrote this log entry.
 - What I did: Chose to use UiPasswordInput in the banner too. Tested the guest banner in the browser: the eye button, folding and opening the banner.
+
+## 2026-11-12 (split PantryList.vue: PantryActions)
+- Tool: Claude Code (Opus 5.5)
+- What: The row of buttons under the pantry list (Select, Delete all, Cancel, Delete selected and Confirm) moved to a new component, app/components/pantry/PantryActions.vue (87 lines). No change for the user. PantryList.vue went from 160 to 107 lines. This was the last of the eight long files.
+- How: Claude wrote PantryActions.vue, which shares the list's `mode` through `v-model` (`defineModel`), gets the number of ticked rows and the total as props, and sends `cancel`, `deleteSelected` and `deleteAll` up. `mode` and `selectedIds` stay in PantryList.vue, since the list needs them for the checkboxes, so the list still decides what is deleted. Claude moved the CSS for the buttons with it, ran the typecheck and the tests (40 passing), explained the change afterwards and wrote this log entry.
+- What I did: Tested selecting and deleting, Cancel, and Delete all in the browser.
