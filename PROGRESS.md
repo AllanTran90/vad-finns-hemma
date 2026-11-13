@@ -105,7 +105,7 @@ found, what was fixed, and what was left on purpose and why.
 
 Still open from the reviews:
 
-- [ ] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL needs a
+- [x] Use vad-finns-hemma.vercel.app at hand-in (the git-main preview URL needs a
       Vercel login)
 - [x] Security review (see CODE-REVIEW.md)
 
